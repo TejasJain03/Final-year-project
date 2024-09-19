@@ -1,16 +1,19 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import './App.css'
-import React from 'react';
+import "./App.css";
+import React from "react";
 import allRoutes from "./utils/routes";
 import Redirect from "./pages/Redirect";
+import Navbar from "./components/Navbar/Navbar";
+import Loader from "./components/static/Loader";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   return (
     <Router>
       <div className="App flex flex-col">
-        <React.Suspense fallback={<h1>Loading...</h1>}>
+        <React.Suspense fallback={Loader}>
           {/* <ScrollToTop /> */}
-          {/* <Navbar /> */}
+          <Navbar />
           {/* <Sidebar /> */}
           <Routes>
             {allRoutes.map((route) => {
@@ -25,11 +28,11 @@ function App() {
             })}
             <Route exact path="*" element={<Redirect />} />
           </Routes>
-          {/* <Footer /> */}
+          <Footer />
         </React.Suspense>
       </div>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;

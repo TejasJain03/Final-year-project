@@ -1,8 +1,11 @@
+import Login from "../components/Authentication/Login"
 
 
 const Autenticate = () => {
   return (
-    <div>Autenticate</div>
+    <div>
+      <Login />
+    </div>
   )
 }
 
