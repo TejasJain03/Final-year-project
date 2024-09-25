@@ -1,6 +1,8 @@
+import ProfilePage from "../components/Profile/ProfilePage"
+
 const Profile = () => {
   return (
-    <div>Profile</div>
+    <div><ProfilePage /></div>
   )
 }
 
