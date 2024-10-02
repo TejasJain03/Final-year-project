@@ -1,12 +1,16 @@
-import Login from "../components/Authentication/Login"
+import { useLocation } from 'react-router-dom';
+import Login from '../components/Authentication/Login';
+import Register from '../components/Authentication/Register';
 
+const Authenticate = () => {
+  const location = useLocation();
 
-const Autenticate = () => {
   return (
     <div>
-      <Login />
+      <h2>{location.pathname === '/auth/login' ? 'Login' : 'Register'}</h2>
+      {location.pathname === '/auth/login' ? <Login /> : <Register />}
     </div>
-  )
-}
+  );
+};
 
-export default Autenticate
+export default Authenticate;

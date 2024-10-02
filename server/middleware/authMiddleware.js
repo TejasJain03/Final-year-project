@@ -1,27 +1,19 @@
-const jwt = require('jsonwebtoken')
-const User = require('../models/user')
-const ExpressError = require('../utils/ExpressError')
-require('dotenv').config()
+const jwt = require('jsonwebtoken');
+const ExpressError = require('../utils/ExpressError');
 
-const isLoggedIn = async (req, res, next) => {
-  const token = req.cookies.access_token
+const protect = (req, res, next) => {
+  const token = req.cookies.access_token;
   if (!token) {
-    return res.status(401).json({
-      success: false,
-      status: 'logout',
-      message: 'Session Expired! Please Login Again!',
-    })
-  }
-  const data = jwt.verify(token, process.env.JWT_SECRET)
-  if (!data) {
-    res.clearCookie('access_token', { httpOnly: true, expires: new Date(0) })
-    res.status(401).send('Session Expired. Login Again!')
+    return next(new ExpressError(401, 'Not authenticated'));
   }
 
-  req.user = await User.findById(data.userId).select('-password')
-  if (!req.user) throw new ExpressError(400, false, 'User was not found')
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch (error) {
+    return next(new ExpressError(401, 'Token expired or invalid'));
+  }
+};
 
-  next()
-}
-
-module.exports = isLoggedIn
+module.exports = protect;

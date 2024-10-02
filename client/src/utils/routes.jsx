@@ -6,6 +6,8 @@ const Profile = React.lazy(() => import("../pages/Profile"));
 const Pricing = React.lazy(() => import("../pages/Pricing"));
 const Payment = React.lazy(() => import("../pages/Payment"));
 const ResumeForm = React.lazy(() => import("../pages/ResumeForm"));
+const Login = React.lazy(() => import("../components/Authentication/Login"));
+const Register = React.lazy(() => import("../components/Authentication/Register"));
 
 const allRoutes = [
   {
@@ -19,6 +21,20 @@ const allRoutes = [
     path: "/auth",
     element: <Authenticate />,
     status: false,
+    children: [
+      {
+        id: 21,
+        path: "login",
+        element: <Login />,
+        status: false,
+      },
+      {
+        id: 22,
+        path: "register",
+        element: <Register />,
+        status: false,
+      },
+    ],
   },
   {
     id: 3,
@@ -45,4 +61,5 @@ const allRoutes = [
     status: false,
   },
 ];
+
 export default allRoutes;

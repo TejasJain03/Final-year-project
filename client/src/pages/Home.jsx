@@ -144,7 +144,7 @@ export default function LandingPage() {
               dream jobs.
             </p>
             <Link
-              to="/signup"
+              to="/auth/register"
               className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold text-lg hover:bg-blue-100 transition duration-300"
             >
               Sign Up Now
