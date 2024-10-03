@@ -6,7 +6,7 @@ const cors = require('cors')
 require('dotenv').config()
 const GlobalErrorHandler = require('./utils/GlobalErrorHandler')
 const ExpressError = require('./utils/ExpressError')
-
+const authRoutes = require('./routes/authRoutes')
 
 const connectDB = async () => {
   try {
@@ -26,13 +26,14 @@ const corsOptions = {
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }
-
 app.use(cors(corsOptions))
+
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-
 app.use(cookieParser())
+
+app.use('/api/v1/auth', authRoutes)
 
 app.get('/', (req, res) => {
   res.json('Final Year Project')
