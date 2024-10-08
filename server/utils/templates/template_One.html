@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume</title>
+    <style>
+        /* Global Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0px;
+            padding: 1px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0px;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        h1,
+        h2 {
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        h2 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        p {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        .container {
+            width: 210mm;
+            height: 297mm;
+            padding: 20px;
+            border: 1px solid black;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        /* Header Section */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px solid black;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .header-left {
+            text-align: left;
+        }
+
+        .header-right {
+            text-align: right;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            font-size: 12px;
+        }
+
+        /* Section Styles */
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 1px solid black;
+            margin-bottom: 10px;
+        }
+
+        /* Content Sections */
+        .section-content {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .section-content .left {
+            flex: 1;
+        }
+
+        .section-content .right {
+            text-align: right;
+            flex-basis: 150px;
+        }
+
+        .sub-section {
+            margin-bottom: 10px;
+        }
+
+        .sub-section-title {
+            font-weight: bold;
+        }
+
+        .skills ul {
+            list-style-type: none;
+            margin-bottom: 10px;
+        }
+
+        .skills li {
+            margin-bottom: 5px;
+        }
+
+        .projects ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <div class="header-left">
+                <p>[ Home Address: {{user.address}} ]</p>
+                <a href="{{user.github}}">{{user.github}}</a>
+            </div>
+            <div class="header-center">
+                <h1>{{user.userName}}</h1>
+            </div>
+            <div class="header-right">
+                <p>[ Phone Number: {{user.phoneNumber}} ]</p>
+                <p>[ E-Mail Address: {{user.email}} ]</p>
+                <a href="{{user.linkedin}}">{{user.linkedin}}</a>
+            </div>
+        </div>
+
+        <!-- Education Section -->
+        <div class="section">
+            <h2 class="section-title">Education</h2>
+            <div class="section-content">
+                <div class="left">
+                    <p>{{education.institution}}</p>
+                    <p><strong>Major:</strong> {{education.major}}</p>
+                </div>
+                <div class="right">
+                    <p>{{education.duration}}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Employment Section -->
+        <div class="section">
+            <h2 class="section-title">Employment</h2>
+
+            <!-- Job 1 -->
+            <div class="section-content">
+                <div class="left">
+                    <p><strong>{{job.job1.title}}</strong></p>
+                    <p>{{job.job1.company}}</p>
+                    <ul>
+                        <li>{{job.job1.responsibility1}}</li>
+                        <li>{{job.job1.responsibility2}}</li>
+                        <li>{{job.job1.responsibility3}}</li>
+                    </ul>
+                </div>
+                <div class="right">
+                    <p>{{job.job1.duration}}</p>
+                </div>
+            </div>
+
+            <!-- Job 2 -->
+            <div class="section-content">
+                <div class="left">
+                    <p><strong>{{job.job2.title}}</strong></p>
+                    <p>{{job.job2.company}}</p>
+                    <ul>
+                        <li>{{job.job2.responsibility1}}</li>
+                        <li>{{job.job2.responsibility2}}</li>
+                        <li>{{job.job2.responsibility3}}</li>
+                    </ul>
+                </div>
+                <div class="right">
+                    <p>{{job.job2.duration}}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Software Projects Section -->
+        <div class="section">
+            <h2 class="section-title">Software Projects</h2>
+
+            <!-- Project 1 -->
+            <div class="sub-section">
+                <p><strong>{{projects.project1.title}}</strong></p>
+                <ul>
+                    <li>{{projects.project1.description1}}</li>
+                    <li>{{projects.project1.description2}}</li>
+                    <li><strong>Technologies Used:</strong> {{projects.project1.technologies}}</li>
+                </ul>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="sub-section">
+                <p><strong>{{projects.project2.title}}</strong></p>
+                <ul>
+                    <li>{{projects.project2.description1}}</li>
+                    <li>{{projects.project2.description2}}</li>
+                    <li><strong>Technologies Used:</strong> {{projects.project2.technologies}}</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Skills Section -->
+        <div class="section">
+            <h2 class="section-title">Skills</h2>
+            <div class="skills">
+                <ul>
+                    {{#each skills}}
+                        <li>{{this}}</li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
