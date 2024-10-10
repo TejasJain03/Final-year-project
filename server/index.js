@@ -1,11 +1,14 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const passport = require('passport')
 const app = express()
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
+const session=require('express-session')
 require('dotenv').config()
 const GlobalErrorHandler = require('./utils/GlobalErrorHandler')
 const ExpressError = require('./utils/ExpressError')
+
 const authRoutes = require('./routes/authRoutes')
 
 const connectDB = async () => {
@@ -28,10 +31,19 @@ const corsOptions = {
 }
 app.use(cors(corsOptions))
 
+app.use(session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: true,
+  })
+)
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.use('/api/v1/auth', authRoutes)
 

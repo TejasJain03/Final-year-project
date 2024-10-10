@@ -3,7 +3,7 @@ const User = require('../models/users.model')
 const generateToken = require('../utils/generateToken')
 
 exports.registerUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password } = req.body
 
   const userExists = await User.findOne({ email })
 
@@ -46,4 +46,33 @@ exports.loginUser = async (req, res) => {
     email: user.email,
     message: 'Login successful!',
   })
+}
+
+exports.googleOAuthLogin = async (req, res) => {
+  const { email, name, googleId } = req.user // Passport adds user data after Google OAuth success
+    // Check if the user exists in the database
+    let user = await User.findOne({ email })
+
+    if (!user) {
+      // If user does not exist, create a new user
+      user = await User.create({
+        name,
+        email,
+        password: googleId, // Storing googleId as password (optional)
+      })
+    }
+
+    const token = generateToken(user._id)
+
+    // Return the token and user data
+    res.status(200).json({
+      success: true,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+      },
+      token, // JWT token
+    })
+  
 }

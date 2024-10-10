@@ -8,9 +8,6 @@ const Login = () => {
     password: "",
   });
 
-  const handleGoogleSignIn = () => {
-    console.log("Sign in with Google");
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,6 +21,12 @@ const Login = () => {
     e.preventDefault();
     console.log("Form submitted", formData);
   };
+
+  const handleGoogleLogin = () => {
+    const googleAuthURL = `http://localhost:8081/auth/google`;
+    window.location.href = googleAuthURL;
+  };
+  
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
@@ -71,7 +74,7 @@ const Login = () => {
 
             {/* Submit Button */}
             <div className="flex justify-center">
-              <button className="px-8 py-3 rounded-md bg-blue-500 text-white font-bold transition duration-200 hover:bg-white hover:text-blue-500 border-2 border-transparent hover:border-blue-500 text-lg">
+              <button  className="px-8 py-3 rounded-md bg-blue-500 text-white font-bold transition duration-200 hover:bg-white hover:text-blue-500 border-2 border-transparent hover:border-blue-500 text-lg">
                 <span className="inline-block mr-2">Login</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +105,7 @@ const Login = () => {
           <div className="py-5 flex justify-center">
             <button
               className="transition duration-200 bg-black hover:bg-gray-800 focus:bg-gray-900 focus:shadow-sm focus:ring-4 focus:ring-gray-700 focus:ring-opacity-50 text-white px-4 py-3 rounded-lg text-lg shadow-sm hover:shadow-md font-semibold text-center inline-flex items-center justify-center"
-              onClick={handleGoogleSignIn}
+              onClick={handleGoogleLogin}
             >
               <FontAwesomeIcon icon={faGoogle} className="mr-3" />
               <span>Sign in with Google</span>
