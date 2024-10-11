@@ -9,7 +9,7 @@ const InfoSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    domain: { type: String, required: [true, "Domain is required"] },
+    domain: { type: String },
     phoneNumber: {
       type: Number,
       validate: {
@@ -47,6 +47,18 @@ const InfoSchema = new mongoose.Schema(
           return true;
         },
       },
+    },
+    city: {
+      type: String,
+      required: [true, "City is required"],
+    },
+    state: {
+      type: String,
+      required: [true, "State is required"],
+    },
+    country: {
+      type: String,
+      required: [true, "Country is required"],
     },
   },
   { timestamps: true }

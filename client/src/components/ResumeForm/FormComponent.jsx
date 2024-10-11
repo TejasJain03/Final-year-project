@@ -12,22 +12,7 @@ import {
   faExclamationCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { toast } from 'react-toastify';
-
-const COMMON_SKILLS = [
-  'JavaScript', 'Python', 'Java', 'C++', 'Ruby', 'PHP',
-  'HTML', 'CSS', 'React', 'Angular', 'Vue.js', 'Node.js',
-  'Express.js', 'Django', 'Flask', 'Spring Boot', 'MySQL',
-  'PostgreSQL', 'MongoDB', 'Git', 'Docker', 'Kubernetes',
-  'AWS', 'Azure', 'Google Cloud', 'Machine Learning', 'Data Analysis'
-]
-
-const COMMON_TECHNOLOGIES = [
-  'JavaScript', 'Python', 'Java', 'C++', 'Ruby', 'PHP',
-  'React', 'Angular', 'Vue.js', 'Node.js', 'Express.js', 'Django',
-  'Flask', 'Spring Boot', 'MySQL', 'PostgreSQL', 'MongoDB',
-  'Docker', 'Kubernetes', 'AWS', 'Azure', 'Google Cloud',
-  'TensorFlow', 'PyTorch', 'scikit-learn', 'pandas', 'NumPy'
-];
+import { COMMON_SKILLS, COMMON_TECHNOLOGIES } from "../../assets/constants";
 
 
 const FormComponent = () => {

@@ -1,0 +1,3 @@
+const premiumMail = () => {  };
+
+const resumeMail = () => {  };

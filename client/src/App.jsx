@@ -12,7 +12,7 @@ function App() {
   return (
     <Router>
       <div className="App flex flex-col">
-        <React.Suspense fallback={Loader}>
+        <React.Suspense fallback={<Loader />}>
           {/* <ScrollToTop /> */}
           <Navbar />
           {/* <Sidebar /> */}

@@ -36,6 +36,7 @@ const UserSchema = new mongoose.Schema({
     }
   },
   isAdmin: { type: Boolean, default: false },
+  profileImage: { type: String },
 }, { timestamps: true });
 
 // Middleware to hash passwords before saving
