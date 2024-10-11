@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,7 +9,9 @@ import {
   faProjectDiagram,
   faBook,
   faTimes,
+  faExclamationCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import { toast } from 'react-toastify';
 
 const COMMON_SKILLS = [
   'JavaScript', 'Python', 'Java', 'C++', 'Ruby', 'PHP',
@@ -18,19 +21,26 @@ const COMMON_SKILLS = [
   'AWS', 'Azure', 'Google Cloud', 'Machine Learning', 'Data Analysis'
 ]
 
+const COMMON_TECHNOLOGIES = [
+  'JavaScript', 'Python', 'Java', 'C++', 'Ruby', 'PHP',
+  'React', 'Angular', 'Vue.js', 'Node.js', 'Express.js', 'Django',
+  'Flask', 'Spring Boot', 'MySQL', 'PostgreSQL', 'MongoDB',
+  'Docker', 'Kubernetes', 'AWS', 'Azure', 'Google Cloud',
+  'TensorFlow', 'PyTorch', 'scikit-learn', 'pandas', 'NumPy'
+];
+
+
 const FormComponent = () => {
   const [education, setEducation] = useState([
-    { institution: "", degree: "", year: "" },
+    { institution: "", degree: "", from_year: "", to_year: "" },
   ]);
 
-  const [internship, setInternship] = useState({
-    company: "",
-    position: "",
-    duration: "",
-    description: "",
-  });
+  const [experiences, setExperiences] = useState([
+    { company: "", position: "", duration: "", description: "" },
+  ]);
+
   const [projects, setProjects] = useState([
-    { name: "", description: "", technologies: "" },
+    { name: "", description: "", technologies: [], newTechnology: "" },
   ]);
   const [courses, setCourses] = useState([
     { name: "", institution: "", year: "" },
@@ -43,14 +53,24 @@ const FormComponent = () => {
   const inputRef = useRef(null)
   const dropdownRef = useRef(null)
 
+  const [filteredTechnologies, setFilteredTechnologies] = useState([]);
+  const [isTechDropdownOpen, setIsTechDropdownOpen] = useState(false);
+  const [currentProjectIndex, setCurrentProjectIndex] = useState(null);
+  const techInputRef = useRef(null);
+  const techDropdownRef = useRef(null);
+
+  const [formErrors, setFormErrors] = useState({});
+
   const handleEducationChange = (index, field, value) => {
     const newEducation = [...education];
     newEducation[index][field] = value;
     setEducation(newEducation);
   };
 
-  const handleInternshipChange = (field, value) => {
-    setInternship({ ...internship, [field]: value });
+  const handleExperienceChange = (index, field, value) => {
+    const newExperiences = [...experiences];
+    newExperiences[index][field] = value;
+    setExperiences(newExperiences);
   };
 
   const handleProjectChange = (index, field, value) => {
@@ -78,10 +98,7 @@ const FormComponent = () => {
 
   const addProject = () => {
     if (projects.length < 3) {
-      setProjects([
-        ...projects,
-        { name: "", description: "", technologies: "" },
-      ]);
+      setProjects([...projects, { name: "", description: "", technologies: [], newTechnology: "" }]);
     }
   };
 
@@ -118,7 +135,7 @@ const FormComponent = () => {
   }, [newSkill, skills])
 
   const handleAddSkill = () => {
-    if (newSkill.trim() !== '' && !skills.includes(newSkill.trim())) {
+    if (newSkill.trim() !== '' && !skills.includes(newSkill.trim()) && skills.length < 10) {
       setSkills([...skills, newSkill.trim()])
       setNewSkill('')
       setIsDropdownOpen(false)
@@ -137,9 +154,12 @@ const FormComponent = () => {
   }
 
   const handleSelectSkill = (skill) => {
-    setNewSkill(skill)
-    setIsDropdownOpen(false)
-    inputRef.current?.focus()
+    if (!skills.includes(skill) && skills.length < 10) {
+      setSkills([...skills, skill]);
+    }
+    setNewSkill('');
+    setIsDropdownOpen(false);
+    inputRef.current?.focus();
   }
 
   const removeProject = (index) => {
@@ -158,12 +178,114 @@ const FormComponent = () => {
     setCourses(newCourses);
   };
 
+  const addExperience = () => {
+    if (experiences.length < 2) {
+      setExperiences([...experiences, { company: "", position: "", duration: "", description: "" }]);
+    }
+  };
+
+  const removeExperience = (index) => {
+    const newExperiences = experiences.filter((_, i) => i !== index);
+    setExperiences(newExperiences);
+  };
+
+  const handleRemoveTechnology = (projectIndex, techIndex) => {
+    const newProjects = [...projects];
+    newProjects[projectIndex].technologies.splice(techIndex, 1);
+    setProjects(newProjects);
+  };
+
+  const handleTechInputChange = (e, index) => {
+    const newProjects = [...projects];
+    newProjects[index].newTechnology = e.target.value;
+    setProjects(newProjects);
+    setCurrentProjectIndex(index);
+  };
+
+  const handleSelectTechnology = (tech, index) => {
+    const newProjects = [...projects];
+    if (!newProjects[index].technologies.includes(tech)) {
+      newProjects[index].technologies.push(tech);
+      newProjects[index].newTechnology = "";
+      setProjects(newProjects);
+    }
+    setIsTechDropdownOpen(false);
+    techInputRef.current?.focus();
+  };
+
+  const handleTechKeyPress = (e, index) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const tech = projects[index].newTechnology.trim();
+      if (tech && !projects[index].technologies.includes(tech)) {
+        handleSelectTechnology(tech, index);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        techDropdownRef.current &&
+        !techDropdownRef.current.contains(event.target) &&
+        techInputRef.current &&
+        !techInputRef.current.contains(event.target)
+      ) {
+        setIsTechDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (currentProjectIndex !== null) {
+      const currentProject = projects[currentProjectIndex];
+      const newTechnology = currentProject.newTechnology.trim();
+      if (newTechnology !== '') {
+        const filtered = COMMON_TECHNOLOGIES.filter(tech => 
+          tech.toLowerCase().includes(newTechnology.toLowerCase()) &&
+          !currentProject.technologies.includes(tech)
+        );
+        setFilteredTechnologies(filtered);
+        setIsTechDropdownOpen(filtered.length > 0);
+      } else {
+        setFilteredTechnologies([]);
+        setIsTechDropdownOpen(false);
+      }
+    }
+  }, [projects, currentProjectIndex]);
+
+  const validateForm = () => {
+    const errors = {};
+
+    if (skills.length === 0) {
+      errors.skills = "Please add at least one skill.";
+    }
+
+    projects.forEach((project, index) => {
+      if (project.technologies.length === 0) {
+        errors[`project${index}Technologies`] = "Please add at least one technology for this project.";
+      }
+    });
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you would typically send the form data to a backend or state management system
-    if(skills.length!==0) {
-      console.log({ education, skills, internship, projects, courses });
-    } 
+    if (validateForm()) {
+      // Form is valid, proceed with submission
+      console.log({ education, skills, experiences, projects, courses });
+      toast.success("Resume details submitted successfully!");
+    } else {
+      // Form is invalid, display error message
+      toast.error("Please fill in all required fields.");
+    }
   };
 
   return (
@@ -234,14 +356,32 @@ const FormComponent = () => {
                         htmlFor={`year-${index}`}
                         className="block text-sm font-medium text-gray-700"
                       >
-                        Year
+                        From Year
                       </label>
                       <input
                         type="text"
                         id={`year-${index}`}
-                        value={edu.year}
+                        value={edu.from_year}
                         onChange={(e) =>
-                          handleEducationChange(index, "year", e.target.value)
+                          handleEducationChange(index, "from_year", e.target.value)
+                        }
+                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor={`year-${index}`}
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        To Year
+                      </label>
+                      <input
+                        type="text"
+                        id={`year-${index}`}
+                        value={edu.to_year}
+                        onChange={(e) =>
+                          handleEducationChange(index, "to_year", e.target.value)
                         }
                         className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         required
@@ -259,7 +399,7 @@ const FormComponent = () => {
                   )}
                 </div>
               ))}
-              {education.length < 2 && (
+              {/* {education.length < 2 && (
                 <button
                   type="button"
                   onClick={addEducation}
@@ -268,14 +408,14 @@ const FormComponent = () => {
                   <FontAwesomeIcon icon={faPlus} className="mr-2" />
                   Add Education
                 </button>
-              )}
+              )} */}
             </div>
 
             {/* Skills Section */}
             <div>
               <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
                 <FontAwesomeIcon icon={faLaptopCode} className="mr-2 text-indigo-500" />
-                Skills
+                Skills ({skills.length}/10) <span className="text-red-500 ml-2">*</span>
               </h2>
               <div className="relative">
                 <div className="flex items-center mb-4">
@@ -289,6 +429,7 @@ const FormComponent = () => {
                       onFocus={() => setIsDropdownOpen(true)}
                       className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       placeholder="Enter a skill"
+                      disabled={skills.length >= 10}
                     />
                     {isDropdownOpen && (
                       <div 
@@ -310,7 +451,12 @@ const FormComponent = () => {
                   <button
                     type="button"
                     onClick={handleAddSkill}
-                    className="ml-2 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className={`ml-2 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md ${
+                      skills.length >= 10
+                        ? 'text-gray-400 bg-gray-100 cursor-not-allowed'
+                        : 'text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                    }`}
+                    disabled={skills.length >= 10}
                   >
                     <FontAwesomeIcon icon={faPlus} className="mr-2" />
                     Add Skill
@@ -334,91 +480,120 @@ const FormComponent = () => {
                   </div>
                 ))}
               </div>
+              {formErrors.skills && (
+                <p className="mt-2 text-sm text-red-600">
+                  <FontAwesomeIcon icon={faExclamationCircle} className="mr-2" />
+                  {formErrors.skills}
+                </p>
+              )}
             </div>
 
-            {/* Internship Experience Section */}
+            {/* Experience Section */}
             <div>
               <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
                 <FontAwesomeIcon
                   icon={faBriefcase}
                   className="mr-2 text-indigo-500"
                 />
-                Internship Experience
+                Experience
               </h2>
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div>
-                  <label
-                    htmlFor="company"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Company
-                  </label>
-                  <input
-                    type="text"
-                    id="company"
-                    value={internship.company}
-                    onChange={(e) =>
-                      handleInternshipChange("company", e.target.value)
-                    }
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    required
-                  />
+              {experiences.map((experience, index) => (
+                <div key={index} className="mb-4 p-4 border border-gray-200 rounded-md">
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div>
+                      <label
+                        htmlFor={`company-${index}`}
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Company
+                      </label>
+                      <input
+                        type="text"
+                        id={`company-${index}`}
+                        value={experience.company}
+                        onChange={(e) =>
+                          handleExperienceChange(index, "company", e.target.value)
+                        }
+                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor={`position-${index}`}
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Position
+                      </label>
+                      <input
+                        type="text"
+                        id={`position-${index}`}
+                        value={experience.position}
+                        onChange={(e) =>
+                          handleExperienceChange(index, "position", e.target.value)
+                        }
+                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <label
+                      htmlFor={`duration-${index}`}
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Duration
+                    </label>
+                    <input
+                      type="text"
+                      id={`duration-${index}`}
+                      value={experience.duration}
+                      onChange={(e) =>
+                        handleExperienceChange(index, "duration", e.target.value)
+                      }
+                      className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      required
+                    />
+                  </div>
+                  <div className="mt-4">
+                    <label
+                      htmlFor={`description-${index}`}
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Description
+                    </label>
+                    <textarea
+                      id={`description-${index}`}
+                      rows={3}
+                      value={experience.description}
+                      onChange={(e) =>
+                        handleExperienceChange(index, "description", e.target.value)
+                      }
+                      className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      required
+                    />
+                  </div>
+                  {index > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => removeExperience(index)}
+                      className="mt-2 text-sm text-red-600 hover:text-red-800"
+                    >
+                      Remove
+                    </button>
+                  )}
                 </div>
-                <div>
-                  <label
-                    htmlFor="position"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Position
-                  </label>
-                  <input
-                    type="text"
-                    id="position"
-                    value={internship.position}
-                    onChange={(e) =>
-                      handleInternshipChange("position", e.target.value)
-                    }
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    required
-                  />
-                </div>
-              </div>
-              <div className="mt-4">
-                <label
-                  htmlFor="duration"
-                  className="block text-sm font-medium text-gray-700"
+              ))}
+              {experiences.length < 2 && (
+                <button
+                  type="button"
+                  onClick={addExperience}
+                  className="mt-2 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  Duration
-                </label>
-                <input
-                  type="text"
-                  id="duration"
-                  value={internship.duration}
-                  onChange={(e) =>
-                    handleInternshipChange("duration", e.target.value)
-                  }
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  required
-                />
-              </div>
-              <div className="mt-4">
-                <label
-                  htmlFor="description"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Description
-                </label>
-                <textarea
-                  id="description"
-                  rows={3}
-                  value={internship.description}
-                  onChange={(e) =>
-                    handleInternshipChange("description", e.target.value)
-                  }
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  required
-                />
-              </div>
+                  <FontAwesomeIcon icon={faPlus} className="mr-2" />
+                  Add Experience
+                </button>
+              )}
             </div>
 
             {/* Projects Section */}
@@ -431,10 +606,7 @@ const FormComponent = () => {
                 Projects
               </h2>
               {projects.map((project, index) => (
-                <div
-                  key={index}
-                  className="mb-4 p-4 border border-gray-200 rounded-md"
-                >
+                <div key={index} className="mb-4 p-4 border border-gray-200 rounded-md">
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
                       <label
@@ -459,22 +631,65 @@ const FormComponent = () => {
                         htmlFor={`project-technologies-${index}`}
                         className="block text-sm font-medium text-gray-700"
                       >
-                        Technologies Used
+                        Technologies Used <span className="text-red-500">*</span>
                       </label>
-                      <input
-                        type="text"
-                        id={`project-technologies-${index}`}
-                        value={project.technologies}
-                        onChange={(e) =>
-                          handleProjectChange(
-                            index,
-                            "technologies",
-                            e.target.value
-                          )
-                        }
-                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        required
-                      />
+                      <div className="relative">
+                        <input
+                          ref={index === currentProjectIndex ? techInputRef : null}
+                          type="text"
+                          id={`project-technologies-${index}`}
+                          value={project.newTechnology}
+                          onChange={(e) => handleTechInputChange(e, index)}
+                          onKeyPress={(e) => handleTechKeyPress(e, index)}
+                          onFocus={() => {
+                            setIsTechDropdownOpen(true);
+                            setCurrentProjectIndex(index);
+                          }}
+                          className={`mt-1 block w-full border ${
+                            formErrors[`project${index}Technologies`] ? 'border-red-500' : 'border-gray-300'
+                          } rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+                          placeholder="Add a technology"
+                        />
+                        {isTechDropdownOpen && currentProjectIndex === index && (
+                          <div 
+                            ref={techDropdownRef}
+                            className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
+                          >
+                            {filteredTechnologies.map((tech, techIndex) => (
+                              <div
+                                key={techIndex}
+                                className="cursor-pointer select-none relative py-2 pl-3 pr-9 hover:bg-indigo-100"
+                                onClick={() => handleSelectTechnology(tech, index)}
+                              >
+                                {tech}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {project.technologies.map((tech, techIndex) => (
+                          <div
+                            key={techIndex}
+                            className="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium flex items-center"
+                          >
+                            {tech}
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveTechnology(index, techIndex)}
+                              className="ml-2 text-indigo-600 hover:text-indigo-800 focus:outline-none"
+                            >
+                              <FontAwesomeIcon icon={faTimes} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                      {formErrors[`project${index}Technologies`] && (
+                        <p className="mt-2 text-sm text-red-600">
+                          <FontAwesomeIcon icon={faExclamationCircle} className="mr-2" />
+                          {formErrors[`project${index}Technologies`]}
+                        </p>
+                      )}
                     </div>
                   </div>
                   <div className="mt-4">
@@ -523,7 +738,7 @@ const FormComponent = () => {
             </div>
 
             {/* Courses and Workshops Section */}
-            <div>
+            {/* <div>
               <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
                 <FontAwesomeIcon
                   icon={faBook}
@@ -614,7 +829,7 @@ const FormComponent = () => {
                   Add Course/Workshop
                 </button>
               )}
-            </div>
+            </div> */}
 
             <div className="pt-5">
               <div className="flex justify-end">

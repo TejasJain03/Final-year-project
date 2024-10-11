@@ -6,6 +6,7 @@ import Redirect from "./pages/Redirect";
 import Navbar from "./components/Navbar/Navbar";
 import Loader from "./components/static/Loader";
 import Footer from "./components/Footer/Footer";
+import Toaster from "./components/static/Toaster";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route exact path="*" element={<Redirect />} />
           </Routes>
           <Footer />
+          <Toaster />
         </React.Suspense>
       </div>
     </Router>
