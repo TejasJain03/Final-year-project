@@ -39,7 +39,9 @@ app.get('/', (req, res) => {
 })
 
 app.use('/resume', require('./routes/resume.routes'));
+app.use('/user', require('./routes/user.routes'));
 
+// wrong routes handler
 app.all('*', (req, res, next) => {
   try {
     new ExpressError(404, false, 'Page not found')

@@ -9,11 +9,17 @@ const InfoSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    domain: { type: String },
+    domain: { 
+      type: String,
+      default: "",
+      trim: true,
+    },
     phoneNumber: {
-      type: Number,
+      type: String,
+      default: "",
       validate: {
         validator: function (v) {
+          if (v === "") return true;
           const isValid = /^\d{10}$/.test(v);
           if (!isValid) {
             throw new ExpressError(
@@ -28,8 +34,10 @@ const InfoSchema = new mongoose.Schema(
     },
     github: {
       type: String,
+      default: "",
       validate: {
         validator: function (v) {
+          if (v === "") return true;
           if (!validator.isURL(v)) {
             throw new ExpressError(400, false, "Invalid GitHub URL");
           }
@@ -39,8 +47,10 @@ const InfoSchema = new mongoose.Schema(
     },
     linkedin: {
       type: String,
+      default: "",
       validate: {
         validator: function (v) {
+          if (v === "") return true;
           if (!validator.isURL(v)) {
             throw new ExpressError(400, false, "Invalid LinkedIn URL");
           }
@@ -50,15 +60,42 @@ const InfoSchema = new mongoose.Schema(
     },
     city: {
       type: String,
-      required: [true, "City is required"],
+      default: "",
+      validate: {
+        validator: function (v) {
+          if (v === "") return true;
+          if (v.trim() === "") {
+            throw new ExpressError(400, false, "City cannot be empty");
+          }
+          return true;
+        },
+      },
     },
     state: {
       type: String,
-      required: [true, "State is required"],
+      default: "",
+      validate: {
+        validator: function (v) {
+          if (v === "") return true;
+          if (v.trim() === "") {
+            throw new ExpressError(400, false, "State cannot be empty");
+          }
+          return true;
+        },
+      },
     },
     country: {
       type: String,
-      required: [true, "Country is required"],
+      default: "",
+      validate: {
+        validator: function (v) {
+          if (v === "") return true;
+          if (v.trim() === "") {
+            throw new ExpressError(400, false, "Country cannot be empty");
+          }
+          return true;
+        },
+      },
     },
   },
   { timestamps: true }
