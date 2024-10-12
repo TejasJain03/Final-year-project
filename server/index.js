@@ -38,6 +38,8 @@ app.get('/', (req, res) => {
   res.json('Final Year Project')
 })
 
+app.use('/resume', require('./routes/resume.routes'));
+
 app.all('*', (req, res, next) => {
   try {
     new ExpressError(404, false, 'Page not found')

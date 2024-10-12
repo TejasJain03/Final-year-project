@@ -4,7 +4,7 @@ import template_One from '../../assets/templates/template1.jpg';
 import { useEffect, useRef, useState } from 'react';
 
 const templates = [
-  { id: 1, name: 'Professional', image: template_One },
+  { id: 1, name: 'Professional', image: template_One, description: 'A professional template suitable for various industries.' },
   // { id: 2, name: 'Creative', image: template_One },
   // { id: 3, name: 'Modern', image: template_One },
   // { id: 4, name: 'Simple', image: template_One },
@@ -53,17 +53,18 @@ const TemplateSelectionPage = () => {
           {templates.map((template) => (
             <div
               key={template.id}
-              className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 ease-in-out transform hover:scale-105 cursor-pointer p-2"
+              className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 ease-in-out transform hover:scale-105 p-2"
             >
               <img
                 src={template.image}
                 alt={`${template.name} Template`}
-                className="block mx-auto w-auto h-64 object-cover"
+                className="block mx-auto w-auto h-64 object-cover cursor-pointer"
                 onClick={() => handleMouseClick(template.image)}
               />
               <div className="p-4">
                 <h2 className="text-xl font-semibold text-gray-800">{template.name}</h2>
-                <p className="mt-2 text-blue-600" onClick={() => handleTemplateClick(template.id)}>Choose this template</p>
+                <p className="text-gray-600">{template.description}</p>
+                <p className="mt-2 text-blue-600 cursor-pointer" onClick={() => handleTemplateClick(template.id)}>Choose this template</p>
               </div>
             </div>
           ))}

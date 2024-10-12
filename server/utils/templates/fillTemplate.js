@@ -1,10 +1,9 @@
-const puppeteer = require('puppeteer');
 const fs = require('fs').promises;
+const {launch} = require('puppeteer');
 const path = require('path');
 const handlebars = require('handlebars');
-
+const ExpressError = require('../ExpressError');
 async function generateResume(data) {
-    const { name, skills, projects, education } = data;
 
     // Read the HTML template from a separate file
     const templatePath = path.join(__dirname, 'template_One.html');
@@ -13,17 +12,20 @@ async function generateResume(data) {
     // Use Handlebars to compile the HTML template with the provided data
     const template = handlebars.compile(resumeTemplate);
     // user(userName, address, email, phone, github, linkedin), job(job1(title, company, responsibility1, responsibility2, responsibility3, duration), job2(title, company, responsibility1, responsibility2, responsibility3, duration)), skills, projects(project1(title, description1, description2, technologies), project2(title, description1, description2, technologies)), education(institution, major, duration)
-    const html = template({ user, job, skills, projects, education });
+    const html = template(data);
 
     try {
         // Launch Puppeteer to generate PDF from the compiled HTML
-        const browser = await puppeteer.launch();
+        const browser = await launch();
         const page = await browser.newPage();
 
         await page.setContent(html, { waitUntil: 'domcontentloaded' });
         const pdfBuffer = await page.pdf({ format: 'A4' });
 
         await browser.close();
+
+        // Extract the name from the data object
+        const name = data.user.userName || 'unnamed';
 
         // Write the PDF to current folder
         const fileName = `${name.replace(/\s+/g, '_')}_resume.pdf`;
