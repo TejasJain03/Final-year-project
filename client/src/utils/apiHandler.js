@@ -1,14 +1,10 @@
-/* eslint-disable no-unused-vars */
 import { toast } from "react-toastify";
-import { Navigate } from "react-router-dom";
 
-const ErrroHandler = (func) => {
-  const navigate = Navigate();
+const apiHandler = (func, navigate) => {
   return (req, res, next) => {
     func(req, res, next).catch((error) => {
-      const message = error.response.data.message,
-        type = "error";
-      toast(message);
+      const message = error.response.data.message;
+      toast.error(message);
       if (error.response.data.status === "logout") {
         localStorage.removeItem("authenticate");
         navigate("/auth");  // might have to change this
@@ -17,4 +13,8 @@ const ErrroHandler = (func) => {
   };
 };
 
-export default ErrroHandler;
+export default apiHandler;
+
+// function call
+// apiHandler(registerApiCall, navigate)();
+// where registerApiCall is the function that consists of the api call
