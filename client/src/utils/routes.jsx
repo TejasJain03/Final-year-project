@@ -7,6 +7,10 @@ const Pricing = React.lazy(() => import("../pages/Pricing"));
 const Payment = React.lazy(() => import("../pages/Payment"));
 const ResumeForm = React.lazy(() => import("../pages/ResumeForm"));
 const Templates = React.lazy(() => import("../pages/Templates"));
+const Login = React.lazy(() => import("../components/Authentication/Login"));
+const Register = React.lazy(() =>
+  import("../components/Authentication/Register")
+);
 
 const allRoutes = [
   {
@@ -49,6 +53,18 @@ const allRoutes = [
     id: 7,
     path: "/templates",
     element: <Templates />,
+    status: false,
+  },
+  {
+    id: 8,
+    path: "/auth/login",
+    element: <Login />,
+    status: false,
+  },
+  {
+    id: 9,
+    path: "/auth/register",
+    element: <Register />,
     status: false,
   },
 ];
