@@ -45,14 +45,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-app.use('/api/v1/auth', authRoutes)
-
 app.get('/', (req, res) => {
   res.json('Final Year Project')
 })
 
-app.use('/resume', require('./routes/resume.routes'));
-app.use('/user', require('./routes/user.routes'));
+
+app.use('/api/v1/auth', authRoutes)
+app.use('/api/v1/resume', require('./routes/resume.routes'));
+app.use('/api/v1/user', require('./routes/user.routes'));
 
 // wrong routes handler
 app.all('*', (req, res, next) => {
