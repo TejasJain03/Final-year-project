@@ -1,8 +1,13 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { Link, useNavigate } from "react-router-dom";
+import axios from '../../utils/axiosConfig';
+import apiHandler from '../../utils/apiHandler';
+import { toast } from 'react-toastify';
 
 export default function Register() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -17,9 +22,18 @@ export default function Register() {
     });
   };
 
+  const registerApiCall = async () => {
+    const response = await axios.post('/auth/register', formData);
+    if(response.data.success) {
+      toast.success(response.data.message);
+      navigate('/auth/login');
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Form submitted', formData);
+    apiHandler(registerApiCall, navigate)();
   };
 
   const handleGoogleSignIn = () => {
@@ -104,12 +118,12 @@ export default function Register() {
           <div className="flex justify-center">
             <div className="text-center sm:text-left whitespace-nowrap">
               <span className="text-lg">Already have an account?{" "}
-                <a
-                  href="/auth/login"
+                <Link
+                  to="/auth/login"
                   className="transition duration-200 py-4 cursor-pointer font-normal text-sm md:text-lg rounded-lg text-blue-500 hover:underline focus:bg-gray-100 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 ring-inset"
                 >
                   Login
-                </a>
+                </Link>
               </span>
             </div>
           </div>

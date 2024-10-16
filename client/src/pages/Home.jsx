@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFileAlt,
@@ -9,11 +9,25 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import template1 from "../assets/templates/template1.jpg";
 import resumeCollage from "../assets/templates/resume-collage.jpg";
+import axios from '../utils/axiosConfig';
+import apiHandler from '../utils/apiHandler';
+import { toast } from "react-toastify";
 
 export default function LandingPage() {
+  const navigate = useNavigate();
   const templates = [
     template1,
   ];
+
+  const checkAuth = () => {
+    apiHandler(async()=>{
+      const response = await axios.get('/auth/check-auth');
+      if(response.data.success) {
+        toast.success(response.data.message);
+      }
+    }, navigate)();
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Main Content */}
@@ -154,12 +168,12 @@ export default function LandingPage() {
             <p className="text-xl mb-8">
               Join thousands of job seekers who have successfully received their professionally crafted resumes and landed their dream jobs.
             </p>
-            <Link
-              to="/signup"
+            <button
+              onClick={checkAuth}
               className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold text-lg hover:bg-blue-100 transition duration-300"
             >
               Sign Up Now
-            </Link>
+            </button>
           </div>
         </section>
       </main>

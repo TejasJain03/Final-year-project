@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEnvelope,
@@ -10,23 +10,25 @@ import {
   faPencilAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { COUNTRIES } from "../../assets/constants";
+import axios from "../../utils/axiosConfig";
+import apiHandler from "../../utils/apiHandler";
+import { toast } from "react-toastify";
 
 export default function ProfilePage() {
+  const navigate = useNavigate();
   const userInfo = {
-    name: "Jane Doe",
+    userName: "Jane Doe",
     email: "jane.doe@example.com",
-    phone: "+1 (555) 123-4567",
     profileImage:
       "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
     premiumPlan: "Pro",
-    domain: "Software Developer",
-    socials: {
+    info: {
+      domain: "Software Developer",
       linkedin: "https://www.linkedin.com/in/janedoe",
       github: "https://github.com/janedoe",
-    },
-    address: {
+      phoneNumber: "+1 (555) 123-4567",
       city: "San Francisco",
       state: "California",
       country: "United States",
@@ -38,37 +40,47 @@ export default function ProfilePage() {
   const [cities, setCities] = useState([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    domain: user.domain,
-    city: user.address.city,
-    state: user.address.state,
-    country: user.address.country,
-    phone: user.phone,
-    github: user.socials.github,
-    linkedin: user.socials.linkedin,
-  });
+  const [formData, setFormData] = useState({});
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (name === 'phoneNumber') {
+      // Remove non-numeric characters and update state
+      const numericValue = value.replace(/\D/g, '');
+      setFormData((prev) => ({ ...prev, [name]: numericValue }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
+
+  useEffect(()=>{
+    apiHandler(async ()=>{
+      const response = await axios.get('/user/get-user');
+      if(response.data.success) {
+        const {user} = response.data;
+        setUser(user);
+        setFormData(user.info);
+        toast.success(response.data.message);
+      }
+    }, navigate)();
+  }, []);
+
+  const updateUserApi = async () => {
+    const response = await axios.put('/user/update-user', formData);
+    if(response.data.success) {
+      const {userInfo} = response.data;
+      setUser(prevUser => ({
+        ...prevUser,
+        info: userInfo
+      }));
+      setFormData(userInfo);
+      toast.success(response.data.message);
+    }
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setUser((prev) => ({
-      ...prev,
-      domain: formData.domain,
-      phone: formData.phone,
-      address: {
-        city: formData.city,
-        state: formData.state,
-        country: formData.country,
-      },
-      socials: {
-        github: formData.github,
-        linkedin: formData.linkedin,
-      },
-    }));
+    apiHandler(updateUserApi, navigate)();
     setIsModalOpen(false);
   };
 
@@ -97,20 +109,20 @@ export default function ProfilePage() {
           <img
             className="h-full w-auto object-cover md:w-48"
             src={user.profileImage}
-            alt={user.name}
+            alt={user.userName}
           />
         </div>
         <div className="p-8 w-full">
           <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold mb-1">
             Profile
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">{user.name}</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">{user.userName}</h1>
           <p className="text-xl text-gray-600 mb-4 flex items-center">
             <FontAwesomeIcon
               icon={faBriefcase}
               className="mr-2 text-indigo-500"
             />
-            {user.domain}
+            {user.info.domain===""? "Not mentioned": user.info.domain}
           </p>
           <div className="space-y-4">
             <a
@@ -123,6 +135,7 @@ export default function ProfilePage() {
               />
               {user.email}
             </a>
+            {/* yet to update in models and controllers and UI */}
             {user.premiumPlan ? (
               <div className="flex items-center text-green-600">
                 <FontAwesomeIcon icon={faCrown} className="mr-2" />
@@ -147,7 +160,7 @@ export default function ProfilePage() {
       <div className="mt-8 max-w-3xl mx-auto">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold text-gray-900">
-            Contact Information
+            My Information
           </h2>
           <button
             onClick={() => setIsModalOpen(true)}
@@ -167,7 +180,9 @@ export default function ProfilePage() {
                     icon={faMapMarkerAlt}
                     className="mr-2 text-indigo-500"
                   />
-                  {`${user.address.city}, ${user.address.state}, ${user.address.country}`}
+                  {user.info.city || user.info.state || user.info.country
+                    ? `${user.info.city}, ${user.info.state}, ${user.info.country}`
+                    : "Not mentioned"}
                 </dd>
               </div>
               <div className="sm:col-span-1">
@@ -179,35 +194,49 @@ export default function ProfilePage() {
                     icon={faPhone}
                     className="mr-2 text-indigo-500"
                   />
-                  {user.phone}
+                  {user.info.phoneNumber ? user.info.phoneNumber : "Not mentioned"}
                 </dd>
               </div>
               <div className="sm:col-span-1">
                 <dt className="text-sm font-medium text-gray-500">GitHub</dt>
                 <dd className="mt-1 text-sm text-gray-900">
-                  <a
-                    href={user.socials.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center text-indigo-600 hover:text-indigo-900"
-                  >
-                    <FontAwesomeIcon icon={faGithub} className="mr-2" />
-                    {user.socials.github.split("//")[1]}
-                  </a>
+                  {user.info.github ? (
+                    <a
+                      href={user.info.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center text-indigo-600 hover:text-indigo-900"
+                    >
+                      <FontAwesomeIcon icon={faGithub} className="mr-2" />
+                      {user.info.github.split("//")[1]}
+                    </a>
+                  ) : (
+                    <span className="flex items-center text-gray-500">
+                      <FontAwesomeIcon icon={faGithub} className="mr-2" />
+                      Not mentioned
+                    </span>
+                  )}
                 </dd>
               </div>
               <div className="sm:col-span-1">
                 <dt className="text-sm font-medium text-gray-500">LinkedIn</dt>
                 <dd className="mt-1 text-sm text-gray-900">
-                  <a
-                    href={user.socials.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center text-indigo-600 hover:text-indigo-900"
-                  >
-                    <FontAwesomeIcon icon={faLinkedin} className="mr-2" />
-                    {user.socials.linkedin.split("//")[1]}
-                  </a>
+                  {user.info.linkedin ? (
+                    <a
+                      href={user.info.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center text-indigo-600 hover:text-indigo-900"
+                    >
+                      <FontAwesomeIcon icon={faLinkedin} className="mr-2" />
+                      {user.info.linkedin.split("//")[1]}
+                    </a>
+                  ) : (
+                    <span className="flex items-center text-gray-500">
+                      <FontAwesomeIcon icon={faLinkedin} className="mr-2" />
+                      Not mentioned
+                    </span>
+                  )}
                 </dd>
               </div>
             </dl>
@@ -299,8 +328,8 @@ export default function ProfilePage() {
                     required
                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   >
-                    <option value={user.address.country}>
-                      {user.address.country}
+                    <option value={user.info.country}>
+                      {user.info.country}
                     </option>
                     {countries.map((country) => (
                       <option key={country} value={country}>
@@ -326,8 +355,8 @@ export default function ProfilePage() {
                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     disabled={!formData.country}
                   >
-                    <option value={user.address.state}>
-                      {user.address.state}
+                    <option value={user.info.state}>
+                      {user.info.state}
                     </option>
                     {states.map((state) => (
                       <option key={state} value={state}>
@@ -355,8 +384,8 @@ export default function ProfilePage() {
                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     disabled={!formData.state}
                   >
-                    <option value={user.address.city}>
-                      {user.address.city}
+                    <option value={user.info.city}>
+                      {user.info.city}
                     </option>
                     {cities.map((city) => (
                       <option key={city} value={city}>
@@ -367,18 +396,21 @@ export default function ProfilePage() {
                 </div>
                 <div className="mb-4">
                   <label
-                    htmlFor="phone"
+                    htmlFor="phoneNumber"
                     className="block text-sm font-medium text-gray-700"
                   >
                     Phone Number
                   </label>
                   <input
                     type="tel"
-                    name="phone"
-                    id="phone"
-                    value={formData.phone}
+                    name="phoneNumber"
+                    id="phoneNumber"
+                    value={formData.phoneNumber}
                     onChange={handleInputChange}
                     required
+                    maxLength={10}
+                    pattern="[0-9]*"
+                    inputMode="numeric"
                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>

@@ -4,6 +4,7 @@ import App from './App.jsx'
 import './index.css'
 
 createRoot(document.getElementById('root')).render(
+  // remove this for production
   <StrictMode>
     <App />
   </StrictMode>,

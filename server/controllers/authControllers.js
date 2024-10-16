@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt')
 const User = require('../models/users.model')
+const Info = require('../models/info.model')
 const generateToken = require('../utils/generateToken')
+const ExpressError = require('../utils/ExpressError')
 
 exports.registerUser = async (req, res) => {
   const { name, email, password } = req.body
@@ -8,7 +10,7 @@ exports.registerUser = async (req, res) => {
   const userExists = await User.findOne({ email })
 
   if (userExists) {
-    throw new ExpressError(401, false, 'You have already exists.')
+    throw new ExpressError(401, false, 'You already have an account.')
   }
 
   const user = await User.create({
@@ -16,7 +18,12 @@ exports.registerUser = async (req, res) => {
     email,
     password,
   })
-  res.send({ success: true, user })
+
+  const info = await Info.create({
+    userId: user._id,
+  })
+
+  res.status(201).send({ success: true, user, message: 'Registration successful!' })
 }
 
 exports.loginUser = async (req, res) => {
@@ -40,7 +47,7 @@ exports.loginUser = async (req, res) => {
 
   generateToken(res, user._id)
 
-  res.status(201).send({
+  res.status(200).send({
     success: true,
     _id: user._id,
     email: user.email,
@@ -76,3 +83,20 @@ exports.googleOAuthLogin = async (req, res) => {
     })
   
 }
+
+
+exports.checkAuth = async (req, res) => {
+  const token = req.cookies.access_token
+  if (!token) {
+    return res.status(401).json({
+      success: false,
+      status: 'logout',
+    })
+  }
+  res.status(200).send({ success: true, message: 'You are already signed in!' })
+}
+
+exports.logoutUser = async (req, res) => {
+  res.clearCookie("access_token", { httpOnly: true});
+  res.status(200).json({ success: true, message: "Logged out successfully!" });
+};

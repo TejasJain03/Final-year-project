@@ -1,8 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from '../../utils/axiosConfig';
+import apiHandler from '../../utils/apiHandler';
+import { toast } from "react-toastify";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -17,9 +22,18 @@ const Login = () => {
     });
   };
 
+  const loginApiCall = async () => {
+    const response = await axios.post('/auth/login', formData);
+    if(response.data.success) {
+      localStorage.setItem("authenticated", true);
+      toast.success(response.data.message);
+      navigate('/');
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted", formData);
+    apiHandler(loginApiCall, navigate)();
   };
 
   const handleGoogleLogin = () => {
@@ -119,12 +133,12 @@ const Login = () => {
             <div className="text-center sm:text-left whitespace-nowrap">
               <span className="text-lg">
                 No account?{" "}
-                <a
-                  href="/auth/register"
+                <Link
+                  to="/auth/register"
                   className="transition duration-200 py-4 cursor-pointer font-normal text-sm md:text-lg rounded-lg text-blue-500 hover:underline focus:bg-gray-100 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 ring-inset"
                 >
                   Create Account
-                </a>
+                </Link>
               </span>
             </div>
           </div>
