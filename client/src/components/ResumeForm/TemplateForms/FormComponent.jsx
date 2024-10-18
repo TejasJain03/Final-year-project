@@ -11,9 +11,8 @@ import {
   faTimes,
   faExclamationCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import { toast } from 'react-toastify';
-import { COMMON_SKILLS, COMMON_TECHNOLOGIES } from "../../assets/constants";
-
+import { toast } from "react-toastify";
+import { COMMON_SKILLS, COMMON_TECHNOLOGIES } from "../../../assets/constants";
 
 const FormComponent = () => {
   const [education, setEducation] = useState([
@@ -31,12 +30,12 @@ const FormComponent = () => {
     { name: "", institution: "", year: "" },
   ]);
 
-  const [skills, setSkills] = useState([])
-  const [newSkill, setNewSkill] = useState('')
-  const [filteredSkills, setFilteredSkills] = useState([])
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const inputRef = useRef(null)
-  const dropdownRef = useRef(null)
+  const [skills, setSkills] = useState([]);
+  const [newSkill, setNewSkill] = useState("");
+  const [filteredSkills, setFilteredSkills] = useState([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const inputRef = useRef(null);
+  const dropdownRef = useRef(null);
 
   const [filteredTechnologies, setFilteredTechnologies] = useState([]);
   const [isTechDropdownOpen, setIsTechDropdownOpen] = useState(false);
@@ -83,7 +82,10 @@ const FormComponent = () => {
 
   const addProject = () => {
     if (projects.length < 3) {
-      setProjects([...projects, { name: "", description: "", technologies: [], newTechnology: "" }]);
+      setProjects([
+        ...projects,
+        { name: "", description: "", technologies: [], newTechnology: "" },
+      ]);
     }
   };
 
@@ -99,53 +101,58 @@ const FormComponent = () => {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
   useEffect(() => {
-    if (newSkill.trim() !== '') {
-      const filtered = COMMON_SKILLS.filter(skill => 
-        skill.toLowerCase().includes(newSkill.toLowerCase()) &&
-        !skills.includes(skill)
-      )
-      setFilteredSkills(filtered)
-      setIsDropdownOpen(filtered.length > 0)
+    if (newSkill.trim() !== "") {
+      const filtered = COMMON_SKILLS.filter(
+        (skill) =>
+          skill.toLowerCase().includes(newSkill.toLowerCase()) &&
+          !skills.includes(skill)
+      );
+      setFilteredSkills(filtered);
+      setIsDropdownOpen(filtered.length > 0);
     } else {
-      setFilteredSkills([])
-      setIsDropdownOpen(false)
+      setFilteredSkills([]);
+      setIsDropdownOpen(false);
     }
-  }, [newSkill, skills])
+  }, [newSkill, skills]);
 
   const handleAddSkill = () => {
-    if (newSkill.trim() !== '' && !skills.includes(newSkill.trim()) && skills.length < 10) {
-      setSkills([...skills, newSkill.trim()])
-      setNewSkill('')
-      setIsDropdownOpen(false)
+    if (
+      newSkill.trim() !== "" &&
+      !skills.includes(newSkill.trim()) &&
+      skills.length < 10
+    ) {
+      setSkills([...skills, newSkill.trim()]);
+      setNewSkill("");
+      setIsDropdownOpen(false);
     }
-  }
+  };
 
   const handleRemoveSkill = (indexToRemove) => {
-    setSkills(skills.filter((_, index) => index !== indexToRemove))
-  }
+    setSkills(skills.filter((_, index) => index !== indexToRemove));
+  };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault()
-      handleAddSkill()
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleAddSkill();
     }
-  }
+  };
 
   const handleSelectSkill = (skill) => {
     if (!skills.includes(skill) && skills.length < 10) {
       setSkills([...skills, skill]);
     }
-    setNewSkill('');
+    setNewSkill("");
     setIsDropdownOpen(false);
     inputRef.current?.focus();
-  }
+  };
 
   const removeProject = (index) => {
     const newProjects = projects.filter((_, i) => i !== index);
@@ -165,7 +172,10 @@ const FormComponent = () => {
 
   const addExperience = () => {
     if (experiences.length < 2) {
-      setExperiences([...experiences, { company: "", position: "", duration: "", description: "" }]);
+      setExperiences([
+        ...experiences,
+        { company: "", position: "", duration: "", description: "" },
+      ]);
     }
   };
 
@@ -199,7 +209,7 @@ const FormComponent = () => {
   };
 
   const handleTechKeyPress = (e, index) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault();
       const tech = projects[index].newTechnology.trim();
       if (tech && !projects[index].technologies.includes(tech)) {
@@ -220,9 +230,9 @@ const FormComponent = () => {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -230,10 +240,11 @@ const FormComponent = () => {
     if (currentProjectIndex !== null) {
       const currentProject = projects[currentProjectIndex];
       const newTechnology = currentProject.newTechnology.trim();
-      if (newTechnology !== '') {
-        const filtered = COMMON_TECHNOLOGIES.filter(tech => 
-          tech.toLowerCase().includes(newTechnology.toLowerCase()) &&
-          !currentProject.technologies.includes(tech)
+      if (newTechnology !== "") {
+        const filtered = COMMON_TECHNOLOGIES.filter(
+          (tech) =>
+            tech.toLowerCase().includes(newTechnology.toLowerCase()) &&
+            !currentProject.technologies.includes(tech)
         );
         setFilteredTechnologies(filtered);
         setIsTechDropdownOpen(filtered.length > 0);
@@ -253,7 +264,8 @@ const FormComponent = () => {
 
     projects.forEach((project, index) => {
       if (project.technologies.length === 0) {
-        errors[`project${index}Technologies`] = "Please add at least one technology for this project.";
+        errors[`project${index}Technologies`] =
+          "Please add at least one technology for this project.";
       }
     });
 
@@ -348,7 +360,11 @@ const FormComponent = () => {
                         id={`year-${index}`}
                         value={edu.from_year}
                         onChange={(e) =>
-                          handleEducationChange(index, "from_year", e.target.value)
+                          handleEducationChange(
+                            index,
+                            "from_year",
+                            e.target.value
+                          )
                         }
                         className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         required
@@ -366,7 +382,11 @@ const FormComponent = () => {
                         id={`year-${index}`}
                         value={edu.to_year}
                         onChange={(e) =>
-                          handleEducationChange(index, "to_year", e.target.value)
+                          handleEducationChange(
+                            index,
+                            "to_year",
+                            e.target.value
+                          )
                         }
                         className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         required
@@ -399,8 +419,12 @@ const FormComponent = () => {
             {/* Skills Section */}
             <div>
               <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-                <FontAwesomeIcon icon={faLaptopCode} className="mr-2 text-indigo-500" />
-                Skills ({skills.length}/10) <span className="text-red-500 ml-2">*</span>
+                <FontAwesomeIcon
+                  icon={faLaptopCode}
+                  className="mr-2 text-indigo-500"
+                />
+                Skills ({skills.length}/10){" "}
+                <span className="text-red-500 ml-2">*</span>
               </h2>
               <div className="relative">
                 <div className="flex items-center mb-4">
@@ -417,7 +441,7 @@ const FormComponent = () => {
                       disabled={skills.length >= 10}
                     />
                     {isDropdownOpen && (
-                      <div 
+                      <div
                         ref={dropdownRef}
                         className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
                       >
@@ -438,8 +462,8 @@ const FormComponent = () => {
                     onClick={handleAddSkill}
                     className={`ml-2 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md ${
                       skills.length >= 10
-                        ? 'text-gray-400 bg-gray-100 cursor-not-allowed'
-                        : 'text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                        ? "text-gray-400 bg-gray-100 cursor-not-allowed"
+                        : "text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     }`}
                     disabled={skills.length >= 10}
                   >
@@ -467,7 +491,10 @@ const FormComponent = () => {
               </div>
               {formErrors.skills && (
                 <p className="mt-2 text-sm text-red-600">
-                  <FontAwesomeIcon icon={faExclamationCircle} className="mr-2" />
+                  <FontAwesomeIcon
+                    icon={faExclamationCircle}
+                    className="mr-2"
+                  />
                   {formErrors.skills}
                 </p>
               )}
@@ -483,7 +510,10 @@ const FormComponent = () => {
                 Experience
               </h2>
               {experiences.map((experience, index) => (
-                <div key={index} className="mb-4 p-4 border border-gray-200 rounded-md">
+                <div
+                  key={index}
+                  className="mb-4 p-4 border border-gray-200 rounded-md"
+                >
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
                       <label
@@ -497,7 +527,11 @@ const FormComponent = () => {
                         id={`company-${index}`}
                         value={experience.company}
                         onChange={(e) =>
-                          handleExperienceChange(index, "company", e.target.value)
+                          handleExperienceChange(
+                            index,
+                            "company",
+                            e.target.value
+                          )
                         }
                         className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         required
@@ -515,7 +549,11 @@ const FormComponent = () => {
                         id={`position-${index}`}
                         value={experience.position}
                         onChange={(e) =>
-                          handleExperienceChange(index, "position", e.target.value)
+                          handleExperienceChange(
+                            index,
+                            "position",
+                            e.target.value
+                          )
                         }
                         className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         required
@@ -534,7 +572,11 @@ const FormComponent = () => {
                       id={`duration-${index}`}
                       value={experience.duration}
                       onChange={(e) =>
-                        handleExperienceChange(index, "duration", e.target.value)
+                        handleExperienceChange(
+                          index,
+                          "duration",
+                          e.target.value
+                        )
                       }
                       className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       required
@@ -552,7 +594,11 @@ const FormComponent = () => {
                       rows={3}
                       value={experience.description}
                       onChange={(e) =>
-                        handleExperienceChange(index, "description", e.target.value)
+                        handleExperienceChange(
+                          index,
+                          "description",
+                          e.target.value
+                        )
                       }
                       className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       required
@@ -591,7 +637,10 @@ const FormComponent = () => {
                 Projects
               </h2>
               {projects.map((project, index) => (
-                <div key={index} className="mb-4 p-4 border border-gray-200 rounded-md">
+                <div
+                  key={index}
+                  className="mb-4 p-4 border border-gray-200 rounded-md"
+                >
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
                       <label
@@ -616,11 +665,14 @@ const FormComponent = () => {
                         htmlFor={`project-technologies-${index}`}
                         className="block text-sm font-medium text-gray-700"
                       >
-                        Technologies Used <span className="text-red-500">*</span>
+                        Technologies Used{" "}
+                        <span className="text-red-500">*</span>
                       </label>
                       <div className="relative">
                         <input
-                          ref={index === currentProjectIndex ? techInputRef : null}
+                          ref={
+                            index === currentProjectIndex ? techInputRef : null
+                          }
                           type="text"
                           id={`project-technologies-${index}`}
                           value={project.newTechnology}
@@ -631,26 +683,31 @@ const FormComponent = () => {
                             setCurrentProjectIndex(index);
                           }}
                           className={`mt-1 block w-full border ${
-                            formErrors[`project${index}Technologies`] ? 'border-red-500' : 'border-gray-300'
+                            formErrors[`project${index}Technologies`]
+                              ? "border-red-500"
+                              : "border-gray-300"
                           } rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
                           placeholder="Add a technology"
                         />
-                        {isTechDropdownOpen && currentProjectIndex === index && (
-                          <div 
-                            ref={techDropdownRef}
-                            className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
-                          >
-                            {filteredTechnologies.map((tech, techIndex) => (
-                              <div
-                                key={techIndex}
-                                className="cursor-pointer select-none relative py-2 pl-3 pr-9 hover:bg-indigo-100"
-                                onClick={() => handleSelectTechnology(tech, index)}
-                              >
-                                {tech}
-                              </div>
-                            ))}
-                          </div>
-                        )}
+                        {isTechDropdownOpen &&
+                          currentProjectIndex === index && (
+                            <div
+                              ref={techDropdownRef}
+                              className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
+                            >
+                              {filteredTechnologies.map((tech, techIndex) => (
+                                <div
+                                  key={techIndex}
+                                  className="cursor-pointer select-none relative py-2 pl-3 pr-9 hover:bg-indigo-100"
+                                  onClick={() =>
+                                    handleSelectTechnology(tech, index)
+                                  }
+                                >
+                                  {tech}
+                                </div>
+                              ))}
+                            </div>
+                          )}
                       </div>
                       <div className="mt-2 flex flex-wrap gap-2">
                         {project.technologies.map((tech, techIndex) => (
@@ -661,7 +718,9 @@ const FormComponent = () => {
                             {tech}
                             <button
                               type="button"
-                              onClick={() => handleRemoveTechnology(index, techIndex)}
+                              onClick={() =>
+                                handleRemoveTechnology(index, techIndex)
+                              }
                               className="ml-2 text-indigo-600 hover:text-indigo-800 focus:outline-none"
                             >
                               <FontAwesomeIcon icon={faTimes} />
@@ -671,7 +730,10 @@ const FormComponent = () => {
                       </div>
                       {formErrors[`project${index}Technologies`] && (
                         <p className="mt-2 text-sm text-red-600">
-                          <FontAwesomeIcon icon={faExclamationCircle} className="mr-2" />
+                          <FontAwesomeIcon
+                            icon={faExclamationCircle}
+                            className="mr-2"
+                          />
                           {formErrors[`project${index}Technologies`]}
                         </p>
                       )}

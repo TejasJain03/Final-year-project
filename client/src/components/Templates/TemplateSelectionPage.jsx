@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
 import { useNavigate } from 'react-router-dom';
 import template_One from '../../assets/templates/template1.jpg';
+import google_Template from '../../assets/templates/google-template.png';
 import { useEffect, useRef, useState } from 'react';
 
 const templates = [
   { id: 1, name: 'Professional', image: template_One, description: 'A professional template suitable for various industries.' },
-  // { id: 2, name: 'Creative', image: template_One },
+  { id: 2, name: 'Popular', image: google_Template, description: 'A template most suitable for FAANG companies.' },
   // { id: 3, name: 'Modern', image: template_One },
   // { id: 4, name: 'Simple', image: template_One },
   // { id: 5, name: 'Executive', image: template_One },
@@ -27,7 +28,7 @@ const TemplateSelectionPage = () => {
   }
 
   const handleTemplateClick = (templateId) => {
-    navigate(`/create-resume`)
+    navigate(`/create-resume?template=${templateId}`)
   }
 
   useEffect(() => {

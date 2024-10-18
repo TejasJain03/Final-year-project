@@ -1,7 +1,7 @@
-import FormComponent from "../components/ResumeForm/FormComponent";
+import FormPage from "../components/ResumeForm/FormPage";
 
 const ResumeForm = () => {
-  return <><FormComponent /></>;
+  return <><FormPage /></>;
 };
 
 export default ResumeForm;

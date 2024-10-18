@@ -221,8 +221,8 @@ const resumeMailTemplate = (userName) => {
 `
 }
 
-exports.sendResumeMail = async (userName, userEmail) => { 
-    const resumePath = path.join(__dirname, './templates/resume.pdf');
+exports.sendResumeMail = async (userName, userEmail, template) => { 
+    const resumePath = path.join(__dirname, `./templates/${template}/resume.pdf`);
     const transporter = nodemailer.createTransport({
         service: "Gmail",
         host: "smtp.gmail.com",

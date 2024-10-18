@@ -6,6 +6,6 @@ const isLoggedIn = require('../middleware/authMiddleware');
 
 router.post('/create-resume', isLoggedIn, catchAsync(createResume));
 // add isLoggedIn middleware
-router.get('/send-resume', isLoggedIn, catchAsync(sendResume));
+router.post('/send-resume', isLoggedIn, catchAsync(sendResume));
 
 module.exports = router;

@@ -2,8 +2,8 @@ const fs = require('fs').promises;
 const {launch} = require('puppeteer');
 const path = require('path');
 const handlebars = require('handlebars');
-const ExpressError = require('../ExpressError');
-async function generateResume(data) {
+const ExpressError = require('../../ExpressError');
+async function generateProfessionalResume(data) {
 
     // Read the HTML template from a separate file
     const templatePath = path.join(__dirname, 'template_One.html');
@@ -40,4 +40,4 @@ async function generateResume(data) {
     }
 }
 
-module.exports = generateResume;
+module.exports = generateProfessionalResume;
