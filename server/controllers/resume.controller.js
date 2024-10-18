@@ -2,7 +2,7 @@ const ExpressError = require('../utils/ExpressError');
 const { sendResumeMail } = require('../utils/sendEmail');
 const generateResume = require('../utils/templates/fillTemplate');
 const path = require('path');
-const User = require('../models/user.model');
+const User = require('../models/users.model');
 
 exports.createResume = async (req, res) => {
     // Extract resume data from request body
