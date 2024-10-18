@@ -28,7 +28,7 @@ async function generateResume(data) {
         const name = data.user.userName || 'unnamed';
 
         // Write the PDF to current folder
-        const fileName = `${name.replace(/\s+/g, '_')}_resume.pdf`;
+        const fileName = `resume.pdf`;
         const filePath = path.join(__dirname, fileName);
 
         await fs.writeFile(filePath, pdfBuffer);
