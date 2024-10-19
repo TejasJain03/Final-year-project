@@ -132,7 +132,7 @@
                 <h2>Projects</h2>
                 {{#each projects}}
                 <div class="list-item">
-                    <h3 class="project-title">{{name}} — <span>{{detail}}</span></h3>
+                    <h3 class="project-title">{{name}} — <span>{{#each technologies}}{{this}}, {{/each}}</span></h3>
                     <p>{{description}}</p>
                 </div>
                 {{/each}}
@@ -142,18 +142,14 @@
         <div class="right-column">
             <div class="contact-info">
                 <p>{{address}}</p>
-                <p>{{city}}, {{state}} {{zip}}</p>
+                <p>{{city}}, {{state}}</p>
                 <p><strong>{{phone}}</strong></p>
                 <p>{{email}}</p>
             </div>
 
             <div class="skills section">
                 <h2>Skills</h2>
-                <ul>
-                    {{#each skills}}
-                    <li>{{this}}</li>
-                    {{/each}}
-                </ul>
+                <p>{{#each skills}}{{this}}, {{/each}}</p>
             </div>
 
             <div class="awards section">
@@ -167,11 +163,7 @@
 
             <div class="languages section">
                 <h2>Languages</h2>
-                <ul>
-                    {{#each languages}}
-                    <li>{{this}}</li>
-                    {{/each}}
-                </ul>
+                <p>{{#each languages}}{{this}}, {{/each}}</p>
             </div>
         </div>
     </div>

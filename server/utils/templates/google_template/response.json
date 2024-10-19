@@ -33,17 +33,17 @@
     "projects": [
         {
             "name": "Resume Builder",
-            "detail": "MERN Stack Project",
+            "technologies": ["Node.js", "MongoDB", "React"],
             "description": "Allows users to generate dynamic resumes."
         },
         {
             "name": "Portfolio Website",
-            "detail": "React Project",
+            "technologies": ["React"],
             "description": "Allows users to generate dynamic resumes."
         },
         {
             "name": "E-Commerce Website",
-            "detail": "MERN Stack Project",
+            "technologies": ["Node.js", "MongoDB", "React"],
             "description": "Allows users to generate dynamic resumes. This is a full stack project."
         }
     ],
@@ -53,7 +53,6 @@
     "address": "123 Your Street",
     "city": "Udupi",
     "state": "Karnataka",
-    "zip": "576101",
     "phone": "(123) 456-7890",
     "email": "uttam@example.com"
 }

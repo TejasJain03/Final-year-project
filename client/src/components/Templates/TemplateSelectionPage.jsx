@@ -44,12 +44,17 @@ const TemplateSelectionPage = () => {
     const response = await axios.get("/payment/check-premium");
     if (!response.data.success) {
       navigate("/pricing");
+      return false; // change this to false
     }
+    return true;
   };
 
   const handleTemplateClick = (templateId) => {
-    checkPremium();
-    navigate(`/create-resume?template=${templateId}`);
+    checkPremium().then((isPremium) => {
+      if (isPremium) {
+        navigate(`/create-resume?template=${templateId}`);
+      }
+    });
   };
 
   useEffect(() => {
