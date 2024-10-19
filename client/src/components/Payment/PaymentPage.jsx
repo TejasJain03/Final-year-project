@@ -3,6 +3,7 @@ import { PLANS } from "../../assets/constants"; // Import the plans from constan
 import { useState, useEffect } from "react";
 import axios from "../../utils/axiosConfig";
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
 
 const PaymentPage = () => {
@@ -10,6 +11,7 @@ const PaymentPage = () => {
   const planName = searchParams.get("plan"); // Extract 'plan' from the URL query string
   const [key, setKey] = useState();
   const [isLoading, setIsLoading] = useState(false); // Loading state for the payment button
+  const navigate = useNavigate();
   const selectedPlan = PLANS.find(
     (plan) => plan.name.toLowerCase() === planName?.toLowerCase()
   );
@@ -21,8 +23,6 @@ const PaymentPage = () => {
         amount: amount,
       });
 
-      const callbackUrl = `http://localhost:5173/`;
-
       const options = {
         key: key,
         amount: response.data.amount * 100,
@@ -30,7 +30,19 @@ const PaymentPage = () => {
         name: "Resume Builder",
         description: "Subscription payment",
         order_id: response.data.id,
-        callback_url: callbackUrl,
+        handler: function (response) {
+          // Navigate to another page after successful payment
+          navigate("/templates", {
+            state: {
+              paymentId: response.razorpay_payment_id,
+              orderId: response.razorpay_order_id,
+              signature: response.razorpay_signature,
+            },
+          });
+        },
+        theme: {
+          color: "#399cc",
+        },
       };
 
       const rzp1 = new window.Razorpay(options);
@@ -72,7 +84,9 @@ const PaymentPage = () => {
           </h2>
           <p className="text-gray-700 text-lg mt-2">
             <span className="font-medium">Price: </span>
-            <span className="text-green-600">{selectedPlan.price} / month</span>
+            <span className="text-green-600">
+              ₹ {selectedPlan.price} / month
+            </span>
           </p>
           <div className="mt-6">
             <h3 className="text-xl font-semibold text-gray-900">

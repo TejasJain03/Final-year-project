@@ -5,7 +5,7 @@ const PricingPage= () => {
     {
       plan: 1,
       name: 'Pro',
-      price: 9.99,
+      price: 500,
       features: [
         'Unlimited resume templates',
         'AI-powered content suggestions',
@@ -18,7 +18,7 @@ const PricingPage= () => {
     {
       plan: 2,
       name: 'Enterprise',
-      price: 19.99,
+      price: 1500,
       features: [
         'All Pro features',
         'Custom domain',
