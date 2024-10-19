@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faSignOutAlt, faBars } from "@fortawesome/free-solid-svg-icons";
@@ -10,6 +10,22 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false); // State for mobile menu
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.get('/auth/check-auth');
+        if(response.data.success) {
+          localStorage.setItem("authenticated", true);
+        }
+      } catch (error) {
+        if(error.response.data.status === "logout") {
+          localStorage.removeItem("authenticated");
+        }
+      }
+    })();
+  }, [])
+  
 
   const handleLogout = () => {
     apiHandler(async()=>{

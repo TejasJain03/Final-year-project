@@ -3,6 +3,7 @@ const router = express.Router();
 const { buyPremium } = require("../controllers/payment.controller");
 const asyncHandler = require("../utils/catchAsync");
 const isLoggedIn = require("../middleware/authMiddleware");
+const isPremium = require("../middleware/premiumMiddleware");
 const catchAsync = require("../utils/catchAsync");
 const paymentControllers = require("../controllers/payment.controller");
 
@@ -13,5 +14,5 @@ router.post(
   "/paymentverification",
   catchAsync(paymentControllers.paymentVerification)
 );
-
+router.get("/check-premium", isLoggedIn, isPremium, paymentControllers.checkPremium);
 module.exports = router;

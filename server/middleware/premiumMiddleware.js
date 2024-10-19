@@ -11,7 +11,7 @@ const isPremium = async (req, res, next) => {
 
     const payment = await Payment.findOne({ userId: user._id });
     if (!payment) {
-      throw new ExpressError(401, false, 'You are not a premium user!');
+      return res.status(200).json({ success: false, premiumStatus : false ,message: 'You are not a premium user!'});
     }
 
     const currentDate = new Date();

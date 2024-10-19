@@ -6,7 +6,7 @@ const apiHandler = (func, navigate) => {
       const message = error.response.data.message;
       toast.error(message);
       if (error.response.data.status === "logout") {
-        localStorage.removeItem("authenticate");
+        localStorage.removeItem("authenticated");
         navigate("/auth/login");  // might have to change this
       }
     });

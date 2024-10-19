@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "../../utils/axiosConfig";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import apiHandler from "../../utils/apiHandler";
 import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
 
 const PaymentPage = () => {
@@ -62,6 +63,15 @@ const PaymentPage = () => {
   };
 
   useEffect(() => {
+    const checkAuth = () => {
+      apiHandler(async () => {
+        // eslint-disable-next-line no-unused-vars
+        const response = await axios.get("/auth/check-auth");
+        
+      }, navigate)();
+    };
+
+    checkAuth();
     axios
       .get("/api/get-key")
       .then((response) => {

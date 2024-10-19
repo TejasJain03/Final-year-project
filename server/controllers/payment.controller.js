@@ -59,3 +59,8 @@ exports.paymentVerification = async (req, res) => {
 
   res.json(isAuthentic);
 };
+
+
+exports.checkPremium = async (req, res) => {
+  res.status(200).json({success: true, message: "User is a premium holder."});
+}

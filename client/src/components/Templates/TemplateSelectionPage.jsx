@@ -1,47 +1,69 @@
 /* eslint-disable no-unused-vars */
-import { useNavigate } from 'react-router-dom';
-import template_One from '../../assets/templates/template1.jpg';
-import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import template_One from "../../assets/templates/template1.jpg";
+import google_Template from "../../assets/templates/google-template.png";
+import { useEffect, useRef, useState } from "react";
+import apiHandler from "../../utils/apiHandler";
+import axios from "../../utils/axiosConfig";
+import { toast } from "react-toastify";
 
 const templates = [
-  { id: 1, name: 'Professional', image: template_One, description: 'A professional template suitable for various industries.' },
-  // { id: 2, name: 'Creative', image: template_One },
+  {
+    id: 1,
+    name: "Professional",
+    image: template_One,
+    description: "A professional template suitable for various industries.",
+  },
+  {
+    id: 2,
+    name: "Popular",
+    image: google_Template,
+    description: "A template most suitable for FAANG companies.",
+  },
   // { id: 3, name: 'Modern', image: template_One },
   // { id: 4, name: 'Simple', image: template_One },
   // { id: 5, name: 'Executive', image: template_One },
   // { id: 6, name: 'Tech', image: template_One },
-]
+];
 
 const TemplateSelectionPage = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const [previewImage, setPreviewImage] = useState(null)
-  const previewRef = useRef(null)
+  const [previewImage, setPreviewImage] = useState(null);
+  const previewRef = useRef(null);
 
   const handleMouseClick = (image) => {
-    setPreviewImage(image)
-  }
+    setPreviewImage(image);
+  };
 
   const handleMouseLeave = () => {
-    setPreviewImage(null)
-  }
+    setPreviewImage(null);
+  };
+
+  const checkPremium = async () => {
+    const response = await axios.get("/payment/check-premium");
+    if (!response.data.success) {
+      navigate("/pricing");
+    }
+  };
 
   const handleTemplateClick = (templateId) => {
-    navigate(`/create-resume`)
-  }
+    checkPremium();
+    navigate(`/create-resume?template=${templateId}`);
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (previewRef.current && !previewRef.current.contains(event.target)) {
-        setPreviewImage(null)
+        setPreviewImage(null);
       }
-    }
+    };
 
-    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
@@ -62,9 +84,16 @@ const TemplateSelectionPage = () => {
                 onClick={() => handleMouseClick(template.image)}
               />
               <div className="p-4">
-                <h2 className="text-xl font-semibold text-gray-800">{template.name}</h2>
+                <h2 className="text-xl font-semibold text-gray-800">
+                  {template.name}
+                </h2>
                 <p className="text-gray-600">{template.description}</p>
-                <p className="mt-2 text-blue-600 cursor-pointer" onClick={() => handleTemplateClick(template.id)}>Choose this template</p>
+                <p
+                  className="mt-2 text-blue-600 cursor-pointer"
+                  onClick={() => handleTemplateClick(template.id)}
+                >
+                  Choose this template
+                </p>
               </div>
             </div>
           ))}
@@ -91,7 +120,7 @@ const TemplateSelectionPage = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
 export default TemplateSelectionPage;
