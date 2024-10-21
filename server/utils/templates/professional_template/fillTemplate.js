@@ -25,7 +25,7 @@ async function generateProfessionalResume(data) {
         await browser.close();
 
         // Extract the name from the data object
-        const name = data.user.userName || 'unnamed';
+        const name = data.userName || 'unnamed';
 
         // Write the PDF to current folder
         const fileName = `resume.pdf`;

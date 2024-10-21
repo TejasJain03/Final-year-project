@@ -3,11 +3,24 @@ const { sendResumeMail } = require("../utils/sendEmail");
 const path = require("path");
 const User = require("../models/users.model");
 const { create_professional_template, create_google_template } = require("../utils/templates/create_Template");
+const Info = require("../models/info.model");
 
 exports.createResume = async (req, res) => {
   // Extract resume data from request body
   const resumeData = req.body;
   const template = req.body.template;
+
+  const user = await User.findById(req.user._id).select("userName email");
+  if (!user) throw new ExpressError(404, false, "User not found");
+
+  const info = await Info.findOne({userId: req.user._id}).select("-userId -_id");
+  if(!info) throw new ExpressError(404, false, "Info not found");
+
+  // Add all fields from info to resumeData
+  Object.assign(resumeData, info.toObject());
+  Object.assign(resumeData, user.toObject());
+  
+  console.log(resumeData);
 
   const selected_template = {
     1: () => create_professional_template(resumeData),

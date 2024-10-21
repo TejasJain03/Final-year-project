@@ -13,8 +13,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { COMMON_SKILLS, COMMON_TECHNOLOGIES } from "../../../assets/constants";
+import apiHandler from '../../../utils/apiHandler';
+import axios from '../../../utils/axiosConfig';
+import { useNavigate } from "react-router-dom";
 
 const FormComponent = () => {
+  const navigate = useNavigate();
   const [education, setEducation] = useState([
     { institution: "", degree: "", from_year: "", to_year: "" },
   ]);
@@ -273,12 +277,18 @@ const FormComponent = () => {
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
       // Form is valid, proceed with submission
-      console.log({ education, skills, experiences, projects, courses });
-      toast.success("Resume details submitted successfully!");
+      console.log({ education, skills, experiences, projects });
+      const formData = { template: 1, education, skills, experiences, projects };
+      apiHandler(async()=>{
+        const response = await axios.post("/resume/create-resume", formData);
+        if(response.data.success) {
+          toast.success(response.data.message);
+        }
+      }, navigate);
     } else {
       // Form is invalid, display error message
       toast.error("Please fill in all required fields.");

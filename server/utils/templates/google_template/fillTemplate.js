@@ -51,7 +51,7 @@ const generateGoogleResume = async (resumeData) => {
   const templatePath = path.join(__dirname, "google_Template.html");
   let resumeTemplate = fs.readFileSync(templatePath, "utf-8");
   const template = handlebars.compile(resumeTemplate);
-  const html = template(tempdata);
+  const html = template(resumeData);
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.setContent(html, { waitUntil: "domcontentloaded" });
