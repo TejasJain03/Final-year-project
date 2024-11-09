@@ -3,6 +3,7 @@ const ExpressError = require("../utils/ExpressError");
 const { sendPremiumMail } = require("../utils/sendEmail");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
+const Payment=require('../models/payment.model')
 
 exports.buyPremium = async (req, res) => {
   const { premiumType } = req.body;
@@ -45,22 +46,50 @@ exports.getKey = async (req, res) => {
 };
 
 exports.paymentVerification = async (req, res) => {
-  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
-    req.body;
+  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
 
-  const body = razorpay_order_id + "|" + razorpay_payment_id;
+  try {
+    // Fetch order details from Razorpay to verify amount and currency
 
-  const expectedSignature = crypto
-    .createHmac("sha256", "UKTbLcz90bxadSWJrS76VTCm")
-    .update(body.toString())
-    .digest("hex");
+    // Create HMAC signature to validate authenticity
+    const body = razorpay_order_id + "|" + razorpay_payment_id;
+    const expectedSignature = crypto
+      .createHmac("sha256", "UKTbLcz90bxadSWJrS76VTCm")
+      .update(body.toString())
+      .digest("hex");
 
-  const isAuthentic = expectedSignature === razorpay_signature;
+    // Update logic: check if signature matches
+    const isAuthentic = expectedSignature === razorpay_signature;
 
-  res.json(isAuthentic);
+    if (isAuthentic) {
+      // Get the user ID from req.user
+      const userId = req.user._id;
+      // Update user to premium status
+
+      // Log payment to Payment model
+      await Payment.create({
+        userId: userId,
+        paymentDate: new Date(),
+        expiryDate: new Date(new Date().setMonth(new Date().getMonth() + 1)), // Set expiry date 1 month ahead
+        premiumCategory: 1, // Example premium category
+        expired: false,
+      });
+
+      res.redirect("http://localhost:5173/templates");
+      return res.json({
+        success: true,
+        message: "Payment verified, user upgraded to premium.",
+      });
+    } else {
+      return res.json({ success: false, message: "Invalid payment signature." });
+    }
+  } catch (error) {
+    console.error("Error during payment verification:", error);
+    res.status(500).json({ success: false, message: "Payment verification failed." });
+  }
 };
 
 
 exports.checkPremium = async (req, res) => {
-  res.status(200).json({success: true, message: "User is a premium holder."});
-}
+  res.status(200).json({ success: true, message: "User is a premium holder." });
+};

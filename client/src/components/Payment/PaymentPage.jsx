@@ -31,16 +31,7 @@ const PaymentPage = () => {
         name: "Resume Builder",
         description: "Subscription payment",
         order_id: response.data.id,
-        handler: function (response) {
-          // Navigate to another page after successful payment
-          navigate("/templates", {
-            state: {
-              paymentId: response.razorpay_payment_id,
-              orderId: response.razorpay_order_id,
-              signature: response.razorpay_signature,
-            },
-          });
-        },
+        callback_url: "http://localhost:8081/api/v1/payment/paymentverification", // Your backend endpoint for verification
         theme: {
           color: "#399cc",
         },
