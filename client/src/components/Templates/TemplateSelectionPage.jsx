@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import template_One from "../../assets/templates/template1.jpg";
 import google_Template from "../../assets/templates/google-template.png";
 import { useEffect, useRef, useState } from "react";
@@ -27,6 +27,7 @@ const templates = [
 ];
 
 const TemplateSelectionPage = () => {
+  const state = useLocation();
   const navigate = useNavigate();
 
   const [previewImage, setPreviewImage] = useState(null);
@@ -58,6 +59,7 @@ const TemplateSelectionPage = () => {
   };
 
   useEffect(() => {
+    
     const handleClickOutside = (event) => {
       if (previewRef.current && !previewRef.current.contains(event.target)) {
         setPreviewImage(null);
