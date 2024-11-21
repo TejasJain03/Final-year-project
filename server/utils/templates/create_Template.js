@@ -36,7 +36,9 @@ exports.create_college_template = async (resumeData) => {
   if (!pdfPath) throw new ExpressError(500, false, "Error creating college resume");
 
   // Get the filename from the PDF path
-  const fileName = path.basename(pdfPath);
+  // const fileName = path.basename(pdfPath);
+  const fileName = "resume.pdf";
+  
   
   if (!fileName) throw new ExpressError(500, false, "Error getting filename");
 

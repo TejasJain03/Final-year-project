@@ -4,9 +4,20 @@
   "contact": {
     "phone": "+91-9820343055",
     "email": "tejaskjain2003@gmail.com",
-    "linkedin": "https://www.linkedin.com/in/tejas-jain-1688a3234/",
-    "github": "https://github.com/TejasJain03",
-    "portfolio": "https://tejasjain03.netlify.app"
+    "links": [
+      {
+        "name": "LinkedIn",
+        "url": "https://www.linkedin.com/in/tejas-jain-1688a3234/"
+      },
+      {
+        "name": "GitHub",
+        "url": "https://github.com/TejasJain03"
+      },
+      {
+        "name": "Portfolio",
+        "url": "https://tejasjain03.netlify.app"
+      }
+    ]
   },
   "address": "Sudharma Nilaya, Bangerabettu, Karkala Taluk, Mudar, Bajegoli, Udupi, Karnataka, 574122",
   "profileImage": "profile.jpg",
