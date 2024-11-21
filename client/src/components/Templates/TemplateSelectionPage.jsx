@@ -2,8 +2,8 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import template_One from "../../assets/templates/template1.jpg";
 import google_Template from "../../assets/templates/google-template.png";
+import college_Template from '../../assets/templates/template_Three.png'
 import { useEffect, useRef, useState } from "react";
-import apiHandler from "../../utils/apiHandler";
 import axios from "../../utils/axiosConfig";
 import { toast } from "react-toastify";
 
@@ -19,6 +19,12 @@ const templates = [
     name: "Popular",
     image: google_Template,
     description: "A template most suitable for FAANG companies.",
+  },
+  {
+    id: 3,
+    name: "College",
+    image: college_Template,
+    description: "A template suitable for college students.",
   },
   // { id: 3, name: 'Modern', image: template_One },
   // { id: 4, name: 'Simple', image: template_One },
@@ -42,15 +48,29 @@ const TemplateSelectionPage = () => {
   };
 
   const checkPremium = async () => {
-    const response = await axios.get("/payment/check-premium");
-    if (!response.data.success) {
+    try {
+      const response = await axios.get("/payment/check-premium");
+      if (!response.data.success) {
+        navigate("/pricing");
+        return false;
+      }
+      return true;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      if (error.response.data.status === "logout") {
+        localStorage.removeItem("authenticated");
+        navigate("/auth/login");  // might have to change this
+      }
       navigate("/pricing");
+      return false;
     }
   };
 
-  const handleTemplateClick = (templateId) => {
-    checkPremium();
-    navigate(`/create-resume?template=${templateId}`);
+  const handleTemplateClick = async (templateId) => {
+    const isPremium = await checkPremium();
+    if (isPremium) {
+      navigate(`/create-resume?template=${templateId}`);
+    }
   };
 
   useEffect(() => {

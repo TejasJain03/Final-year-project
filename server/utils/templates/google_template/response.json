@@ -1,6 +1,5 @@
 {
     "template": 2,
-    "name": "Uttam",
     "summary": "A passionate software developer who has a passion for building scalable and efficient software solutions. Willing to learn new technologies and improve my skills.",
     "experience": [
         {
@@ -33,27 +32,21 @@
     "projects": [
         {
             "name": "Resume Builder",
-            "detail": "MERN Stack Project",
+            "technologies": ["Node.js", "MongoDB", "React"],
             "description": "Allows users to generate dynamic resumes."
         },
         {
             "name": "Portfolio Website",
-            "detail": "React Project",
+            "technologies": ["React"],
             "description": "Allows users to generate dynamic resumes."
         },
         {
             "name": "E-Commerce Website",
-            "detail": "MERN Stack Project",
+            "technologies": ["Node.js", "MongoDB", "React"],
             "description": "Allows users to generate dynamic resumes. This is a full stack project."
         }
     ],
     "skills": ["JavaScript", "Node.js", "MongoDB", "React"],
     "awards": ["Dean’s List 2022", "Hackathon Winner 2023"],
-    "languages": ["English", "Hindi", "Kannada"],
-    "address": "123 Your Street",
-    "city": "Udupi",
-    "state": "Karnataka",
-    "zip": "576101",
-    "phone": "(123) 456-7890",
-    "email": "uttam@example.com"
+    "languages": ["English", "Hindi", "Kannada"]
 }

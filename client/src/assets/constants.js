@@ -169,3 +169,5 @@ export const PLANS = [
     notIncluded: [],
   },
 ];
+
+export const LANGUAGES = ["English", "German", "French", "Spanish", "Chinese", "Japanese", "Arabic", "Russian", "Portuguese", "Italian"];

@@ -30,10 +30,10 @@
         align-items: flex-start;
       }
       .header img {
-        width: 100px; /* Increase width for passport size look */
-        height: 100px; /* Adjust height for rectangular shape */
+        height: 150px;
+        width: 120px;
         object-fit: cover;
-        border-radius: 5px; /* Optional: adds slight rounding to the corners */
+        /* border-radius: 5px; */
       }
       h1 {
         font-size: 28px;
@@ -99,12 +99,13 @@
         <div>
           <h1>{{name}}</h1>
           <div class="contact-info">
-            <span class="bold-text">{{contact.phone}}</span> |
+            <span class="bold-text">{{contact.phone}}</span><br />
             <span class="bold-text">{{contact.email}}</span><br />
             {{#each contact.links}}
-            <a href="{{url}}" target="_blank" class="bold-text">{{name}}</a>
-            {{#unless @last}} | {{/unless}}
-            {{/each}}
+            <span>{{name}}</span>
+              <a href="{{url}}" target="_blank" class="bold-text">{{url}}</a>{{#unless @last}}{{/unless}}
+              <br />
+              {{/each}}
           </div>          
         </div>
         <img src="{{profilePicture}}" alt="Profile Picture" />

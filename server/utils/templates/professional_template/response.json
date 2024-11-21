@@ -1,58 +1,58 @@
 {
-    "user" : {
-        "userName" : "John Doe",
-        "email" : "john.doe@example.com",
-        "phoneNumber" : "1234567890",
-        "address" : {
-            "city" : "Anytown",
-            "state" : "California",
-            "country" : "United States"
-        },
-        "github" : "https://github.com/john.doe",
-        "linkedin" : "https://www.linkedin.com/in/john.doe"
+  "template": 1,
+  "education": {
+    "institution": "University of California, Los Angeles",
+    "major": "Computer Science",
+    "duration": "2020 - 2022"
+  },
+  "job": {
+    "job1": {
+      "title": "Software Engineer",
+      "company": "Amazon",
+      "duration": "2022 - 2024",
+      "responsibility1": "Developed and maintained web applications using React and Node.js",
+      "responsibility2": "Implemented responsive design and improved user experience",
+      "responsibility3": "Developed and maintained web applications using React and Node.js"
     },
-    "education" : {
-        "institution" : "University of California, Los Angeles",
-        "major" : "Computer Science",
-        "duration" : "2020 - 2022"
-    },
-    "job" : {
-        "job1" : {
-            "title" : "Software Engineer",
-            "company" : "Amazon",
-            "duration" : "2022 - 2024",
-            "responsibility1" : "Developed and maintained web applications using React and Node.js",
-            "responsibility2" : "Implemented responsive design and improved user experience",
-            "responsibility3" : "Developed and maintained web applications using React and Node.js"
-        },
-        "job2" : {
-            "title" : "Software Engineer",
-            "company" : "Google",
-            "duration" : "2024 - Present",
-            "responsibility1" : "Worked as a full stack developer for Google's cloud platform",
-            "responsibility2" : "Organised and coordinated with a team of 10 to develop and maintain web applications",
-            "responsibility3" : "Developed and maintained web applications using React and Node.js"
-        }
-    },
-    "skills" : ["Python", "JavaScript", "Java", "C", "SQL", "Git", "Node.js", "React", "Express", "MongoDB"],
-    "projects" : {
-        "project1" : {
-            "title" : "Personal Website",
-            "description1" : "Developed a personal website to showcase my projects and skills",
-            "description2" : "Used HTML, CSS, and JavaScript to create a responsive and dynamic website",
-            "technologies" : ["HTML", "CSS", "JavaScript"]
-        },
-        "project2" : {
-            "title" : "Food Delivery App",
-            "description1" : "Developed a food delivery app to order food from restaurants",
-            "description2" : "Used React Native and MongoDB to create a cross-platform app",
-            "technologies" : ["React Native", "MongoDB", "Express"]
-        },
-        "project3" : {
-            "title" : "E-Commerce Website",
-            "description1" : "Developed an e-commerce website to sell products",
-            "description2" : "Used React and Node.js to create a dynamic website",
-            "technologies" : ["React", "Node.js", "Express"]
-        }
+    "job2": {
+      "title": "Software Engineer",
+      "company": "Google",
+      "duration": "2024 - Present",
+      "responsibility1": "Worked as a full stack developer for Google's cloud platform",
+      "responsibility2": "Organised and coordinated with a team of 10 to develop and maintain web applications",
+      "responsibility3": "Developed and maintained web applications using React and Node.js"
     }
+  },
+  "skills": [
+    "Python",
+    "JavaScript",
+    "Java",
+    "C",
+    "SQL",
+    "Git",
+    "Node.js",
+    "React",
+    "Express",
+    "MongoDB"
+  ],
+  "projects": {
+    "project1": {
+      "title": "Personal Website",
+      "description1": "Developed a personal website to showcase my projects and skills",
+      "description2": "Used HTML, CSS, and JavaScript to create a responsive and dynamic website",
+      "technologies": ["HTML", "CSS", "JavaScript"]
+    },
+    "project2": {
+      "title": "Food Delivery App",
+      "description1": "Developed a food delivery app to order food from restaurants",
+      "description2": "Used React Native and MongoDB to create a cross-platform app",
+      "technologies": ["React Native", "MongoDB", "Express"]
+    },
+    "project3": {
+      "title": "E-Commerce Website",
+      "description1": "Developed an e-commerce website to sell products",
+      "description2": "Used React and Node.js to create a dynamic website",
+      "technologies": ["React", "Node.js", "Express"]
+    }
+  }
 }
