@@ -6,6 +6,7 @@ const ExpressError = require('../../ExpressError');
 
 async function generateCollegeResume(data) {
     // Read the HTML template for the college resume
+    console.log("This is inside this function")
     const templatePath = path.join(__dirname, 'template_College.html');
     let resumeTemplate = await fs.readFile(templatePath, 'utf-8');
 

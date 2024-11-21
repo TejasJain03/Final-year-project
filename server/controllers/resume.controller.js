@@ -158,7 +158,6 @@ exports.saveAndGenerateResume = async (req, res) => {
     });
   }
 };
-
 exports.sendResume = async (req, res) => {
   const template = req.body.template;
 
@@ -191,7 +190,7 @@ exports.sendResume = async (req, res) => {
     selected_template[template],
     "resume.pdf"
   );
-  console.log(pdfPath)
+  console.log(pdfPath);
   await fs.unlink(pdfPath);
 
   res
