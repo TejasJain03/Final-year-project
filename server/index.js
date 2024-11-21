@@ -69,3 +69,12 @@ app.use(GlobalErrorHandler)
 app.listen(PORT, (req, res) => {
   console.log(`Server running at port ${PORT}`)
 })
+
+
+app.use((req, res, next) => {
+  res.setTimeout(60000, () => {
+    console.log("Request timed out");
+    res.status(408).json({ status: "error", message: "Request timed out" });
+  });
+  next();
+});
