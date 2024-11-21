@@ -1,0 +1,80 @@
+{
+    "name": "Tejas Jain",
+    "contact": {
+      "phone": "+91-9820343055",
+      "email": "tejaskjain2003@gmail.com",
+      "linkedin": "https://www.linkedin.com/in/tejas-jain-1688a3234/",
+      "github": "https://github.com/TejasJain03",
+      "portfolio": "https://tejasjain03.netlify.app"
+    },
+    "address": "Sudharma Nilaya, Bangerabettu, Karkala Taluk, Mudar, Bajegoli, Udupi, Karnataka, 574122",
+    "profileImage": "profile.jpg",
+    "summary": "A computer science student with a solid foundation in MERN stack web development, demonstrating a strong interest in Data Structures, Algorithms, Artificial Intelligence, and Machine Learning. Practical experience in creating dynamic web applications, with a commitment to mastering technical skills and contributing meaningfully to the field. Eager to continue learning and applying knowledge to real-world challenges.",
+    "education": [
+      {
+        "degree": "Bachelor of Engineering – Computer Science & Engineering",
+        "duration": "2021 - Present",
+        "institution": "Mangalore Institute of Technology & Engineering, Karnataka",
+        "score": "CGPA: 8.8"
+      },
+      {
+        "degree": "Junior College (12th)",
+        "duration": "2020 - 2021",
+        "institution": "Royal College of Arts, Science and Commerce, Thane, Maharashtra",
+        "score": "Percentage: 88%"
+      },
+      {
+        "degree": "Secondary School (SSLC)",
+        "duration": "2018 - 2019",
+        "institution": "N.L. Dalmia High School, Thane, Maharashtra",
+        "score": "Percentage: 95%"
+      }
+    ],
+    "skills": {
+      "languages": ["Java", "Python", "JavaScript", "C"],
+      "interface": ["HTML", "CSS"],
+      "frameworks": ["Tailwind CSS", "React", "Express"],
+      "database": ["MongoDB", "SQL"],
+      "tools": ["Postman", "Vercel", "Netlify", "Rapid API", "Git", "Github", "Visual Studio Code"]
+    },
+    "internships": [
+      {
+        "title": "Front End Development",
+        "duration": "July 2023 - August 2023",
+        "description": "Completed a 6-week Front End Development internship with Edunet Foundation under IBM’s SkillsBuild and AICTE. The program enhanced skills in HTML, CSS, and ReactJs, culminating in a project to build a clone website. Received a completion letter, recognizing achievements and practical application of these technologies."
+      },
+      {
+        "title": "Full Stack Development",
+        "duration": "November 2023 - December 2023",
+        "description": "Completed a 4-week internship at Winco Software Solutions in full stack development, with a focus on payment integration and email services. Gained hands-on experience in both front-end and back-end technologies, contributing to the development of robust and user-friendly web applications."
+      }
+    ],
+    "projects": [
+      {
+        "title": "MMC Website",
+        "duration": "June 2024 - July 2024",
+        "technologies": ["HTML", "CSS", "JavaScript"],
+        "description": "The Mashariq Al Mithalia Company website is a fully responsive site built with HTML, CSS, and JavaScript and enhanced by GSAP animations for dynamic user interfaces. Deployed with a custom domain, this project showcases excellence in frontend development."
+      },
+      {
+        "title": "TEDxMITE Website",
+        "duration": "September 2023 - December 2023",
+        "technologies": ["ReactJs", "Tailwind CSS"],
+        "description": "The TEDxMITE website is built with React.js and Tailwind CSS, featuring sleek animations and ensuring full responsiveness across devices. The site seamlessly integrates basic and advanced animations, enhancing the user experience. Deployed with a focus on performance, it offers a modern and intuitive interface that engages users while maintaining consistent responsiveness."
+      },
+      {
+        "title": "EventEase Website",
+        "duration": "November 2023 - December 2023",
+        "technologies": ["ReactJs", "Express", "MongoDB", "NodeJs"],
+        "description": "EventEase: Elevate your event planning with our MERN stack-powered platform. Seamlessly create, organize, and manage events with integrated ticketing, pricing categories, and secure payment options via Razorpay. The platform features JWT authentication for robust security, ensuring a safe and streamlined experience for both organizers and attendees."
+      }
+    ],
+    "achievements": [
+      "Coordinated a coding event titled 'CODE RELAY' at the college, organized by the CSE department and CSI",
+      "Website Head for TEDxMITE held in December 2023",
+      "Advanced to the finals in the 36-hour National-Level Hack to Future 2.0 Hackathon at SJEC.",
+      "Secured 2nd place in UI-War, a 6-hour front-end hackathon, building a luxury watch e-commerce site (CSI, MITE).",
+      "Secured 4th place in CTF event by Crypton Club (MITE)."
+    ]
+  }
+  

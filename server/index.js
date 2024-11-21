@@ -13,7 +13,7 @@ const authRoutes = require('./routes/authRoutes')
 
 const connectDB = async () => {
   try {
-    mongoose.connect(process.env.MONGO_URL)
+    mongoose.connect(process.env.MONGO_URI)
     console.log('Connected to Mongo succesfully')
   } catch (err) {
     console.log('Error while connecting to database')

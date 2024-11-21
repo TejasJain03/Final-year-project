@@ -2,7 +2,7 @@ const ExpressError = require("../utils/ExpressError");
 const { sendResumeMail } = require("../utils/sendEmail");
 const path = require("path");
 const User = require("../models/users.model");
-const { create_professional_template, create_google_template } = require("../utils/templates/create_Template");
+const { create_professional_template, create_google_template,create_college_template } = require("../utils/templates/create_Template");
 
 exports.createResume = async (req, res) => {
   // Extract resume data from request body
@@ -12,6 +12,7 @@ exports.createResume = async (req, res) => {
   const selected_template = {
     1: () => create_professional_template(resumeData),
     2: () => create_google_template(resumeData),
+    3: () => create_college_template(resumeData),
   };
 
   const fileName = await selected_template[template]();
