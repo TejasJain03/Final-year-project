@@ -122,7 +122,7 @@
         <div class="clearfix">
           <p>
             <strong>{{degree}}</strong>
-            <span class="right-align">{{years}}</span><br />
+            <span class="right-align">{{duration}}</span><br />
             {{{institution}}} | {{{details}}}
           </p>
         </div>
@@ -133,27 +133,23 @@
         <h2>SKILLS</h2>
         <div class="skills-content">
           <p>
-            <strong>Languages:</strong> {{#each
-            skills.languages}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}
+            <strong>Languages:</strong> {{#each skills.languages}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
           </p>
           <p>
-            <strong>Interface:</strong> {{#each
-            skills.interface}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}
+            <strong>Interface:</strong> {{#each skills.interface}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
           </p>
           <p>
-            <strong>Frameworks:</strong> {{#each
-            skills.frameworks}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}
+            <strong>Frameworks:</strong> {{#each skills.frameworks}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
           </p>
           <p>
-            <strong>Database:</strong> {{#each
-            skills.database}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}
+            <strong>Database:</strong> {{#each skills.database}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
           </p>
           <p>
-            <strong>Tools:</strong> {{#each skills.tools}}{{this}}{{#unless
-            @last}}, {{/unless}}{{/each}}
+            <strong>Tools:</strong> {{#each skills.tools}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
           </p>
         </div>
       </div>
+      
 
       <div class="section">
         <h2>INTERNSHIPS</h2>
@@ -186,10 +182,11 @@
         <h2>ACHIEVEMENTS & ACTIVITIES</h2>
         <ul>
           {{#each achievements}}
-          <li>{{this}}</li>
+          <li>{{{this}}}</li>
           {{/each}}
         </ul>
       </div>
+      
     </div>
   </body>
 </html>
