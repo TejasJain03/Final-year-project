@@ -9,6 +9,7 @@ const isLoggedIn = require("../middleware/authMiddleware");
 
 router.post(
   "/create-resume",
+  // isLoggedIn,
   catchAsync(createResume)
 );
 // add isLoggedIn middleware
