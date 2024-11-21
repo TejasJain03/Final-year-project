@@ -2,29 +2,41 @@ const ExpressError = require("../utils/ExpressError");
 const { sendResumeMail } = require("../utils/sendEmail");
 const path = require("path");
 const User = require("../models/users.model");
-const { create_professional_template, create_google_template,create_college_template } = require("../utils/templates/create_Template");
+const {
+  create_professional_template,
+  create_college_template,
+  create_google_template,
+} = require("../utils/templates/create_Template");
 
 exports.createResume = async (req, res) => {
-  // Extract resume data from request body
-  const resumeData = req.body;
-  const template = req.body.template;
+  try {
+    // Extract resume data from request body
+    let resumeData = req.body;
+    const template = req.body.template;
 
-  const selected_template = {
-    1: () => create_professional_template(resumeData),
-    2: () => create_google_template(resumeData),
-    3: () => create_college_template(resumeData),
-  };
+    // Check if a file is uploaded
+      
+    const selected_template = {
+      1: () => create_professional_template(resumeData),
+      2: () => create_google_template(resumeData),
+      3: () => create_college_template(resumeData),
+    };
+    const fileName = await selected_template[template]();
 
-  const fileName = await selected_template[template]();
-
-  // Send the PDF file as a download
-  res.status(200).json({
-    status: "success",
-    fileName,
-    message: "Resume created successfully",
-  });
+    // Send the PDF file as a download
+    res.status(200).json({
+      status: "success",
+      fileName,
+      message: "Resume created successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: "An error occurred while creating the resume",
+      error: error.message,
+    });
+  }
 };
-
 exports.sendResume = async (req, res) => {
   const template = req.body.template;
 
@@ -57,7 +69,7 @@ exports.sendResume = async (req, res) => {
     selected_template[template],
     "resume.pdf"
   );
-  console.log(pdfPath)
+  console.log(pdfPath);
   await fs.unlink(pdfPath);
 
   res

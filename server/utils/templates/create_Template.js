@@ -43,5 +43,3 @@ exports.create_college_template = async (resumeData) => {
   // Return the PDF file name
   return fileName;
 };
-
-
