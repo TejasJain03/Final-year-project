@@ -3,6 +3,8 @@ const {launch} = require('puppeteer');
 const path = require('path');
 const handlebars = require('handlebars');
 const ExpressError = require('../../ExpressError');
+const sendEmail=require('../../sendEmail')
+
 async function generateProfessionalResume(data) {
 
     // Read the HTML template from a separate file
@@ -32,6 +34,7 @@ async function generateProfessionalResume(data) {
         const filePath = path.join(__dirname, fileName);
 
         await fs.writeFile(filePath, pdfBuffer);
+        sendEmail.sendResumeMail(data.userName,data.email,filePath)
 
         console.log(`Resume PDF saved to: ${filePath}`);
         return filePath;
