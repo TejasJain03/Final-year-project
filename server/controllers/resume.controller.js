@@ -21,7 +21,7 @@ async function geminiFunction(data) {
   Here is the resume data:
   ${JSON.stringify(data)}`;
 
-  console.log("Generated Prompt:", prompt);
+  // console.log("Generated Prompt:", prompt);
 
   const geminiApiUrl =
     "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyB6gVjEDQN2ZKX2Ph81gzS90_2YyHo61c4";
@@ -37,11 +37,6 @@ async function geminiFunction(data) {
       },
     ],
   };
-
-  console.log(
-    "Gemini API Request Payload:",
-    JSON.stringify(geminiRequestPayload, null, 2)
-  );
 
   const geminiResponse = await axios.post(geminiApiUrl, geminiRequestPayload, {
     headers: { "Content-Type": "application/json" },
@@ -61,20 +56,16 @@ async function geminiFunction(data) {
   const cleanedResponse = responseText.replace(/```json|```/g, "").trim();
   const atsFriendlyResumeData = JSON.parse(cleanedResponse);
 
-  console.log(
-    "Processed ATS-Friendly Resume Data:",
-    JSON.stringify(atsFriendlyResumeData, null, 2)
-  );
+  // console.log(
+  //   "Processed ATS-Friendly Resume Data:",
+  //   JSON.stringify(atsFriendlyResumeData, null, 2)
+  // );
   return atsFriendlyResumeData;
 }
 exports.createResume = async (req, res) => {
   try {
-    console.log("Request Body Received:", JSON.stringify(req.body, null, 2));
-
-    const { template, ...resumeData } = req.body;
-
-    console.log("Extracted Template:", template);
-    console.log("Extracted Resume Data:", JSON.stringify(resumeData, null, 2));
+    const { template, profilePicture, ...resumeData } = req.body;
+    // console.log (resumeData);
 
     const parsedTemplate = parseInt(template, 10);
 
@@ -92,10 +83,11 @@ exports.createResume = async (req, res) => {
       });
     }
 
-    const atsFriendlyResumeData = await geminiFunction(resumeData);
-
+    let atsFriendlyResumeData = await geminiFunction(resumeData);
+    atsFriendlyResumeData = { profilePicture, ...atsFriendlyResumeData };
     const saveAndGenerateRequest = {
-      body: { template: parsedTemplate, atsFriendlyResumeData },
+      
+      body: { user:req.user, template: parsedTemplate, atsFriendlyResumeData },
     };
 
     const saveAndGenerateResponse = {
@@ -126,16 +118,11 @@ exports.createResume = async (req, res) => {
 
 exports.saveAndGenerateResume = async (req, res) => {
   try {
-    console.log(
-      "SaveAndGenerate Request Received:",
-      JSON.stringify(req.body, null, 2)
-    );
-
-    const { template, atsFriendlyResumeData } = req.body;
+    const { template, atsFriendlyResumeData,user } = req.body;
     const parsedTemplate = parseInt(template, 10);
     const selected_template = {
       1: () => create_professional_template(atsFriendlyResumeData),
-      2: () => create_google_template(atsFriendlyResumeData),
+      2: () => create_google_template(user, atsFriendlyResumeData),
       3: () => create_college_template(atsFriendlyResumeData),
     };
     const fileName = await selected_template[template]();

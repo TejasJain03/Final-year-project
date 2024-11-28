@@ -293,7 +293,7 @@ export default function AdvancedResumeForm() {
         projects,
         achievements
       };
-      console.log(formData.profilePicture);
+      console.log(formData)
       const response = await axios.post('/resume/create-resume', formData);
       toast.success(response.data.message);
     } catch (error) {

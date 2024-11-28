@@ -3,6 +3,7 @@ const { launch } = require('puppeteer');
 const path = require('path');
 const handlebars = require('handlebars');
 const ExpressError = require('../../ExpressError');
+const sendEmail=require('../../sendEmail')
 
 async function generateCollegeResume(data) {
     // Read the HTML template for the college resume
@@ -28,13 +29,14 @@ async function generateCollegeResume(data) {
 
         // Extract the name from the data object
         const name = data.name || 'unnamed';
+        const email=data.contact.email
 
         // Write the PDF to the current folder
-        const fileName = `${name}_college_resume.pdf`;
+        const fileName = `resume.pdf`;
         const filePath = path.join(__dirname, fileName);
 
         await fs.writeFile(filePath, pdfBuffer);
-
+        sendEmail.sendResumeMail(name,email,filePath)
         console.log(`College Resume PDF saved to: ${filePath}`);
         return filePath;
     } catch (error) {

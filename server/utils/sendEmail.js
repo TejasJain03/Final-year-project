@@ -1,6 +1,7 @@
 const nodemailer = require("nodemailer");
 const ExpressError = require("./ExpressError");
-const path = require('path');
+const path = require("path");
+const fs = require("fs");
 
 const premiumMailTemplate = (userName, premiumType) => {
   return `<!DOCTYPE html>
@@ -95,8 +96,8 @@ const premiumMailTemplate = (userName, premiumType) => {
     </div>
   </body>
 </html>
-`
-}
+`;
+};
 
 exports.sendPremiumMail = async (userName, userEmail, premiumType) => {
   const transporter = nodemailer.createTransport({
@@ -117,19 +118,19 @@ exports.sendPremiumMail = async (userName, userEmail, premiumType) => {
     from: '"ResuMATCH" <no-reply@resumatch.com>',
     to: userEmail,
     subject: "Welcome to ResuMATCH Premium",
-    html: premiumMailTemplate(userName, premiumType)
+    html: premiumMailTemplate(userName, premiumType),
   };
 
   try {
     const info = await transporter.sendMail(mailOptions);
     return info;
   } catch (error) {
-    throw new ExpressError(500, false, error.message)
+    throw new ExpressError(500, false, error.message);
   }
 };
 
-const resumeMailTemplate = (userName) => { 
-    return `
+const resumeMailTemplate = (userName) => {
+  return `
     <!DOCTYPE html>
 <html>
   <head>
@@ -218,43 +219,50 @@ const resumeMailTemplate = (userName) => {
     </div>
   </body>
 </html>
-`
-}
+`;
+};
 
-exports.sendResumeMail = async (userName, userEmail, template) => { 
-    const resumePath = path.join(__dirname, `./templates/${template}/resume.pdf`);
-    const transporter = nodemailer.createTransport({
-        service: "Gmail",
-        host: "smtp.gmail.com",
-        port: 465,
-        secure: true,
-        auth: {
-          user: "ecomm561@gmail.com",
-          pass: process.env.SMTP_PASS,
-        },
-        tls: {
-          rejectUnauthorized: false,
-        },
-      });
-    
-      const mailOptions = {
-        from: '"ResuMATCH" <no-reply@resumatch.com>',
-        to: userEmail,
-        subject: "Your resume is ready!!!",
-        html: resumeMailTemplate(userName),
-        attachments: [
-            {
-              filename: 'resume.pdf', // Customize filename if needed
-              path: resumePath, // Path to the generated resume file
-              contentType: 'application/pdf',
-            },
-          ],      
-      };
-    
-      try {
-        const info = await transporter.sendMail(mailOptions);
-        return info;
-      } catch (error) {
-        throw new ExpressError(500, false, error.message)
+exports.sendResumeMail = async (userName, userEmail, template) => {
+  resumePath = template;
+  const transporter = nodemailer.createTransport({
+    service: "Gmail",
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: "ecomm561@gmail.com",
+      pass: process.env.SMTP_PASS,
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
+  const mailOptions = {
+    from: '"ResuMATCH" <no-reply@resumatch.com>',
+    to: userEmail,
+    subject: "Your resume is ready!!!",
+    html: resumeMailTemplate(userName),
+    attachments: [
+      {
+        filename: "resume.pdf", // Customize filename if needed
+        path: resumePath, // Path to the generated resume file
+        contentType: "application/pdf",
+      },
+    ],
+  };
+
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    fs.unlink(resumePath, (err) => {
+      if (err) {
+        console.error("Error removing the file:", err.message);
+      } else {
+        console.log("File successfully deleted:", resumePath);
       }
- };
+    });
+
+    return info;
+  } catch (error) {
+    throw new ExpressError(500, false, error.message);
+  }
+};

@@ -3,6 +3,7 @@ const fs = require("fs");
 const handlebars = require("handlebars");
 const path = require("path");
 const tempdata = require("./response.json");
+const sendEmail=require('../../sendEmail')
 
 // Populate template with data
 const data = {
@@ -64,6 +65,7 @@ const generateGoogleResume = async (resumeData) => {
   const filePath = path.join(__dirname, fileName);
 
   fs.writeFileSync(filePath, pdfBuffer);
+  sendEmail.sendResumeMail(resumeData.userName,resumeData.email,filePath)
 
   console.log(`Resume PDF saved to: ${filePath}`);
   return filePath;

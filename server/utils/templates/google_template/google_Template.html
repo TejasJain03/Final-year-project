@@ -103,16 +103,16 @@
 <body>
     <div class="container">
         <div class="left-column">
-            <h1 class="name">{{userName}}</h1>
-            <p class="summary">{{summary}}</p>
+            <h1 class="name">{{{userName}}}</h1>
+            <p class="summary">{{{summary}}}</p>
 
             <div class="section">
                 <h2>Experience</h2>
                 {{#each experience}}
                 <div class="list-item">
-                    <h3>{{company}}, {{location}} — <span>{{jobTitle}}</span></h3>
-                    <p>{{startDate}} - {{endDate}}</p>
-                    <p>{{description}}</p>
+                    <h3>{{{company}}}, {{{location}}} — <span>{{{jobTitle}}}</span></h3>
+                    <p>{{{startDate}}} - {{{endDate}}}</p>
+                    <p>{{{description}}}</p>
                 </div>
                 {{/each}}
             </div>
@@ -121,9 +121,9 @@
                 <h2>Education</h2>
                 {{#each education}}
                 <div class="list-item">
-                    <h3>{{school}}, {{location}} — <span>{{degree}}</span></h3>
-                    <p>{{startDate}} - {{endDate}}</p>
-                    <p>{{description}}</p>
+                    <h3>{{{school}}}, {{{location}}} — <span>{{{degree}}}</span></h3>
+                    <p>{{{startDate}}} - {{{endDate}}}</p>
+                    <p>{{{description}}}</p>
                 </div>
                 {{/each}}
             </div>
@@ -132,8 +132,8 @@
                 <h2>Projects</h2>
                 {{#each projects}}
                 <div class="list-item">
-                    <h3 class="project-title">{{name}} — <span>{{#each technologies}}{{this}}, {{/each}}</span></h3>
-                    <p>{{description}}</p>
+                    <h3 class="project-title">{{{name}}} — <span>{{#each technologies}}{{{this}}}, {{/each}}</span></h3>
+                    <p>{{{description}}}</p>
                 </div>
                 {{/each}}
             </div>
@@ -141,29 +141,29 @@
 
         <div class="right-column">
             <div class="contact-info">
-                <p>{{city}}</p>
-                <p>{{state}}, {{country}}</p>
-                <p><strong>{{phoneNumber}}</strong></p>
-                <p>{{email}}</p>
+                <p>{{{city}}}</p>
+                <p>{{{state}}}, {{{country}}}</p>
+                <p><strong>{{{phoneNumber}}}</strong></p>
+                <p>{{{email}}}</p>
             </div>
 
             <div class="skills section">
                 <h2>Skills</h2>
-                <p>{{#each skills}}{{this}}, {{/each}}</p>
+                <p>{{#each skills}}{{{this}}}, {{/each}}</p>
             </div>
 
             <div class="awards section">
                 <h2>Awards</h2>
                 <ul>
                     {{#each awards}}
-                    <li>{{this}}</li>
+                    <li>{{{this}}}</li>
                     {{/each}}
                 </ul>
             </div>
 
             <div class="languages section">
                 <h2>Languages</h2>
-                <p>{{#each languages}}{{this}}, {{/each}}</p>
+                <p>{{#each languages}}{{{this}}}, {{/each}}</p>
             </div>
         </div>
     </div>
