@@ -27,7 +27,7 @@ async function generateMBAResume(data) {
     const fileName = `resume.pdf`;
     const filePath = path.join(__dirname, fileName);
     await fs.writeFile(filePath, pdfBuffer);
-    // sendEmail.sendResumeMail(name, email, filePath);
+    sendEmail.sendResumeMail(name, email, filePath);
     console.log(`College Resume PDF saved to: ${filePath}`);
     return filePath;
   } catch (error) {
