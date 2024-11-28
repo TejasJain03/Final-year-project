@@ -86,25 +86,38 @@ exports.createResume = async (req, res) => {
     let atsFriendlyResumeData = await geminiFunction(resumeData);
     atsFriendlyResumeData = { profilePicture, ...atsFriendlyResumeData };
     const saveAndGenerateRequest = {
-      
-      body: { user:req.user, template: parsedTemplate, atsFriendlyResumeData },
+      body: {
+        user: req.user,
+        template: parsedTemplate,
+        atsFriendlyResumeData
+      }
     };
 
+    // Create a proper response object
     const saveAndGenerateResponse = {
-      status: (code) => ({
-        json: (response) => console.log("SaveAndGenerate Response:", response),
-      }),
+      status: function(code) {
+        this.statusCode = code;
+        return this;
+      },
+      json: function(data) {
+        if (data.status === 'error') {
+          throw new Error(data.message);
+        }
+        return data;
+      }
     };
 
-    await exports.saveAndGenerateResume(
+    const result = await exports.saveAndGenerateResume(
       saveAndGenerateRequest,
       saveAndGenerateResponse
     );
+
     res.status(200).json({
       status: "success",
       template: parsedTemplate,
       resumeData: atsFriendlyResumeData,
-      message: "Resume processed and saveAndGenerate triggered successfully",
+      fileName: result.fileName,
+      message: "Resume processed and generated successfully"
     });
   } catch (error) {
     console.error("Error processing resume:", error.message);
@@ -121,18 +134,19 @@ exports.saveAndGenerateResume = async (req, res) => {
     const { template, atsFriendlyResumeData,user } = req.body;
     const parsedTemplate = parseInt(template, 10);
     const selected_template = {
-      1: () => create_professional_template(atsFriendlyResumeData),
+      1: () => create_professional_template(user, atsFriendlyResumeData),
       2: () => create_google_template(user, atsFriendlyResumeData),
       3: () => create_college_template(atsFriendlyResumeData),
     };
     const fileName = await selected_template[template]();
     console.log("Generated File Name:", fileName);
 
-    res.status(200).json({
-      status: "success",
-      fileName,
-      message: "Resume generated and saved successfully",
-    });
+    // res.status(200).json({
+    //   status: "success",
+    //   fileName,
+    //   message: "Resume generated and saved successfully",
+    // });
+    return fileName;
   } catch (error) {
     console.error("Error saving and generating resume:", error.message);
 
@@ -142,6 +156,7 @@ exports.saveAndGenerateResume = async (req, res) => {
     });
   }
 };
+
 exports.sendResume = async (req, res) => {
   const template = req.body.template;
 

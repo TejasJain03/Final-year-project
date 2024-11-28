@@ -6,18 +6,20 @@ const path = require("path");
 const User = require("../../models/users.model");
 const Info = require("../../models/info.model");
 
-exports.create_professional_template = async (resumeData) => {
-  const user = await User.findById(req.user._id).select("userName email");
-  if (!user) throw new ExpressError(404, false, "User not found");
+exports.create_professional_template = async (user,resumeData) => {
+  console.log(user);
+  // req
+  const userData = await User.findById(user._id).select("userName email");
+  if (!userData) throw new ExpressError(404, false, "User not found");
 
-  const info = await Info.findOne({ userId: req.user._id }).select(
-    "-userId -_id"
+  const info = await Info.findOne({ userId: user._id }).select(
+    "-userId"
   );
   if (!info) throw new ExpressError(404, false, "Info not found");
 
   // Add all fields from info to resumeData
   Object.assign(resumeData, info.toObject());
-  Object.assign(resumeData, user.toObject());
+  Object.assign(resumeData, userData.toObject());
 
   console.log(resumeData);
   // Call the generateResume function
@@ -39,7 +41,7 @@ exports.create_google_template = async (user, resumeData) => {
   if (!info) throw new ExpressError(404, false, "Info not found");
   // Add all fields from info to resumeData
   Object.assign(resumeData, info.toObject());
-  Object.assign(resumeData, user.toObject());
+  Object.assign(resumeData, userData.toObject());
 
   console.log("Google template");
   const pdfPath = await generateGoogleResume(resumeData);

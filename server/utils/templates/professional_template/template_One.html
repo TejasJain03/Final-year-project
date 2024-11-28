@@ -17,7 +17,7 @@
       font-family: Arial, sans-serif;
       margin: 0px;
       padding: 0;
-      line-height: 1.6;
+      line-height: 1.2;
     }
 
     h1,
@@ -27,17 +27,18 @@
     }
 
     h1 {
-      font-size: 24px;
+      font-size: 20px;
     }
 
     h2 {
-      font-size: 18px;
-      margin-bottom: 5px;
+      font-size: 15px;
+      margin-bottom: 2px;
     }
 
     p {
       margin: 0;
       padding: 0;
+      /* font-size: 12px; */
     }
 
     ul {
@@ -53,6 +54,7 @@
       /* border: 1px solid black; */
       margin: 0 auto;
       box-sizing: border-box;
+      font-family: 'Times New Roman', Times, serif;
     }
 
     /* Header Section */
@@ -60,8 +62,8 @@
       display: flex;
       justify-content: space-between;
       border-bottom: 2px solid black;
-      padding-bottom: 10px;
-      margin-bottom: 20px;
+      padding-bottom: 5px;
+      margin-bottom: 10px;
     }
 
     .header-left {
@@ -83,14 +85,14 @@
 
     /* Section Styles */
     .section {
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
 
     .section-title {
       font-weight: bold;
       text-transform: uppercase;
       border-bottom: 1px solid black;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
     }
 
     /* Content Sections */
@@ -109,7 +111,7 @@
     }
 
     .sub-section {
-      margin-bottom: 10px;
+      margin-bottom: 2px;
     }
 
     .sub-section-title {
@@ -118,7 +120,7 @@
 
     .skills ul {
       list-style-type: none;
-      margin-bottom: 5px;
+      margin-bottom: 1px;
     }
 
     .skills li {
@@ -129,6 +131,9 @@
       list-style-type: disc;
       margin-left: 20px;
     }
+    .duration {
+      font-style: italic;
+    }
   </style>
 </head>
 
@@ -138,18 +143,17 @@
     <div class="header">
       <div class="header-left">
         <p>
-          {{city}}, {{state}}, {{country}}
+          {{{city}}}, {{{state}}}, {{{country}}}
         </p>
-        </p>
-        <a href="{{github}}">{{github}}</a>
+        <a href="{{{github}}}">{{{github}}}</a>
       </div>
       <div class="header-center">
-        <h1>{{userName}}</h1>
+        <h1>{{{userName}}}</h1>
       </div>
       <div class="header-right">
-        <p>Phone Number: {{phoneNumber}}</p>
-        <p><a href="mailto:{{email}}">{{email}}</a></p>
-        <p><a href="{{linkedin}}">{{linkedin}}</a></p>
+        <p>Phone Number: {{{phoneNumber}}}</p>
+        <p><a href="mailto:{{{email}}}">{{{email}}}</a></p>
+        <p><a href="{{{linkedin}}}">{{{linkedin}}}</a></p>
       </div>
     </div>
 
@@ -158,11 +162,11 @@
       <h2 class="section-title">Education</h2>
       <div class="section-content">
         <div class="left">
-          <p><strong>{{education.institution}}</strong></p>
-          <p><strong>Major:</strong> {{education.major}}</p>
+          <p><strong>{{{education.institution}}}</strong></p>
+          <p><strong>Major:</strong> {{{education.major}}}</p>
         </div>
         <div class="right">
-          <p>{{education.duration}}</p>
+          <p class="duration">{{{education.duration}}}</p>
         </div>
       </div>
     </div>
@@ -174,32 +178,32 @@
       <!-- Job 1 -->
       <div class="section-content">
         <div class="left">
-          <p><strong>{{job.job1.title}}</strong></p>
-          <p>{{job.job1.company}}</p>
+          <p><strong>{{{job.job1.title}}}</strong></p>
+          <p>{{{job.job1.company}}}</p>
           <ul>
-            <li>{{job.job1.responsibility1}}</li>
-            <li>{{job.job1.responsibility2}}</li>
-            <li>{{job.job1.responsibility3}}</li>
+            <li>{{{job.job1.responsibility1}}}</li>
+            <li>{{{job.job1.responsibility2}}}</li>
+            <li>{{{job.job1.responsibility3}}}</li>
           </ul>
         </div>
         <div class="right">
-          <p>{{job.job1.duration}}</p>
+          <p class="duration">{{{job.job1.duration}}}</p>
         </div>
       </div>
 
       <!-- Job 2 -->
       <div class="section-content">
         <div class="left">
-          <p><strong>{{job.job2.title}}</strong></p>
-          <p>{{job.job2.company}}</p>
+          <p><strong>{{{job.job2.title}}}</strong></p>
+          <p>{{{job.job2.company}}}</p>
           <ul>
-            <li>{{job.job2.responsibility1}}</li>
-            <li>{{job.job2.responsibility2}}</li>
-            <li>{{job.job2.responsibility3}}</li>
+            <li>{{{job.job2.responsibility1}}}</li>
+            <li>{{{job.job2.responsibility2}}}</li>
+            <li>{{{job.job2.responsibility3}}}</li>
           </ul>
         </div>
         <div class="right">
-          <p>{{job.job2.duration}}</p>
+          <p class="duration">{{{job.job2.duration}}}</p>
         </div>
       </div>
     </div>
@@ -210,39 +214,39 @@
 
       <!-- Project 1 -->
       <div class="sub-section">
-        <p><strong>{{projects.project1.title}}</strong></p>
+        <p><strong>{{{projects.project1.title}}}</strong></p>
         <ul>
-          <li>{{projects.project1.description1}}</li>
-          <li>{{projects.project1.description2}}</li>
+          <li>{{{projects.project1.description1}}}</li>
+          <li>{{{projects.project1.description2}}}</li>
           <li>
             <strong>Technologies Used:</strong>
-            {{#each projects.project1.technologies}} {{this}}, {{/each}}
+            {{#each projects.project1.technologies}} {{{this}}}, {{/each}}
           </li>
         </ul>
       </div>
 
       <!-- Project 2 -->
       <div class="sub-section">
-        <p><strong>{{projects.project2.title}}</strong></p>
+        <p><strong>{{{projects.project2.title}}}</strong></p>
         <ul>
-          <li>{{projects.project2.description1}}</li>
-          <li>{{projects.project2.description2}}</li>
+          <li>{{{projects.project2.description1}}}</li>
+          <li>{{{projects.project2.description2}}}</li>
           <li>
-            <strong>Technologies Used:</strong> {{#each
-            projects.project2.technologies}} {{this}}, {{/each}}
+            <strong>Technologies Used:</strong> 
+            {{#each projects.project2.technologies}} {{{this}}}, {{/each}}
           </li>
         </ul>
       </div>
 
       <!-- Project 3 -->
       <div class="sub-section">
-        <p><strong>{{projects.project3.title}}</strong></p>
+        <p><strong>{{{projects.project3.title}}}</strong></p>
         <ul>
-          <li>{{projects.project3.description1}}</li>
-          <li>{{projects.project3.description2}}</li>
+          <li>{{{projects.project3.description1}}}</li>
+          <li>{{{projects.project3.description2}}}</li>
           <li>
-            <strong>Technologies Used:</strong> {{#each
-            projects.project3.technologies}} {{this}}, {{/each}}
+            <strong>Technologies Used:</strong> 
+            {{#each projects.project3.technologies}} {{{this}}}, {{/each}}
           </li>
         </ul>
       </div>
@@ -253,7 +257,7 @@
       <h2 class="section-title">Skills</h2>
       <div class="skills">
         <ul>
-          {{#each skills}} {{this}}, {{/each}}
+          {{#each skills}} {{{this}}}, {{/each}}
         </ul>
       </div>
     </div>
