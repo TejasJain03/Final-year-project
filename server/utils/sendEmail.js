@@ -2,6 +2,8 @@ const nodemailer = require("nodemailer");
 const ExpressError = require("./ExpressError");
 const path = require("path");
 const fs = require("fs");
+const util = require("util");
+const unlinkFile = util.promisify(fs.unlink); // Promisify unlink for better handling with async/await
 
 const premiumMailTemplate = (userName, premiumType) => {
   return `<!DOCTYPE html>
@@ -222,8 +224,10 @@ const resumeMailTemplate = (userName) => {
 `;
 };
 
+
 exports.sendResumeMail = async (userName, userEmail, template) => {
-  resumePath = template;
+  const resumePath = template;
+
   const transporter = nodemailer.createTransport({
     service: "Gmail",
     host: "smtp.gmail.com",
@@ -237,6 +241,7 @@ exports.sendResumeMail = async (userName, userEmail, template) => {
       rejectUnauthorized: false,
     },
   });
+
   const mailOptions = {
     from: '"ResuMATCH" <no-reply@resumatch.com>',
     to: userEmail,
@@ -253,16 +258,21 @@ exports.sendResumeMail = async (userName, userEmail, template) => {
 
   try {
     const info = await transporter.sendMail(mailOptions);
-    fs.unlink(resumePath, (err) => {
-      if (err) {
-        console.error("Error removing the file:", err.message);
-      } else {
-        console.log("File successfully deleted:", resumePath);
-      }
-    });
+    console.log(info)
+    // Remove the resume file after successful email send
+    await unlinkFile(resumePath);
+    console.log(`File at ${resumePath} successfully deleted after sending email.`);
 
     return info;
   } catch (error) {
+    // Ensure file is removed even if email sending fails
+    try {
+      await unlinkFile(resumePath);
+      console.log(`File at ${resumePath} deleted after email send failed.`);
+    } catch (fileError) {
+      console.error(`Error deleting file at ${resumePath}:`, fileError.message);
+    }
+
     throw new ExpressError(500, false, error.message);
   }
 };

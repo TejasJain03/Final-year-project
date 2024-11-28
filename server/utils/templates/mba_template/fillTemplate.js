@@ -4,9 +4,9 @@ const path = require("path");
 const handlebars = require("handlebars");
 const ExpressError = require("../../ExpressError");
 const sendEmail = require("../../sendEmail");
-async function generateCollegeResume(data) {
+async function generateMBAResume(data) {
   // Read the HTML template for the college resume
-  const templatePath = path.join(__dirname, "template_College.html");
+  const templatePath = path.join(__dirname, "mba_template.html");
   let resumeTemplate = await fs.readFile(templatePath, "utf-8");
   // Use Handlebars to compile the HTML template with the provided data
   const template = handlebars.compile(resumeTemplate);
@@ -22,12 +22,12 @@ async function generateCollegeResume(data) {
     await browser.close();
     // Extract the name from the data object
     const name = data.name || "unnamed";
-    const email = data.contact.email;
+    const email = data.email;
     // Write the PDF to the current folder
     const fileName = `resume.pdf`;
     const filePath = path.join(__dirname, fileName);
     await fs.writeFile(filePath, pdfBuffer);
-    sendEmail.sendResumeMail(name, email, filePath);
+    // sendEmail.sendResumeMail(name, email, filePath);
     console.log(`College Resume PDF saved to: ${filePath}`);
     return filePath;
   } catch (error) {
@@ -39,4 +39,4 @@ async function generateCollegeResume(data) {
   }
 }
 
-module.exports = generateCollegeResume;
+module.exports = generateMBAResume;

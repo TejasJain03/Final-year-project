@@ -1,6 +1,7 @@
 const generateProfessionalResume = require("./professional_template/fillTemplate");
 const generateGoogleResume = require("./google_template/fillTemplate");
-const generateCollegeResume = require("./college_template/fillTemplate"); // Add this line for the college template
+const generateCollegeResume = require("./college_template/fillTemplate");
+const generateMBAResume = require("./mba_template/fillTemplate");
 const ExpressError = require("../ExpressError");
 const path = require("path");
 const User = require("../../models/users.model");
@@ -56,6 +57,25 @@ exports.create_college_template = async (resumeData) => {
 
   // Generate the college resume PDF
   const pdfPath = await generateCollegeResume(resumeData);
+
+  if (!pdfPath)
+    throw new ExpressError(500, false, "Error creating college resume");
+
+  // Get the filename from the PDF path
+  // const fileName = path.basename(pdfPath);
+  const fileName = "resume.pdf";
+
+  if (!fileName) throw new ExpressError(500, false, "Error getting filename");
+
+  // Return the PDF file name
+  return fileName;
+};
+
+exports.create_mba_tempalte = async (resumeData) => {
+  console.log("College template");
+
+  // Generate the college resume PDF
+  const pdfPath = await generateMBAResume(resumeData);
 
   if (!pdfPath)
     throw new ExpressError(500, false, "Error creating college resume");

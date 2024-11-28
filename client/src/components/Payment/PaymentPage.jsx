@@ -31,7 +31,8 @@ const PaymentPage = () => {
         name: "Resume Builder",
         description: "Subscription payment",
         order_id: response.data.id,
-        callback_url: "http://localhost:8081/api/v1/payment/paymentverification", // Your backend endpoint for verification
+        callback_url:
+          "http://localhost:8081/api/v1/payment/paymentverification", // Your backend endpoint for verification
         theme: {
           color: "#399cc",
         },
@@ -44,10 +45,8 @@ const PaymentPage = () => {
       });
       rzp1.open();
     } catch (error) {
-      console.error(error);
-      toast.error(
-        "An error occurred while creating the order. Please try again."
-      );
+      console.log(error.response.data.message);
+      toast.error(error.response.data.message);
     } finally {
       setIsLoading(false);
     }
@@ -58,7 +57,6 @@ const PaymentPage = () => {
       apiHandler(async () => {
         // eslint-disable-next-line no-unused-vars
         const response = await axios.get("/auth/check-auth");
-        
       }, navigate)();
     };
 

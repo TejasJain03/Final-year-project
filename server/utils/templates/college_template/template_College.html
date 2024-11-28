@@ -8,7 +8,7 @@
       @page {
         margin-top: 0.2in;
         margin-left: 0.3in;
-        margin-right: 0.2in;
+        margin-right: 0.3in;
         margin-bottom: 0.61in;
       }
       body {
@@ -27,13 +27,12 @@
       .header {
         display: flex;
         justify-content: space-between;
-        align-items: flex-start;
+        align-items: center; /* Align items to center vertically */
       }
       .header img {
-        height: 150px;
-        width: 120px;
-        object-fit: cover;
-        /* border-radius: 5px; */
+        height: 140px; /* Reduced height */
+        width: 120px; /* Adjusted width to match height */
+        object-fit: cover; /* Ensure the image fits perfectly */
       }
       h1 {
         font-size: 28px;
@@ -42,7 +41,7 @@
         color: #000;
       }
       h2 {
-        font-size: 18px;
+        font-size: 14pt;
         font-weight: bold;
         margin: 12px 0 6px;
         color: #4a90e2;
@@ -54,9 +53,9 @@
       .section p,
       .section ul,
       .section li {
-        font-size: 14px;
+        font-size: 12pt; /* Increased font size */
         line-height: 1.15;
-        margin: 4px 0;
+        margin: 4px 0; /* Uniform spacing between lines */
         text-align: justify;
         color: #000;
       }
@@ -79,7 +78,7 @@
       }
       .right-align {
         float: right;
-        font-size: 14px;
+        font-size: 12pt;
         font-style: italic;
         color: #333;
       }
@@ -103,9 +102,8 @@
             <span class="bold-text">{{contact.email}}</span><br />
             {{#each contact.links}}
             <span>{{name}}</span>
-              <a href="{{url}}" target="_blank" class="bold-text">{{url}}</a>{{#unless @last}}{{/unless}}
-              <br />
-              {{/each}}
+            <a href="{{url}}" target="_blank" class="bold-text">{{url}}</a>{{#unless @last}}{{/unless}}<br />
+            {{/each}}
           </div>          
         </div>
         <img src="{{profilePicture}}" alt="Profile Picture" />
