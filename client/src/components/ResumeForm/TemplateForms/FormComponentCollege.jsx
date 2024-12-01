@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faPlus, faCode, faLink, faGraduationCap, faBriefcase, faTrophy, faProjectDiagram, faAddressCard, faFileAlt } from '@fortawesome/free-solid-svg-icons'
 import axios from '../../../utils/axiosConfig'
 import { toast } from 'react-toastify'
+import { ClipLoader } from "react-spinners"
 
 export default function AdvancedResumeForm() {
   const [template] = useState(3)
@@ -95,6 +96,8 @@ export default function AdvancedResumeForm() {
     'Secured 2nd place in UI-War, a 6-hour front-end hackathon, building a luxury watch e-commerce site (CSI, MITE).',
     'Secured 4th place in the CTF event by Crypton Club (MITE).'
   ])
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const fileInputRef = useRef(null)
 
@@ -279,6 +282,7 @@ export default function AdvancedResumeForm() {
     }
 
     // If validation passes, proceed with form submission
+    setIsSubmitting(true);
     try {
       const formData = {
         template,
@@ -293,12 +297,13 @@ export default function AdvancedResumeForm() {
         projects,
         achievements
       };
-      console.log(formData)
       const response = await axios.post('/resume/create-resume', formData);
       toast.success(response.data.message);
     } catch (error) {
       console.error(error);
       toast.error(error.response?.data?.message || 'Error creating resume');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -839,9 +844,17 @@ export default function AdvancedResumeForm() {
               <div className="flex justify-end">
                 <button
                   type="submit"
-                  className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  disabled={isSubmitting}
+                  className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-400 disabled:cursor-not-allowed"
                 >
-                  Save Resume Details
+                  {isSubmitting ? (
+                    <div className="flex items-center">
+                      <ClipLoader size={20} color="#ffffff" />
+                      <span className="ml-2">Creating Resume...</span>
+                    </div>
+                  ) : (
+                    "Save Resume Details"
+                  )}
                 </button>
               </div>
             </div>
