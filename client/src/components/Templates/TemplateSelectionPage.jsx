@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import template_One from "../../assets/templates/template1.jpg";
 import google_Template from "../../assets/templates/google-template.png";
 import college_Template from '../../assets/templates/template_Three.png'
-import mba_template from "../../assets/templates/mba_template.png"
+import mba_template from "../../assets/templates/template_mba.png"
 import { useEffect, useRef, useState } from "react";
 import axios from "../../utils/axiosConfig";
 import { toast } from "react-toastify";
@@ -27,10 +27,12 @@ const templates = [
     image: college_Template,
     description: "A template suitable for college students.",
   },
-  // { id: 3, name: 'Modern', image: template_One },
-  // { id: 4, name: 'Simple', image: template_One },
-  // { id: 5, name: 'Executive', image: template_One },
-  // { id: 6, name: 'Tech', image: template_One },
+  {
+    id: 4,
+    name: "MBA",
+    image: mba_template,
+    description: "A template suitable for MBA students.",
+  },
 ];
 
 const TemplateSelectionPage = () => {
@@ -61,8 +63,9 @@ const TemplateSelectionPage = () => {
       if (error.response.data.status === "logout") {
         localStorage.removeItem("authenticated");
         navigate("/auth/login");  // might have to change this
+      } else {
+        navigate("/pricing");
       }
-      navigate("/pricing");
       return false;
     }
   };
