@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import template_One from "../../assets/templates/template1.jpg";
 import google_Template from "../../assets/templates/google-template.png";
 import college_Template from '../../assets/templates/template_Three.png'
+import mba_template from "../../assets/templates/mba_template.png"
 import { useEffect, useRef, useState } from "react";
 import axios from "../../utils/axiosConfig";
 import { toast } from "react-toastify";
@@ -25,6 +26,12 @@ const templates = [
     name: "College",
     image: college_Template,
     description: "A template suitable for college students.",
+  },
+  {
+    id: 4,
+    name: "MBA",
+    image: mba_template,
+    description: "A template suitable for MBA students.",
   },
   // { id: 3, name: 'Modern', image: template_One },
   // { id: 4, name: 'Simple', image: template_One },

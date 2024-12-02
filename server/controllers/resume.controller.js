@@ -17,7 +17,6 @@ async function geminiFunction(data) {
   3. Incorporate software development keywords that are relevant to modern technologies, frameworks, and methodologies (e.g., Agile, DevOps, CI/CD, etc.).
   4. Do not include any text or explanation outside of the updated JSON object.
   5. Retain the exact structure of the input JSON for seamless integration.
-  
   Here is the resume data:
   ${JSON.stringify(data)}`;
   const geminiApiUrl =
@@ -75,22 +74,21 @@ exports.createResume = async (req, res) => {
     let atsFriendlyResumeData = await geminiFunction(resumeData);
     atsFriendlyResumeData = { profilePicture, ...atsFriendlyResumeData };
     const saveAndGenerateRequest = {
-      
-      body: { user:req.user, template: parsedTemplate, atsFriendlyResumeData },
+      body: { user: req.user, template: parsedTemplate, atsFriendlyResumeData },
     };
 
     // Create a proper response object
     const saveAndGenerateResponse = {
-      status: function(code) {
+      status: function (code) {
         this.statusCode = code;
         return this;
       },
-      json: function(data) {
-        if (data.status === 'error') {
+      json: function (data) {
+        if (data.status === "error") {
           throw new Error(data.message);
         }
         return data;
-      }
+      },
     };
 
     const result = await exports.saveAndGenerateResume(
@@ -103,7 +101,8 @@ exports.createResume = async (req, res) => {
       template: parsedTemplate,
       resumeData: atsFriendlyResumeData,
       fileName: result.fileName,
-      message: "Resume processed and generated successfully"
+      message:
+        "Resume processed and generated successfully. You will receive the PDF in your email shortly.",
     });
   } catch (error) {
     console.error("Error processing resume:", error.message);

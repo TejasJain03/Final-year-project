@@ -36,7 +36,7 @@ exports.createOrder = async (req, res) => {
   const options = {
     amount: req.body.amount * 100,
     currency: "INR",
-    receipt: "order_receipt_123",
+    receipt: `paymentorder${userId}`,
   };
   const response = await razorpay.orders.create(options);
   if (response.error) {
@@ -47,13 +47,13 @@ exports.createOrder = async (req, res) => {
   }
 };
 
-exports.getKey = async (req, res) => {
-  res.send({ key: process.env.PAYMENT_API_KEY });
-};
-
 exports.paymentVerification = async (req, res) => {
-  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
-    req.body;
+  const {
+    razorpay_order_id,
+    razorpay_payment_id,
+    razorpay_signature,
+    premiumCategory,
+  } = req.body;
 
   try {
     // Create HMAC signature to validate authenticity
@@ -72,7 +72,7 @@ exports.paymentVerification = async (req, res) => {
         userId: userId,
         paymentDate: new Date(),
         expiryDate: new Date(new Date().setMonth(new Date().getMonth() + 1)), // Set expiry date 1 month ahead
-        premiumCategory: 1, // Example premium category
+        premiumCategory, // Example premium category
         expired: false,
       });
       res.redirect(`${process.env.FRONTEND_URL}/templates`);
@@ -96,4 +96,8 @@ exports.paymentVerification = async (req, res) => {
 
 exports.checkPremium = async (req, res) => {
   res.status(200).json({ success: true, message: "User is a premium holder." });
+};
+
+exports.getKey = async (req, res) => {
+  res.send({ key: process.env.PAYMENT_API_KEY });
 };
