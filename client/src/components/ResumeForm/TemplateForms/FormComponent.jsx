@@ -16,6 +16,7 @@ import { COMMON_SKILLS, COMMON_TECHNOLOGIES } from "../../../assets/constants";
 import apiHandler from '../../../utils/apiHandler';
 import axios from '../../../utils/axiosConfig';
 import { useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 
 const FormComponent = () => {
   const navigate = useNavigate();
@@ -48,6 +49,7 @@ const FormComponent = () => {
   const techDropdownRef = useRef(null);
 
   const [formErrors, setFormErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleEducationChange = (index, field, value) => {
     const newEducation = [...education];
@@ -280,17 +282,20 @@ const FormComponent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      // Form is valid, proceed with submission
-      console.log({ education, skills, experiences, projects });
+      setIsSubmitting(true);
       const formData = { template: 1, education, skills, experiences, projects };
-      apiHandler(async()=>{
-        const response = await axios.post("/resume/create-resume", formData);
-        if(response.data.success) {
-          toast.success(response.data.message);
-        }
-      }, navigate);
+      
+      try {
+        await apiHandler(async () => {
+          const response = await axios.post("/resume/create-resume", formData);
+          if (response.data.success) {
+            toast.success(response.data.message);
+          }
+        }, navigate);
+      } finally {
+        setIsSubmitting(false);
+      }
     } else {
-      // Form is invalid, display error message
       toast.error("Please fill in all required fields.");
     }
   };

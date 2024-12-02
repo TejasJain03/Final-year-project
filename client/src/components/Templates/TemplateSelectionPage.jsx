@@ -27,12 +27,6 @@ const templates = [
     image: college_Template,
     description: "A template suitable for college students.",
   },
-  {
-    id: 4,
-    name: "MBA",
-    image: mba_template,
-    description: "A template suitable for MBA students.",
-  },
   // { id: 3, name: 'Modern', image: template_One },
   // { id: 4, name: 'Simple', image: template_One },
   // { id: 5, name: 'Executive', image: template_One },

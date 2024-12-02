@@ -24,6 +24,7 @@ import { toast } from "react-toastify";
 import apiHandler from "../../../utils/apiHandler";
 import axios from "../../../utils/axiosConfig";
 import { useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 
 const FormComponentGoogle = () => {
   const navigate = useNavigate();
@@ -75,6 +76,7 @@ const FormComponentGoogle = () => {
   const skillDropdownRef = useRef(null);
   const languageInputRef = useRef(null);
   const languageDropdownRef = useRef(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -289,7 +291,7 @@ const FormComponentGoogle = () => {
     setIsSkillsValid(newSkills.length > 0);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let isValid = true;
     let firstInvalidProject = null;
@@ -312,7 +314,6 @@ const FormComponentGoogle = () => {
 
     if (skills.length === 0) {
       setIsSkillsValid(false);
-      // Scroll to the skills section
       document
         .getElementById("skills-section")
         .scrollIntoView({ behavior: "smooth" });
@@ -325,7 +326,9 @@ const FormComponentGoogle = () => {
         .scrollIntoView({ behavior: "smooth" });
       return;
     }
+
     // Proceed with form submission
+    setIsSubmitting(true);
     const formData = {
       template: 2,
       name,
@@ -337,13 +340,17 @@ const FormComponentGoogle = () => {
       awards,
       languages,
     };
-    console.log(formData);
-    apiHandler(async () => {
-      const response = await axios.post("/resume/create-resume", formData);
-      if (response.data.success) {
-        toast.success(response.data.message);
-      }
-    }, navigate);
+    
+    try {
+      await apiHandler(async () => {
+        const response = await axios.post("/resume/create-resume", formData);
+        if (response.data.success) {
+          toast.success(response.data.message);
+        }
+      }, navigate);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -1078,9 +1085,17 @@ const FormComponentGoogle = () => {
               <div className="flex justify-end">
                 <button
                   type="submit"
-                  className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  disabled={isSubmitting}
+                  className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-400 disabled:cursor-not-allowed"
                 >
-                  Save Resume Details
+                  {isSubmitting ? (
+                    <div className="flex items-center">
+                      <ClipLoader size={20} color="#ffffff" />
+                      <span className="ml-2">Creating Resume...</span>
+                    </div>
+                  ) : (
+                    "Save Resume Details"
+                  )}
                 </button>
               </div>
             </div>
