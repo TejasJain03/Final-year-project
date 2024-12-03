@@ -14,17 +14,11 @@ const isPremium = async (req, res, next) => {
       return res.status(200).json({ success: false, premiumStatus : false ,message: 'You are not a premium user!'});
     }
 
-    const currentDate = new Date();
-    const oneMonthInMs = 30 * 24 * 60 * 60 * 1000; // Approximate month in milliseconds
-
-    if (currentDate - payment.paymentDate > oneMonthInMs || currentDate > payment.expiryDate) {
-      payment.expired = true;
-      await payment.save();
-      throw new ExpressError(401, false, 'Your premium has expired');
+    if(payment.credits <= 0) {
+      return res.status(200).json({ success: false, premiumStatus : false ,message: 'You have no credits left! Please buy credits to continue.'});
     }
 
-    req.isPremium = true;
-    req.premiumCategory = payment.premiumCategory;
+    req.credits = payment.credits;
 
     next();
   } catch (error) {

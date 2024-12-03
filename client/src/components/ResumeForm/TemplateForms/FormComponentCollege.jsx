@@ -4,9 +4,11 @@ import { faUser, faPlus, faCode, faLink, faGraduationCap, faBriefcase, faTrophy,
 import axios from '../../../utils/axiosConfig'
 import { toast } from 'react-toastify'
 import { ClipLoader } from "react-spinners"
+import { roles } from "../../../assets/constants"
 
 export default function AdvancedResumeForm() {
   const [template] = useState(3)
+  const [role, setRole] = useState("");
   const [title, setTitle] = useState('Uttam')
   const [name, setName] = useState('Uttam')
   const [contact, setContact] = useState({
@@ -286,6 +288,7 @@ export default function AdvancedResumeForm() {
     try {
       const formData = {
         template,
+        role,
         name,
         contact,
         address,
@@ -313,6 +316,26 @@ export default function AdvancedResumeForm() {
         <div className="px-4 py-5 sm:p-6">
           <h1 className="text-2xl font-bold text-gray-900 mb-6">Advanced Resume Details</h1>
           <form onSubmit={handleSubmit} className="space-y-8">
+            {/* Role Section */}
+            <div>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                Role
+              </h2>
+              <select
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                required
+              >
+                <option value="" disabled>Select a role</option>
+                {roles.map((roleOption, index) => (
+                  <option key={index} value={roleOption}>
+                    {roleOption}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             {/* Title and Name Section */}
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div>

@@ -14,12 +14,13 @@ import { toast } from "react-toastify";
 import axiosInstance from "../../../utils/axiosConfig";
 import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
+import { roles } from "../../../assets/constants";
 
 export default function FormComponentMBA() {
   const navigate = useNavigate();
   const [name, setName] = useState("Venkataramana Shettigar");
   const [mobile, setMobile] = useState("+91-9008162519");
-  const [email, setEmail] = useState("venkataramanashettigar216@gmail.com");
+  const [email, setEmail] = useState("19516uttam@gmail.com");
   const [linkedin, setLinkedin] = useState(
     "https://www.linkedin.com/in/venkataramana-shettigar"
   );
@@ -121,6 +122,7 @@ export default function FormComponentMBA() {
     "During 1st Semester of MBA with guidance of the mentor me and my team conduct the “Plastic Awareness Campaign” at Kallamudkur Village. It was the one-week campaign. Our main intention is to give the awareness about Plastic usage and minimize the usage of plastic by some suggestion. I learn team coordination as leader, Pre-Plans for success of campaign, convenience village people to reduce the usage of plastic, handle the different kind of behavior of people. I am NSS volunteer."
   );
   const [isLoading, setIsLoading] = useState(false);
+  const [role, setRole] = useState("");
 
   const handleAddItem = (setter, initialValue) => {
     setter((prev) => [...prev, initialValue]);
@@ -170,6 +172,7 @@ export default function FormComponentMBA() {
     
     const formData = {
       template: 4,
+      role,
       name,
       phone1: mobile,
       email,
@@ -210,6 +213,26 @@ export default function FormComponentMBA() {
             Advanced Resume Form
           </h1>
           <form onSubmit={handleSubmit} className="space-y-8">
+            {/* Role Section */}
+            <div>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                Role
+              </h2>
+              <select
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                required
+              >
+                <option value="" disabled>Select a role</option>
+                {roles.map((roleOption, index) => (
+                  <option key={index} value={roleOption}>
+                    {roleOption}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             {/* Personal Information */}
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div>

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useSearchParams } from "react-router-dom";
 import { PLANS } from "../../assets/constants"; // Import the plans from constants
 import { useState, useEffect } from "react";
@@ -39,6 +40,9 @@ const PaymentPage = () => {
       };
 
       const rzp1 = new window.Razorpay(options);
+      rzp1.on("payment.success", function (response) {
+        navigate("/templates");
+      });
       rzp1.on("payment.failed", function (response) {
         console.error(response);
         toast.error("Payment failed! Please try again.");

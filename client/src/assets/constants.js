@@ -171,3 +171,22 @@ export const PLANS = [
 ];
 
 export const LANGUAGES = ["English", "German", "French", "Spanish", "Chinese", "Japanese", "Arabic", "Russian", "Portuguese", "Italian"];
+
+export const roles = [
+  "Developer",
+  "Designer",
+  "Manager",
+  "Tester",
+  "Sales",
+  "Other",
+  "Fresher",
+  "Intern",
+  "Data Scientist",
+  "DevOps Engineer",
+  "Product Manager",
+  "UX/UI Designer",
+  "Quality Assurance Engineer",
+  "Marketing Specialist",
+  "HR Generalist",
+  "Finance Analyst",
+];

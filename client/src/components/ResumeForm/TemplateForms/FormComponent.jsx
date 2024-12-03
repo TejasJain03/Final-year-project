@@ -12,7 +12,7 @@ import {
   faExclamationCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
-import { COMMON_SKILLS, COMMON_TECHNOLOGIES } from "../../../assets/constants";
+import { COMMON_SKILLS, COMMON_TECHNOLOGIES, roles } from "../../../assets/constants";
 import apiHandler from '../../../utils/apiHandler';
 import axios from '../../../utils/axiosConfig';
 import { useNavigate } from "react-router-dom";
@@ -20,6 +20,8 @@ import { ClipLoader } from "react-spinners";
 
 const FormComponent = () => {
   const navigate = useNavigate();
+  const [role, setRole] = useState("");
+
   const [education, setEducation] = useState([
     { institution: "", degree: "", from_year: "", to_year: "" },
   ]);
@@ -283,7 +285,7 @@ const FormComponent = () => {
     e.preventDefault();
     if (validateForm()) {
       setIsSubmitting(true);
-      const formData = { template: 1, education, skills, experiences, projects };
+      const formData = { template: 1, education, skills, experiences, projects, role };
       
       try {
         await apiHandler(async () => {
@@ -308,6 +310,26 @@ const FormComponent = () => {
             Resume Details
           </h1>
           <form onSubmit={handleSubmit} className="space-y-8">
+            {/* Role Section */}
+            <div>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                Role
+              </h2>
+              <select
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                required
+              >
+                <option value="" disabled>Select a role</option>
+                {roles.map((roleOption, index) => (
+                  <option key={index} value={roleOption}>
+                    {roleOption}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             {/* Education Section */}
             <div>
               <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">

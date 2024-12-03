@@ -19,6 +19,7 @@ import {
   COMMON_TECHNOLOGIES,
   LANGUAGES,
   COMMON_SKILLS,
+  roles,
 } from "../../../assets/constants";
 import { toast } from "react-toastify";
 import apiHandler from "../../../utils/apiHandler";
@@ -77,6 +78,7 @@ const FormComponentGoogle = () => {
   const languageInputRef = useRef(null);
   const languageDropdownRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [role, setRole] = useState("");
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -331,6 +333,7 @@ const FormComponentGoogle = () => {
     setIsSubmitting(true);
     const formData = {
       template: 2,
+      role,
       name,
       summary,
       experience,
@@ -361,6 +364,26 @@ const FormComponentGoogle = () => {
             Resume Details
           </h1>
           <form onSubmit={handleSubmit} className="space-y-8">
+            {/* Role Section */}
+            <div>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                Role
+              </h2>
+              <select
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                required
+              >
+                <option value="" disabled>Select a role</option>
+                {roles.map((roleOption, index) => (
+                  <option key={index} value={roleOption}>
+                    {roleOption}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             {/* Name Section */}
             <div>
               <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">

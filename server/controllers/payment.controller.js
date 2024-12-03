@@ -38,6 +38,8 @@ exports.createOrder = async (req, res) => {
     currency: "INR",
     receipt: `paymentorder${userId}`,
   };
+
+  console.log(req.body.amount);
   const response = await razorpay.orders.create(options);
   if (response.error) {
     console.log(response.error);
@@ -62,8 +64,10 @@ exports.paymentVerification = async (req, res) => {
       .createHmac("sha256", "UKTbLcz90bxadSWJrS76VTCm")
       .update(body.toString())
       .digest("hex");
+
     // Update logic: check if signature matches
     const isAuthentic = expectedSignature === razorpay_signature;
+    
     if (isAuthentic) {
       // Get the user ID from req.user
       const userId = req.user._id;
@@ -71,26 +75,27 @@ exports.paymentVerification = async (req, res) => {
       await Payment.create({
         userId: userId,
         paymentDate: new Date(),
-        expiryDate: new Date(new Date().setMonth(new Date().getMonth() + 1)), // Set expiry date 1 month ahead
-        premiumCategory, // Example premium category
-        expired: false,
+        credits: req.body.amount == 500 ? 10 : 20,
       });
-      res.redirect(`${process.env.FRONTEND_URL}/templates`);
+
+      // Send single response with redirect URL
       return res.json({
         success: true,
         message: "Payment verified, user upgraded to premium.",
+        redirectUrl: `${process.env.FRONTEND_URL}/templates`
       });
     } else {
       return res.json({
         success: false,
-        message: "Invalid payment signature.",
+        message: "Invalid payment signature."
       });
     }
   } catch (error) {
     console.error("Error during payment verification:", error);
-    res
-      .status(500)
-      .json({ success: false, message: "Payment verification failed." });
+    return res.status(500).json({ 
+      success: false, 
+      message: "Payment verification failed." 
+    });
   }
 };
 

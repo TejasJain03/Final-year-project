@@ -28,9 +28,7 @@ const Login = () => {
       toast.success(response.data.message, {
         onClose: () => navigate("/"), // Navigate after toast is closed
       });
-    } else {
-      toast.error("Login failed. Please try again.")
-    }
+    } 
   };
 
   const handleSubmit = (e) => {

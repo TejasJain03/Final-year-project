@@ -9,16 +9,7 @@ const PaymentSchema = new mongoose.Schema(
       required: true,
     },
     paymentDate: { type: Date, required: [true, "Payment date is required"] },
-    expiryDate: { type: Date, required: [true, "Expiry date is required"] },
-    expired: { type: Boolean, default: false },
-    premiumCategory: {
-      type: Number,
-      enum: {
-        values: [0, 1, 2],
-        message: "Premium category must be 0, 1, or 2",
-      },
-      default: 0,
-    },
+    credits: { type: Number, required: [true, "Credits are required"] },
   },
   { timestamps: true }
 );
