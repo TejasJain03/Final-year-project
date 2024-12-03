@@ -17,6 +17,9 @@ async function geminiFunction(data) {
   3. Incorporate software development keywords that are relevant to modern technologies, frameworks, and methodologies (e.g., Agile, DevOps, CI/CD, etc.).
   4. Do not include any text or explanation outside of the updated JSON object.
   5. Retain the exact structure of the input JSON for seamless integration.
+  6. Ensure the content is tailored to align with the responsibilities, skills, and expectations of the role ${
+    data.role
+  }.
   Here is the resume data:
   ${JSON.stringify(data)}`;
   const geminiApiUrl =

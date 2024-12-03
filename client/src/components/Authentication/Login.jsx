@@ -24,7 +24,6 @@ const Login = () => {
   const loginApiCall = async () => {
     const response = await axios.post("/auth/login", formData);
     if (response.data.success) {
-      // Set localStorage and display a toast
       localStorage.setItem("authenticated", true);
       toast.success(response.data.message, {
         onClose: () => navigate("/"), // Navigate after toast is closed
