@@ -67,7 +67,7 @@ exports.paymentVerification = async (req, res) => {
 
     // Update logic: check if signature matches
     const isAuthentic = expectedSignature === razorpay_signature;
-    
+
     if (isAuthentic) {
       // Get the user ID from req.user
       const userId = req.user._id;
@@ -79,22 +79,22 @@ exports.paymentVerification = async (req, res) => {
       });
 
       // Send single response with redirect URL
+      res.redirect(`${process.env.FRONTEND_URL}/templates`);
       return res.json({
         success: true,
         message: "Payment verified, user upgraded to premium.",
-        redirectUrl: `${process.env.FRONTEND_URL}/templates`
       });
     } else {
       return res.json({
         success: false,
-        message: "Invalid payment signature."
+        message: "Invalid payment signature.",
       });
     }
   } catch (error) {
     console.error("Error during payment verification:", error);
-    return res.status(500).json({ 
-      success: false, 
-      message: "Payment verification failed." 
+    return res.status(500).json({
+      success: false,
+      message: "Payment verification failed.",
     });
   }
 };
