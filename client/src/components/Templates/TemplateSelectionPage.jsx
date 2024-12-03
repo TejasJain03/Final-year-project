@@ -27,10 +27,12 @@ const templates = [
     image: college_Template,
     description: "A template suitable for college students.",
   },
-  // { id: 3, name: 'Modern', image: template_One },
-  // { id: 4, name: 'Simple', image: template_One },
-  // { id: 5, name: 'Executive', image: template_One },
-  // { id: 6, name: 'Tech', image: template_One },
+  {
+    id: 4,
+    name: "MBA",
+    image: mba_template,
+    description: "A template suitable for MBA students.",
+  },
 ];
 
 const TemplateSelectionPage = () => {
@@ -62,7 +64,6 @@ const TemplateSelectionPage = () => {
         localStorage.removeItem("authenticated");
         navigate("/auth/login"); // might have to change this
       }
-      navigate("/pricing");
       return false;
     }
   };
