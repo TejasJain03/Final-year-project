@@ -258,7 +258,6 @@ exports.sendResumeMail = async (userName, userEmail, template) => {
 
   try {
     const info = await transporter.sendMail(mailOptions);
-    console.log(info)
     // Remove the resume file after successful email send
     await unlinkFile(resumePath);
     console.log(`File at ${resumePath} successfully deleted after sending email.`);

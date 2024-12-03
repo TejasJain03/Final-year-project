@@ -2,8 +2,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from '../../utils/axiosConfig';
-import apiHandler from '../../utils/apiHandler';
+import axios from "../../utils/axiosConfig";
+import apiHandler from "../../utils/apiHandler";
 import { toast } from "react-toastify";
 
 const Login = () => {
@@ -12,7 +12,6 @@ const Login = () => {
     email: "",
     password: "",
   });
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,11 +22,15 @@ const Login = () => {
   };
 
   const loginApiCall = async () => {
-    const response = await axios.post('/auth/login', formData);
-    if(response.data.success) {
+    const response = await axios.post("/auth/login", formData);
+    if (response.data.success) {
+      // Set localStorage and display a toast
       localStorage.setItem("authenticated", true);
-      toast.success(response.data.message);
-      navigate('/');
+      toast.success(response.data.message, {
+        onClose: () => navigate("/"), // Navigate after toast is closed
+      });
+    } else {
+      toast.error("Login failed. Please try again.")
     }
   };
 
@@ -40,7 +43,6 @@ const Login = () => {
     const googleAuthURL = `http://localhost:8081/auth/google`;
     window.location.href = googleAuthURL;
   };
-  
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
@@ -88,7 +90,7 @@ const Login = () => {
 
             {/* Submit Button */}
             <div className="flex justify-center">
-              <button  className="px-8 py-3 rounded-md bg-blue-500 text-white font-bold transition duration-200 hover:bg-white hover:text-blue-500 border-2 border-transparent hover:border-blue-500 text-lg">
+              <button className="px-8 py-3 rounded-md bg-blue-500 text-white font-bold transition duration-200 hover:bg-white hover:text-blue-500 border-2 border-transparent hover:border-blue-500 text-lg">
                 <span className="inline-block mr-2">Login</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

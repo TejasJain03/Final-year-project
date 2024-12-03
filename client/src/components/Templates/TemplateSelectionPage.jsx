@@ -2,8 +2,8 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import template_One from "../../assets/templates/template1.jpg";
 import google_Template from "../../assets/templates/google-template.png";
-import college_Template from '../../assets/templates/template_Three.png'
-import mba_template from "../../assets/templates/mba_template.png"
+import college_Template from "../../assets/templates/template_Three.png";
+import mba_template from "../../assets/templates/mba_template.png";
 import { useEffect, useRef, useState } from "react";
 import axios from "../../utils/axiosConfig";
 import { toast } from "react-toastify";
@@ -60,7 +60,7 @@ const TemplateSelectionPage = () => {
       toast.error(error.response.data.message);
       if (error.response.data.status === "logout") {
         localStorage.removeItem("authenticated");
-        navigate("/auth/login");  // might have to change this
+        navigate("/auth/login"); // might have to change this
       }
       navigate("/pricing");
       return false;
@@ -68,14 +68,16 @@ const TemplateSelectionPage = () => {
   };
 
   const handleTemplateClick = async (templateId) => {
+    console.log(templateId)
     const isPremium = await checkPremium();
     if (isPremium) {
       navigate(`/create-resume?template=${templateId}`);
+    } else {
+      navigate("/pricing");
     }
   };
 
   useEffect(() => {
-    
     const handleClickOutside = (event) => {
       if (previewRef.current && !previewRef.current.contains(event.target)) {
         setPreviewImage(null);
