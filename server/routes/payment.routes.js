@@ -15,7 +15,7 @@ router.post(
   catchAsync(paymentControllers.createOrder)
 );
 router.post(
-  "/paymentverification",
+  "/paymentverification/:amount",
   isLoggedIn,
   catchAsync(paymentControllers.paymentVerification)
 );

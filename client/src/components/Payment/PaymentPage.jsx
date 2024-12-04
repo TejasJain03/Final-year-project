@@ -32,8 +32,7 @@ const PaymentPage = () => {
         name: "Resume Builder",
         description: "Subscription payment",
         order_id: response.data.id,
-        callback_url:
-          "http://localhost:8081/api/v1/payment/paymentverification", // Your backend endpoint for verification
+        callback_url: `http://localhost:8081/api/v1/payment/paymentverification/${amount}`, // Your backend endpoint for verification
         theme: {
           color: "#399cc",
         },

@@ -2,6 +2,7 @@ const ExpressError = require("../utils/ExpressError");
 const { sendResumeMail } = require("../utils/sendEmail");
 const path = require("path");
 const User = require("../models/users.model");
+const Payment = require("../models/payment.model");
 const {
   create_professional_template,
   create_google_template,
@@ -11,17 +12,21 @@ const {
 const axios = require("axios"); // Ensure Axios is installed for making API requests
 
 async function geminiFunction(data) {
-  const prompt = `You are an expert in creating ATS-friendly resumes. Please process the following resume data to make it fully compliant with ATS standards and optimized for a software developer role. Ensure the following:
-  1. Highlight modern and in-demand skills by enclosing them in strong HTML Tags (e.g., <strong>JavaScript</strong>, <strong>React</strong>).
-  2. Use concise and impactful language while preserving the structure and formatting of the input JSON.
-  3. Incorporate software development keywords that are relevant to modern technologies, frameworks, and methodologies (e.g., Agile, DevOps, CI/CD, etc.).
-  4. Do not include any text or explanation outside of the updated JSON object.
-  5. Retain the exact structure of the input JSON for seamless integration.
-  6. Ensure the content is tailored to align with the responsibilities, skills, and expectations of the role ${
-    data.role
-  }.
-  Here is the resume data:
-  ${JSON.stringify(data)}`;
+  const prompt = `You are an expert in creating ATS-friendly resumes. Please process the following resume data and make it fully compliant with ATS standards, optimized for the role specified. Ensure the following:
+
+1. Highlight modern and in-demand skills by enclosing them in strong HTML Tags (e.g., <strong>JavaScript</strong>, <strong>React</strong>).
+2. Use concise and impactful language while preserving the structure and formatting of the input JSON.
+3. Incorporate role-specific keywords that are relevant to modern technologies, frameworks, methodologies, and tools (e.g., Agile, DevOps, CI/CD, etc. for software roles, or specific tools for other roles like marketing or data analytics).
+4. Do not include any text or explanation outside of the updated JSON object.
+5. Retain the exact structure of the input JSON for seamless integration.
+6. Tailor the content to align with the responsibilities, skills, and expectations of the role sent in the request.
+
+Here is the role-specific ATS optimization for the resume:
+
+Role: ${data.role}
+
+Resume Data:
+${JSON.stringify(data)}`;
   const geminiApiUrl =
     "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyB6gVjEDQN2ZKX2Ph81gzS90_2YyHo61c4";
 
@@ -98,6 +103,15 @@ exports.createResume = async (req, res) => {
       saveAndGenerateRequest,
       saveAndGenerateResponse
     );
+    if (result) {
+      const paymentDetails = await Payment.findOne({ userId: req.user._id });
+      const requiredCredits = req.requiredCredits; // Assumes `checkCredits` middleware passed this value
+      // Deduct the credits
+      paymentDetails.credits -= requiredCredits;
+      // Save the updated payment details
+      await paymentDetails.save();
+      console.log("Updated payment details:", paymentDetails);
+    }
 
     res.status(200).json({
       status: "success",

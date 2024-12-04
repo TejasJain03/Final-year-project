@@ -27,11 +27,6 @@ const razorpay = new Razorpay({
 
 exports.createOrder = async (req, res) => {
   const userId = req.user.id; // Assuming `req.user` contains the authenticated user's details
-  const existingPayment = await Payment.findOne({ userId });
-  if (existingPayment) {
-    // If a payment record exists for the user, throw an error
-    throw new ExpressError(400, false, "User has already paid.");
-  }
   // If the user hasn't paid, proceed to create an order
   const options = {
     amount: req.body.amount * 100,
@@ -39,7 +34,6 @@ exports.createOrder = async (req, res) => {
     receipt: `paymentorder${userId}`,
   };
 
-  console.log(req.body.amount);
   const response = await razorpay.orders.create(options);
   if (response.error) {
     console.log(response.error);
@@ -54,9 +48,8 @@ exports.paymentVerification = async (req, res) => {
     razorpay_order_id,
     razorpay_payment_id,
     razorpay_signature,
-    premiumCategory,
+    
   } = req.body;
-
   try {
     // Create HMAC signature to validate authenticity
     const body = razorpay_order_id + "|" + razorpay_payment_id;
@@ -71,28 +64,36 @@ exports.paymentVerification = async (req, res) => {
     if (isAuthentic) {
       // Get the user ID from req.user
       const userId = req.user._id;
-      // Log payment to Payment model
-      await Payment.create({
-        userId: userId,
-        paymentDate: new Date(),
-        credits: req.body.amount == 500 ? 10 : 20,
-      });
+      // Determine credits based on the payment amount
+      const creditsToAdd = req.params.amount == 500 ? 10 : 20;
 
-      // Send single response with redirect URL
+      // Check if a payment record already exists for the user
+      const existingPayment = await Payment.findOne({ userId: userId });
+      if (existingPayment) {
+        // Add credits to the existing payment record
+        existingPayment.credits += creditsToAdd;
+        existingPayment.paymentDate = new Date(); // Update payment date if needed
+        await existingPayment.save();
+      } else {
+        // Create a new payment record
+        await Payment.create({
+          userId: userId,
+          paymentDate: new Date(),
+          credits: creditsToAdd,
+        });
+      }
+
+      // Send single response
       res.redirect(`${process.env.FRONTEND_URL}/templates`);
-      return res.json({
-        success: true,
-        message: "Payment verified, user upgraded to premium.",
-      });
     } else {
-      return res.json({
+      res.json({
         success: false,
         message: "Invalid payment signature.",
       });
     }
   } catch (error) {
     console.error("Error during payment verification:", error);
-    return res.status(500).json({
+    res.status(500).json({
       success: false,
       message: "Payment verification failed.",
     });

@@ -22,13 +22,16 @@ const Login = () => {
   };
 
   const loginApiCall = async () => {
+    console.log(formData)
+    console.log("first")
     const response = await axios.post("/auth/login", formData);
+    console.log(response)
     if (response.data.success) {
       localStorage.setItem("authenticated", true);
       toast.success(response.data.message, {
         onClose: () => navigate("/"), // Navigate after toast is closed
       });
-    } 
+    }
   };
 
   const handleSubmit = (e) => {
