@@ -141,29 +141,27 @@ export const COUNTRIES = {
   },
 };
 
+
 export const PLANS = [
   {
     plan: 1,
     name: "Pro",
     price: 500,
     features: [
-      "Unlimited resume templates",
-      "AI-powered content suggestions",
-      "Export to PDF and Word",
-      "Cover letter builder",
+      "10 credits",
+      "Remaining credits will be added to next subscription",
       "24/7 customer support",
     ],
-    notIncluded: ["Custom domain"],
+    notIncluded: [],
   },
   {
     plan: 2,
     name: "Enterprise",
     price: 1500,
     features: [
-      "All Pro features",
-      "Custom domain",
-      "Team collaboration",
-      "Analytics dashboard",
+      "20 credits",
+      "Remaining credits will be added to next subscription",
+      "24/7 customer support",
       "Priority support",
     ],
     notIncluded: [],
