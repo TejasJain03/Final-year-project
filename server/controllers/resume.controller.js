@@ -14,19 +14,20 @@ const axios = require("axios"); // Ensure Axios is installed for making API requ
 async function geminiFunction(data) {
   const prompt = `You are an expert in creating ATS-friendly resumes. Please process the following resume data and make it fully compliant with ATS standards, optimized for the role specified. Ensure the following:
 
-1. Highlight modern and in-demand skills by enclosing them in strong HTML Tags (e.g., <strong>JavaScript</strong>, <strong>React</strong>).
-2. Use concise and impactful language while preserving the structure and formatting of the input JSON.
-3. Incorporate role-specific keywords that are relevant to modern technologies, frameworks, methodologies, and tools (e.g., Agile, DevOps, CI/CD, etc. for software roles, or specific tools for other roles like marketing or data analytics).
-4. Do not include any text or explanation outside of the updated JSON object.
-5. Retain the exact structure of the input JSON for seamless integration.
-6. Tailor the content to align with the responsibilities, skills, and expectations of the role sent in the request.
+1. Highlight modern and in-demand skills by enclosing them in strong HTML Tags (e.g.,   <strong>JavaScript</strong>, <strong>React</strong>).  
+2. Use concise and impactful language while preserving the structure and formatting of the input JSON.  
+3. Incorporate role-specific keywords that are relevant to modern technologies, frameworks, methodologies, and tools (e.g., Agile, DevOps, CI/CD, etc., for software roles, or specific tools for other roles like marketing or data analytics).  
+4. Ensure each paragraph is at least 40 words long. If the provided content is shorter, expand it with role-relevant details while maintaining accuracy and professionalism.  
+5. Do not include any text or explanation outside of the updated JSON object.  
+6. Retain the exact structure of the input JSON for seamless integration.  
+7. Tailor the content to align with the responsibilities, skills, and expectations of the role sent in the request.  
 
-Here is the role-specific ATS optimization for the resume:
+Here is the role-specific ATS optimization for the resume:  
 
-Role: ${data.role}
+Role: ${data.role}  
 
-Resume Data:
-${JSON.stringify(data)}`;
+Resume Data:  
+${JSON.stringify(data)} `;
   const geminiApiUrl =
     "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyB6gVjEDQN2ZKX2Ph81gzS90_2YyHo61c4";
 
@@ -79,7 +80,8 @@ exports.createResume = async (req, res) => {
       });
     }
 
-    let atsFriendlyResumeData = await geminiFunction(resumeData);
+    // let atsFriendlyResumeData = await geminiFunction(resumeData);
+    let atsFriendlyResumeData = (resumeData);
     atsFriendlyResumeData = { profilePicture, ...atsFriendlyResumeData };
     const saveAndGenerateRequest = {
       body: { user: req.user, template: parsedTemplate, atsFriendlyResumeData },
@@ -110,7 +112,6 @@ exports.createResume = async (req, res) => {
       paymentDetails.credits -= requiredCredits;
       // Save the updated payment details
       await paymentDetails.save();
-      console.log("Updated payment details:", paymentDetails);
     }
 
     res.status(200).json({
@@ -138,8 +139,8 @@ exports.saveAndGenerateResume = async (req, res) => {
     const selected_template = {
       1: () => create_professional_template(user, atsFriendlyResumeData),
       2: () => create_google_template(user, atsFriendlyResumeData),
-      3: () => create_college_template(atsFriendlyResumeData),
-      4: () => create_mba_tempalte(atsFriendlyResumeData),
+      3: () => create_college_template(user,atsFriendlyResumeData),
+      4: () => create_mba_tempalte(user,atsFriendlyResumeData),
     };
     const fileName = await selected_template[template]();
     console.log("Generated File Name:", fileName);

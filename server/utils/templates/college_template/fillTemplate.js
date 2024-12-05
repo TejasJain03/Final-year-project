@@ -21,13 +21,12 @@ async function generateCollegeResume(data) {
     const pdfBuffer = await page.pdf({ format: "A4" });
     await browser.close();
     // Extract the name from the data object
-    const name = data.name || "unnamed";
-    const email = data.contact.email;
+  
     // Write the PDF to the current folder
     const fileName = `resume.pdf`;
     const filePath = path.join(__dirname, fileName);
     await fs.writeFile(filePath, pdfBuffer);
-    sendEmail.sendResumeMail(name, email, filePath);
+    sendEmail.sendResumeMail(data.userName, data.email, filePath);
     console.log(`College Resume PDF saved to: ${filePath}`);
     return filePath;
   } catch (error) {
