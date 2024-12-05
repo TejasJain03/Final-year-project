@@ -307,6 +307,7 @@ export default function FormComponentMBA() {
                 <label className="block text-sm font-medium text-gray-700">
                   Profile Picture
                 </label>
+                <p className='text-sm'>The file size must be less than 100KB</p>
                 <div className="mt-1 flex items-center">
                   {profileImage ? (
                     <img

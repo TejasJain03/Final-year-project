@@ -17,9 +17,15 @@ const FormPage = () => {
 
   return (
     <>
-      {TEMPLATE_FORMS[template] || (
-        <p>No template selected or invalid template number.</p>
-      )}
+      {template<=4?(
+        <>
+          <div className="mx-auto my-10 font-bold text-xl">
+            Fill the form accordingly. Refer the format as specified in the
+            fields.
+          </div>
+          {TEMPLATE_FORMS[template]}
+        </>
+      ): <p className="mx-auto text-2xl font-extrabold my-10">No template selected or invalid template number.</p>}
     </>
   );
 };

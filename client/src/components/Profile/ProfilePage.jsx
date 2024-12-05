@@ -59,6 +59,7 @@ export default function ProfilePage() {
       if(response.data.success) {
         const {user} = response.data;
         setUser(user);
+        console.log(user);
         setFormData(user.info);
         toast.success(response.data.message);
       }
@@ -136,10 +137,10 @@ export default function ProfilePage() {
               {user.email}
             </a>
             {/* yet to update in models and controllers and UI */}
-            {user.premiumPlan ? (
+            {user.credits>0 ? (
               <div className="flex items-center text-green-600">
                 <FontAwesomeIcon icon={faCrown} className="mr-2" />
-                <span className="font-semibold">{user.premiumPlan} Plan</span>
+                <span className="font-semibold">Total Credits: {user.credits}</span>
               </div>
             ) : (
               <Link

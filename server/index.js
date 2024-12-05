@@ -8,6 +8,7 @@ const session = require("express-session");
 require("dotenv").config();
 const GlobalErrorHandler = require("./utils/GlobalErrorHandler");
 const ExpressError = require("./utils/ExpressError");
+const compression = require("compression");
 
 const authRoutes = require("./routes/authRoutes");
 
@@ -39,9 +40,10 @@ app.use(
   })
 );
 
+app.use(cookieParser());
+// app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 
