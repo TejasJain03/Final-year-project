@@ -155,14 +155,20 @@
       <div class="section">
         <h2>EDUCATION</h2>
         <div class="clearfix">
-          <p>
-            <strong
-              >Bachelor of Engineering – Computer Science & Engineering</strong
-            >
-            <span class="right-align">2021 - Present</span><br />
-            Mangalore Institute of Technology & Engineering, Karnataka | CGPA:
-            8.8
-          </p>
+         <div class="section">
+  <h2>EDUCATION</h2>
+  {{#each education}}
+  <div class="clearfix">
+    <p>
+      <strong>{{degree}}</strong>
+      <span class="right-align">{{duration}}</span><br />
+      {{institution}}<br />
+      <em>{{score}}</em>
+    </p>
+  </div>
+  {{/each}}
+</div>
+
 
           <p>
             <strong>Junior College (12th)</strong>

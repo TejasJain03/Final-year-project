@@ -48,9 +48,7 @@ const Navbar = () => {
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center space-x-4">
-          <Link to="/features" className="text-gray-600 hover:text-blue-600">
-            Features
-          </Link>
+          
           <Link to="/templates" className="text-gray-600 hover:text-blue-600">
             Templates
           </Link>

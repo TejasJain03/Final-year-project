@@ -99,12 +99,16 @@
           <h1>{{name}}</h1>
           <div class="contact-info">
             <span class="bold-text">{{contact.phone}}</span><br />
-            <span class="bold-text">{{contact.email}}</span><br />
+            <span class="bold-text"
+              ><a href="mailto:{{contact.email}}">{{contact.email}}</a></span
+            >
+            <br />
             {{#each contact.links}}
             <span>{{name}}</span>
-            <a href="{{url}}" target="_blank" class="bold-text">{{url}}</a>{{#unless @last}}{{/unless}}<br />
+            <a href="{{url}}" target="_blank" class="bold-text">{{url}}</a
+            >{{#unless @last}}{{/unless}}<br />
             {{/each}}
-          </div>          
+          </div>
         </div>
         <img src="{{profilePicture}}" alt="Profile Picture" />
       </div>
@@ -122,7 +126,8 @@
           <p>
             <strong>{{degree}}</strong>
             <span class="right-align">{{duration}}</span><br />
-            {{{institution}}} | {{{details}}}
+            {{institution}}<br />
+            <em>{{score}}</em>
           </p>
         </div>
         {{/each}}
@@ -132,23 +137,27 @@
         <h2>SKILLS</h2>
         <div class="skills-content">
           <p>
-            <strong>Languages:</strong> {{#each skills.languages}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
+            <strong>Languages:</strong> {{#each
+            skills.languages}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
           </p>
           <p>
-            <strong>Interface:</strong> {{#each skills.interface}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
+            <strong>Interface:</strong> {{#each
+            skills.interface}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
           </p>
           <p>
-            <strong>Frameworks:</strong> {{#each skills.frameworks}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
+            <strong>Frameworks:</strong> {{#each
+            skills.frameworks}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
           </p>
           <p>
-            <strong>Database:</strong> {{#each skills.database}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
+            <strong>Database:</strong> {{#each
+            skills.database}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
           </p>
           <p>
-            <strong>Tools:</strong> {{#each skills.tools}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
+            <strong>Tools:</strong> {{#each skills.tools}}{{{this}}}{{#unless
+            @last}}, {{/unless}}{{/each}}
           </p>
         </div>
       </div>
-      
 
       <div class="section">
         <h2>INTERNSHIPS</h2>
@@ -185,7 +194,6 @@
           {{/each}}
         </ul>
       </div>
-      
     </div>
   </body>
 </html>
