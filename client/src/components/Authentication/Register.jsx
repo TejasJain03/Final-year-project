@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { Link, useNavigate } from "react-router-dom";
 import axios from '../../utils/axiosConfig';
 import apiHandler from '../../utils/apiHandler';
@@ -36,9 +36,9 @@ export default function Register() {
     apiHandler(registerApiCall, navigate)();
   };
 
-  const handleGoogleSignIn = () => {
-    console.log('Sign in with Google');
-  };
+  // const handleGoogleSignIn = () => {
+  //   console.log('Sign in with Google');
+  // };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
@@ -95,14 +95,14 @@ export default function Register() {
           </form>
 
           {/* Divider with OR */}
-          <div className="flex items-center py-4">
+          {/* <div className="flex items-center py-4">
             <div className="flex-1 border-t border-gray-300"></div>
             <span className="mx-4 text-gray-600">OR</span>
             <div className="flex-1 border-t border-gray-300"></div>
-          </div>
+          </div> */}
 
           {/* Google Sign In Button */}
-          <div className="py-5 flex justify-center">
+          {/* <div className="py-5 flex justify-center">
             <button
               className="transition duration-200 bg-black hover:bg-gray-800 focus:bg-gray-900 focus:shadow-sm focus:ring-4 focus:ring-gray-700 focus:ring-opacity-50 text-white px-4 py-3 rounded-lg text-lg shadow-sm hover:shadow-md font-semibold text-center inline-flex items-center justify-center"
               onClick={handleGoogleSignIn}
@@ -110,7 +110,7 @@ export default function Register() {
               <FontAwesomeIcon icon={faGoogle} className="mr-3" />
               <span>Sign in with Google</span>
             </button>
-          </div>
+          </div> */}
         </div>
 
         {/* Optional Footer */}

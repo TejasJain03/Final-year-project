@@ -13,24 +13,28 @@ const templates = [
     id: 1,
     name: "Professional",
     image: template_One,
+    credits: 2,
     description: "A professional template suitable for various industries.",
   },
   {
     id: 2,
     name: "Popular",
     image: google_Template,
+    credits: 5,
     description: "A template most suitable for FAANG companies.",
   },
   {
     id: 3,
     name: "College",
     image: college_Template,
+    credits: 9,
     description: "A template suitable for college students.",
   },
   {
     id: 4,
     name: "MBA",
     image: mba_template,
+    credits: 7,
     description: "A template suitable for MBA students.",
   },
 ];
@@ -69,7 +73,7 @@ const TemplateSelectionPage = () => {
   };
 
   const handleTemplateClick = async (templateId) => {
-    console.log(templateId)
+    console.log(templateId);
     const isPremium = await checkPremium();
     if (isPremium) {
       navigate(`/create-resume?template=${templateId}`);
@@ -114,6 +118,7 @@ const TemplateSelectionPage = () => {
                   {template.name}
                 </h2>
                 <p className="text-gray-600">{template.description}</p>
+                <p className="text-gray-400 text-md">Credits Required: {template.credits}</p>
                 <p
                   className="mt-2 text-blue-600 cursor-pointer"
                   onClick={() => handleTemplateClick(template.id)}

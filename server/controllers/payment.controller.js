@@ -44,12 +44,8 @@ exports.createOrder = async (req, res) => {
 };
 
 exports.paymentVerification = async (req, res) => {
-  const {
-    razorpay_order_id,
-    razorpay_payment_id,
-    razorpay_signature,
-    
-  } = req.body;
+  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
+    req.body;
   try {
     // Create HMAC signature to validate authenticity
     const body = razorpay_order_id + "|" + razorpay_payment_id;
@@ -65,7 +61,7 @@ exports.paymentVerification = async (req, res) => {
       // Get the user ID from req.user
       const userId = req.user._id;
       // Determine credits based on the payment amount
-      const creditsToAdd = req.params.amount == 500 ? 10 : 20;
+      const creditsToAdd = req.params.amount == 500 ? 10 : 35;
 
       // Check if a payment record already exists for the user
       const existingPayment = await Payment.findOne({ userId: userId });
@@ -84,7 +80,7 @@ exports.paymentVerification = async (req, res) => {
       }
 
       // Send single response
-      res.redirect(`${process.env.FRONTEND_URL}/templates`);
+      res.redirect(`http://localhost:8081/templates`);
     } else {
       res.json({
         success: false,

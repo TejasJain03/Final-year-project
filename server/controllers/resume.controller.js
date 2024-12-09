@@ -28,8 +28,7 @@ Role: ${data.role}
 
 Resume Data:  
 ${JSON.stringify(data)} `;
-  const geminiApiUrl =
-    "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyBVgaZ81mZ6qzrLQGQGzg0a0w0GVbAw3uU";
+  const geminiApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${process.env.GEMINI_API_KEY}`;
 
   const geminiRequestPayload = {
     contents: [
