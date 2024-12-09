@@ -1,53 +1,81 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cookieParser = require('cookie-parser');
-const cors = require('cors');
-require('dotenv').config();
-const authRoutes = require('./routes/authRoutes');
-const GlobalErrorHandler = require('./utils/GlobalErrorHandler');
-const ExpressError = require('./utils/ExpressError');
-
+const express = require("express");
+const mongoose = require("mongoose");
+const passport = require("passport");
 const app = express();
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const session = require("express-session");
+require("dotenv").config();
+const GlobalErrorHandler = require("./utils/GlobalErrorHandler");
+const ExpressError = require("./utils/ExpressError");
+const compression = require("compression");
+
+const authRoutes = require("./routes/authRoutes");
 
 // MongoDB connection
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
-    console.log('Connected to MongoDB');
-  } catch (error) {
-    console.log('Error connecting to MongoDB:', error);
+    mongoose.connect(process.env.MONGO_URI);
+    console.log("Connected to Mongo succesfully");
+  } catch (err) {
+    console.log("Error while connecting to database");
   }
 };
 connectDB();
 
-// CORS configuration
+const PORT = process.env.PORT || 5000;
+
 const corsOptions = {
-  origin: ['http://localhost:5173', 'http://localhost:5174'],  // Make sure this matches your frontend URL
+  origin: "http://localhost:5173",
+  // origin: 'https://resumatch.netlify.app',
+  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 };
-
 app.use(cors(corsOptions));
-app.use(express.json());
+
+app.use(
+  session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
 app.use(cookieParser());
+// app.use(compression());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
-// Routes
-app.use('/api/auth', authRoutes);
-
-// Basic route for testing
-app.get('/', (req, res) => {
-  res.json('Final Year Project Backend');
+app.get("/", (req, res) => {
+  res.json("Final Year Project");
 });
 
-// Handle 404 errors
-app.all('*', (req, res, next) => {
-  next(new ExpressError(404, 'Page not found'));
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/resume", require("./routes/resume.routes"));
+app.use("/api/v1/user", require("./routes/user.routes"));
+app.use("/api/v1/payment", require("./routes/payment.routes"));
+
+// wrong routes handler
+app.all("*", (req, res, next) => {
+  try {
+    new ExpressError(404, false, "Page not found");
+  } catch (error) {
+    next(error);
+  }
 });
 
-// Global error handler
 app.use(GlobalErrorHandler);
 
-// Start the server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(PORT, (req, res) => {
+  console.log(`Server running at port ${PORT}`);
+});
+
+app.use((req, res, next) => {
+  res.setTimeout(60000, () => {
+    console.log("Request timed out");
+    res.status(408).json({ status: "error", message: "Request timed out" });
+  });
+  next();
 });

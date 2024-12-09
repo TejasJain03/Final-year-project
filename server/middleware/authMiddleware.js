@@ -1,5 +1,7 @@
-const jwt = require('jsonwebtoken');
-const ExpressError = require('../utils/ExpressError');
+const jwt = require('jsonwebtoken')
+const User = require('../models/users.model')
+const ExpressError = require('../utils/ExpressError')
+require('dotenv').config()
 
 const protect = (req, res, next) => {
   const token = req.cookies.access_token;

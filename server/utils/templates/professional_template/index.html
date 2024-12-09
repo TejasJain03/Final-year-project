@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume</title>
+    <style>
+        /* Global Styles */
+        *{
+            box-sizing: border-box;
+            margin: 0px;
+            padding: 1px;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0px;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        h1, h2 {
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        h2 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        p {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        .container {
+            width: 210mm;
+            height: 297mm;
+            padding: 20px;
+            border: 1px solid black;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        /* Header Section */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px solid black;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .header-left {
+            text-align: left;
+        }
+
+        .header-right {
+            text-align: right;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            font-size: 12px;
+        }
+
+        /* Section Styles */
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 1px solid black;
+            margin-bottom: 10px;
+        }
+
+        /* Content Sections */
+        .section-content {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .section-content .left {
+            flex: 1;
+        }
+
+        .section-content .right {
+            text-align: right;
+            flex-basis: 150px;
+        }
+
+        .sub-section {
+            margin-bottom: 10px;
+        }
+
+        .sub-section-title {
+            font-weight: bold;
+        }
+
+        .skills ul {
+            list-style-type: none;
+            margin-bottom: 10px;
+        }
+
+        .skills li {
+            margin-bottom: 5px;
+        }
+
+        .projects ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <div class="header-left">
+                <p>[ Home Address ]</p>
+                <a href="#">www.github.com/yourprofile</a>
+            </div>
+            <div class="header-center">
+                <h1>Your Name</h1>
+            </div>
+            <div class="header-right">
+                <p>[ Phone Number ]</p>
+                <p>[ E-Mail Address ]</p>
+                <a href="#">www.yourwebsite.com</a>
+            </div>
+        </div>
+
+        <!-- Education Section -->
+        <div class="section">
+            <h2 class="section-title">Education</h2>
+            <div class="section-content">
+                <div class="left">
+                    <p>Princeton University</p>
+                    <p><strong>Major:</strong> Electrical Engineering</p>
+                    <p><strong>Certificate (Minor):</strong> Computer Science</p>
+                    <p><strong>Programming Coursework:</strong> Algorithms & Data Structures, Operating Systems, Networks, Computer Vision</p>
+                    <p><strong>EE Coursework:</strong> Embedded Systems, IoT, Computer Architecture, Circuits, Logic Design</p>
+                </div>
+                <div class="right">
+                    <p>Sept 2013 - June 2017</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Employment Section -->
+        <div class="section">
+            <h2 class="section-title">Employment</h2>
+
+            <!-- Job 1 -->
+            <div class="section-content">
+                <div class="left">
+                    <p><strong>Firmware Engineer, Intern</strong></p>
+                    <p>Stryd (startup) - Foot Pod (Wearable Power Meter for Running)</p>
+                    <ul>
+                        <li>Improved device's battery lifespan by 8% through integrating fuel gauge sensors.</li>
+                        <li>Utilized I2C protocol for a device driver that created a low-power state.</li>
+                        <li>Increased flash memory by 66% through redesigning storage systems.</li>
+                    </ul>
+                </div>
+                <div class="right">
+                    <p>June - Aug 2016</p>
+                </div>
+            </div>
+
+            <!-- Job 2 -->
+            <div class="section-content">
+                <div class="left">
+                    <p><strong>Software Developer, Intern</strong></p>
+                    <p>Autodesk - TinkerCad 3D Design and Printing Tool</p>
+                    <ul>
+                        <li>Integrated multi-touch gestures for 3D workspaces.</li>
+                        <li>Implemented a low-pass smoothing function for improved UX.</li>
+                        <li>Established remote testing using Docker and bash scripts.</li>
+                    </ul>
+                </div>
+                <div class="right">
+                    <p>June - Aug 2015</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Software Projects Section -->
+        <div class="section">
+            <h2 class="section-title">Software Projects</h2>
+
+            <!-- Project 1 -->
+            <div class="sub-section">
+                <p><strong>iOS Meme App</strong></p>
+                <ul>
+                    <li>Developed iOS app using Swift and Objective-C allowing users to create and share memes.</li>
+                    <li>Implemented persistent data storage and a RESTful backend server for meme generation.</li>
+                    <li><strong>Technologies Used:</strong> Swift, Obj-C, Python, SQLite, Cloud Storage</li>
+                </ul>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="sub-section">
+                <p><strong>Autonomous RC Car & Virtual Driving</strong></p>
+                <ul>
+                    <li>Designed PID speed control and implemented image processing for an RC car.</li>
+                    <li>Constructed a virtual driving experience via a web-based app, including camera views and steering.</li>
+                    <li><strong>Technologies Used:</strong> C, Python, Arduino, O-scope, PID Control</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Skills Section -->
+        <div class="section">
+            <h2 class="section-title">Skills</h2>
+            <div class="skills">
+                <ul>
+                    <li>Python, Swift, C, JavaScript, Git, Java, C++, SQL, MATLAB</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

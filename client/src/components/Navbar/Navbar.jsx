@@ -1,15 +1,41 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faSignOutAlt, faBars } from "@fortawesome/free-solid-svg-icons";
+import apiHandler from "../../utils/apiHandler";
+import axios from "../../utils/axiosConfig";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false); // State for mobile menu
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.get('/auth/check-auth');
+        if(response.data.success) {
+          localStorage.setItem("authenticated", true);
+        }
+      } catch (error) {
+        if(error.response.data.status === "logout") {
+          localStorage.removeItem("authenticated");
+        }
+      }
+    })();
+  }, [])
+  
+
   const handleLogout = () => {
-    console.log("User logged out");
-    // Add your logout logic here
+    apiHandler(async()=>{
+      const response = await axios.get('/auth/logout');
+      if(response.data.success) {
+        toast.success(response.data.message);
+        navigate('/auth/login');
+        localStorage.removeItem("authenticated");
+      }
+    }, navigate)();
   };
 
   return (
@@ -22,16 +48,14 @@ const Navbar = () => {
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center space-x-4">
-          <Link to="/features" className="text-gray-600 hover:text-blue-600">
-            Features
-          </Link>
+          
           <Link to="/templates" className="text-gray-600 hover:text-blue-600">
             Templates
           </Link>
           <Link to="/pricing" className="text-gray-600 hover:text-blue-600">
             Pricing
           </Link>
-          <div className="user-icon relative">
+          {localStorage.getItem("authenticated") && <div className="user-icon relative">
             <div
               className="w-10 h-10 bg-gray-300 rounded-full overflow-hidden border-2 border-blue-500 cursor-pointer"
               onMouseOver={() => setShowDropdown(true)}
@@ -67,7 +91,7 @@ const Navbar = () => {
                 </button>
               </div>
             )}
-          </div>
+          </div>}
         </div>
 
         {/* Mobile Menu Button */}

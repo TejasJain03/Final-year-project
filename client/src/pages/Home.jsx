@@ -1,17 +1,33 @@
-import { Link } from "react-router-dom";
+/* eslint-disable no-unused-vars */
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFileAlt,
   faEdit,
-  faDownload,
+  faEnvelope,
+  faImages,
 } from "@fortawesome/free-solid-svg-icons";
+import template1 from "../assets/templates/template1.jpg";
+import resumeCollage from "../assets/templates/resume-collage.jpg";
+import axios from '../utils/axiosConfig';
+import apiHandler from '../utils/apiHandler';
+import { toast } from "react-toastify";
 
 export default function LandingPage() {
+  const navigate = useNavigate();
   const templates = [
-    "https://cmsv2-assets.apptegy.net/uploads/4768/file/2513628/989c5f07-c457-4deb-9d41-8cb32a0d7009.png",
-    "https://templates-kickresume-com.s3.eu-west-2.amazonaws.com/sharp/small.png",
-    "https://marketplace.canva.com/EAFSLI7n6x4/1/0/1131w/canva-minimalist-white-and-grey-professional-resume-KjN0Z-p3Mo8.jpg",
+    template1,
   ];
+
+  const checkAuth = () => {
+    apiHandler(async()=>{
+      const response = await axios.get('/auth/check-auth');
+      if(response.data.success) {
+        toast.success(response.data.message);
+      }
+    }, navigate)();
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Main Content */}
@@ -83,13 +99,12 @@ export default function LandingPage() {
               </div>
               <div className="text-center">
                 <FontAwesomeIcon
-                  icon={faDownload}
+                  icon={faEnvelope}
                   className="text-blue-600 h-12 w-12 mb-4"
                 />
-                <h3 className="text-xl font-semibold mb-2">Instant Download</h3>
+                <h3 className="text-xl font-semibold mb-2">Email Delivery</h3>
                 <p className="text-gray-600">
-                  Download your resume in multiple formats, ready to send to
-                  employers.
+                  Receive your professionally crafted resume directly in your email inbox.
                 </p>
               </div>
             </div>
@@ -106,7 +121,7 @@ export default function LandingPage() {
               {templates.map((i, index) => (
                 <div
                   key={i}
-                  className="bg-white rounded-lg shadow-md overflow-hidden"
+                  className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 ease-in-out transform hover:scale-105"
                 >
                   <div style={{ height: "300px" }}>
                     <img
@@ -116,19 +131,30 @@ export default function LandingPage() {
                     />
                   </div>
                   <div className="p-4">
-                    <h3 className="text-xl font-semibold mb-2">Template {index+1}</h3>
+                    <h3 className="text-xl font-semibold mb-2">Professional</h3>
                     <p className="text-gray-600 mb-4">
                       A professional template suitable for various industries.
                     </p>
-                    <Link
-                      to={`/template/${i}`}
-                      className="text-blue-600 font-semibold hover:underline"
-                    >
-                      Use This Template
-                    </Link>
                   </div>
                 </div>
               ))}
+              <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105">
+                <div style={{ height: "300px" }} className="flex items-center justify-center bg-gray-100">
+                  <img src={resumeCollage} alt="resume collage" className="h-full w-auto mx-auto"/>
+                </div>
+                <div className="p-4">
+                  <h3 className="text-xl font-semibold mb-2">More Templates</h3>
+                  <p className="text-gray-600 mb-4">
+                    Explore our full collection of professional resume templates.
+                  </p>
+                  <Link
+                    to="/templates"
+                    className="text-blue-600 font-semibold hover:underline"
+                  >
+                    View All Templates
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -140,15 +166,14 @@ export default function LandingPage() {
               Ready to Build Your Resume?
             </h2>
             <p className="text-xl mb-8">
-              Join thousands of job seekers who have successfully landed their
-              dream jobs.
+              Join thousands of job seekers who have successfully received their professionally crafted resumes and landed their dream jobs.
             </p>
-            <Link
-              to="/auth/register"
+            <button
+              onClick={checkAuth}
               className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold text-lg hover:bg-blue-100 transition duration-300"
             >
               Sign Up Now
-            </Link>
+            </button>
           </div>
         </section>
       </main>

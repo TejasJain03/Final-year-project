@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume</title>
+    <style>
+      /* Page Margins for PDF Export */
+      @page {
+        margin-top: 0.51in;
+        margin-left: 0.76in;
+        margin-right: 0.51in;
+        margin-bottom: 1.55in;
+      }
+
+      body {
+        font-family: "Times New Roman", Times, serif;
+        background-color: #ffffff;
+        color: #000000;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 750px;
+        margin: 0 auto;
+        padding: 0;
+        position: relative;
+      }
+
+      /* Header and Profile Photo Positioning */
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .header img {
+        width: 100px; /* Increase width for passport size look */
+        height: 100px; /* Adjust height for rectangular shape */
+        object-fit: cover;
+        border-radius: 5px; /* Optional: adds slight rounding to the corners */
+      }
+
+      h1 {
+        font-size: 28px;
+        font-weight: bold;
+        margin: 0;
+        color: #000;
+      }
+
+      /* Section Titles */
+      h2 {
+        font-size: 18px;
+        font-weight: bold;
+        margin: 12px 0 6px;
+        color: #4a90e2;
+      }
+
+      /* Text and Layout Styling */
+      .contact-info,
+      .address,
+      p,
+      .skills-content,
+      .section p,
+      .section ul,
+      .section li {
+        font-size: 14px;
+        line-height: 1.15;
+        margin: 4px 0;
+        text-align: justify;
+        color: #000;
+      }
+
+      .contact-info a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      .contact-info a:hover {
+        text-decoration: underline;
+      }
+      .address {
+        margin-top: 5px;
+      }
+      hr {
+        border: none;
+        border-top: 1px solid #ccc;
+        margin: 10px 0;
+      }
+
+      /* Right-Aligned Date Styling */
+      .right-align {
+        float: right;
+        font-size: 14px;
+        font-style: italic;
+        color: #333;
+      }
+
+      /* Clear floats for sections */
+      .clearfix::after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header with Profile Photo on the Right -->
+      <div class="header">
+        <div>
+          <h1>Tejas Jain</h1>
+          <div class="contact-info">
+            +91-9820343055 | tejaskjain2003@gmail.com<br />
+            <a
+              href="https://www.linkedin.com/in/tejas-jain-1688a3234/"
+              target="_blank"
+              >LinkedIn</a
+            >
+            |
+            <a href="https://github.com/TejasJain03" target="_blank">GitHub</a>
+            |
+            <a href="https://tejasjain03.netlify.app" target="_blank"
+              >Portfolio</a
+            >
+          </div>
+          <div class="address">
+            Sudharma Nilaya, Bangerabettu, Karkala Taluk, Mudar, Bajegoli,
+            Udupi, Karnataka, 574122
+          </div>
+        </div>
+        <img
+          src="https://bizimages.withfloats.com/actual/64e38a7bbd7e06000130503c.jpg"
+          alt="Profile Picture"
+        />
+        <!-- Placeholder for Profile Image on Right -->
+      </div>
+      <hr />
+
+      <!-- Summary -->
+      <div class="section">
+        <h2>SUMMARY</h2>
+        <p>
+          A computer science student with a solid foundation in MERN stack web
+          development, demonstrating a strong interest in Data Structures,
+          Algorithms, Artificial Intelligence, and Machine Learning. Practical
+          experience in creating dynamic web applications, with a commitment to
+          mastering technical skills and contributing meaningfully to the field.
+          Eager to continue learning and applying knowledge to real-world
+          challenges.
+        </p>
+      </div>
+
+      <!-- Education -->
+      <div class="section">
+        <h2>EDUCATION</h2>
+        <div class="clearfix">
+         <div class="section">
+  <h2>EDUCATION</h2>
+  {{#each education}}
+  <div class="clearfix">
+    <p>
+      <strong>{{degree}}</strong>
+      <span class="right-align">{{duration}}</span><br />
+      {{institution}}<br />
+      <em>{{score}}</em>
+    </p>
+  </div>
+  {{/each}}
+</div>
+
+
+          <p>
+            <strong>Junior College (12th)</strong>
+            <span class="right-align">2020 - 2021</span><br />
+            Royal College of Arts, Science and Commerce, Thane, Maharashtra |
+            Percentage: 88%
+          </p>
+
+          <p>
+            <strong>Secondary School (SSLC)</strong>
+            <span class="right-align">2018 - 2019</span><br />
+            N.L. Dalmia High School, Thane, Maharashtra | Percentage: 95%
+          </p>
+        </div>
+      </div>
+
+      <!-- Skills -->
+      <div class="section">
+        <h2>SKILLS</h2>
+        <div class="skills-content">
+          <p><strong>Languages:</strong> Java, Python, JavaScript, C</p>
+          <p><strong>Interface:</strong> HTML, CSS</p>
+          <p><strong>Frameworks:</strong> Tailwind CSS, React, Express</p>
+          <p><strong>Database:</strong> MongoDB, SQL</p>
+          <p>
+            <strong>Tools:</strong> Postman, Vercel, Netlify, Rapid API, Git,
+            Github, Visual Studio Code
+          </p>
+        </div>
+      </div>
+
+      <!-- Internship -->
+      <div class="section">
+        <h2>INTERNSHIP</h2>
+        <div class="clearfix">
+          <p>
+            <strong>Front End Development</strong>
+            <span class="right-align">July 2023 - August 2023</span><br />
+            Completed a 6-week Front End Development internship with Edunet
+            Foundation under IBM’s SkillsBuild and AICTE. The program enhanced
+            skills in HTML, CSS, and ReactJs, culminating in a project to build
+            a clone website. Received a completion letter, recognizing
+            achievements and practical application of these technologies.
+          </p>
+
+          <p>
+            <strong>Full Stack Development</strong>
+            <span class="right-align">November 2023 - December 2023</span><br />
+            Completed a 4-week internship at Winco Software Solutions in full
+            stack development, with a focus on payment integration and email
+            services. Gained hands-on experience in both front-end and back-end
+            technologies, contributing to the development of robust and
+            user-friendly web applications.
+          </p>
+        </div>
+      </div>
+
+      <!-- Projects -->
+      <div class="section">
+        <h2>PROJECTS</h2>
+        <div class="clearfix">
+          <p>
+            <strong>MMC Website</strong>
+            <span class="right-align">June 2024 - July 2024</span><br />
+            Technologies: HTML, CSS and Javascript<br />
+            The Mashariq Al Mithalia Company website is a fully responsive site
+            built with HTML, CSS, and JavaScript and enhanced by GSAP animations
+            for dynamic user interfaces. Deployed with a custom domain, this
+            project showcases excellence in frontend development.
+          </p>
+
+          <p>
+            <strong>TEDxMITE Website</strong>
+            <span class="right-align">September 2023 - December 2023</span
+            ><br />
+            Technologies: ReactJs and Tailwind CSS<br />
+            The TEDxMITE website is built with React.js and Tailwind CSS,
+            featuring sleek animations and ensuring full responsiveness across
+            devices. The site seamlessly integrates basic and advanced
+            animations, enhancing the user experience. Deployed with a focus on
+            performance, it offers a modern and intuitive interface that engages
+            users while maintaining consistent responsiveness.
+          </p>
+
+          <p>
+            <strong>EventEase Website</strong>
+            <span class="right-align">November 2023 - December 2023</span><br />
+            Technologies: ReactJs, Express, MongoDB, NodeJs<br />
+            EventEase: Elevate your event planning with our MERN stack-powered
+            platform. Seamlessly create, organize, and manage events with
+            integrated ticketing, pricing categories, and secure payment options
+            via Razorpay. The platform features JWT authentication for robust
+            security, ensuring a safe and streamlined experience for both
+            organizers and attendees.
+          </p>
+        </div>
+      </div>
+
+      <!-- Achievements -->
+      <div class="section">
+        <h2>ACHIEVEMENTS & ACTIVITIES</h2>
+        <ul>
+          <li>
+            Coordinated a coding event titled "CODE RELAY" at the college,
+            organized by the CSE department and CSI
+          </li>
+          <li>Website Head for TEDxMITE held in December 2023</li>
+          <li>
+            Advanced to the finals in the 36-hour National-Level Hack to Future
+            2.0 Hackathon at SJEC.
+          </li>
+          <li>
+            Secured 2nd place in UI-War, a 6-hour front-end hackathon, building
+            a luxury watch e-commerce site (CSI, MITE).
+          </li>
+          <li>Secured 4th place in CTF event by Crypton Club (MITE).</li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

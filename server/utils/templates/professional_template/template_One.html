@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resume</title>
+  <style>
+    /* Global Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0px;
+      padding: 1px;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0px;
+      padding: 0;
+      line-height: 1.2;
+    }
+
+    h1,
+    h2 {
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      font-size: 20px;
+    }
+
+    h2 {
+      font-size: 15px;
+      margin-bottom: 2px;
+    }
+
+    p {
+      margin: 0;
+      padding: 0;
+      /* font-size: 12px; */
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    .container {
+      /* width: 210mm;
+      height: 297mm; */   /* default A4 size */
+      width: 210mm;
+      height: 296mm;
+      padding: 20px;
+      /* border: 1px solid black; */
+      margin: 0 auto;
+      box-sizing: border-box;
+      font-family: 'Times New Roman', Times, serif;
+    }
+
+    /* Header Section */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 2px solid black;
+      padding-bottom: 5px;
+      margin-bottom: 10px;
+    }
+
+    .header-left {
+      text-align: left;
+    }
+
+    .header-right {
+      text-align: right;
+    }
+
+    .header h1 {
+      font-size: 25px;
+      letter-spacing: 0px;
+    }
+
+    .header p {
+      font-size: 12px;
+    }
+
+    /* Section Styles */
+    .section {
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-weight: bold;
+      text-transform: uppercase;
+      border-bottom: 1px solid black;
+      margin-bottom: 5px;
+    }
+
+    /* Content Sections */
+    .section-content {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .section-content .left {
+      flex: 1;
+    }
+
+    .section-content .right {
+      text-align: right;
+      flex-basis: 150px;
+    }
+
+    .sub-section {
+      margin-bottom: 2px;
+    }
+
+    .sub-section-title {
+      font-weight: bold;
+    }
+
+    .skills ul {
+      list-style-type: none;
+      margin-bottom: 1px;
+    }
+
+    .skills li {
+      margin-bottom: 0px;
+    }
+
+    .projects ul {
+      list-style-type: disc;
+      margin-left: 20px;
+    }
+    .duration {
+      font-style: italic;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Header Section -->
+    <div class="header">
+      <div class="header-left">
+        <p>
+          {{{city}}}, {{{state}}}, {{{country}}}
+        </p>
+        <a href="{{{github}}}">{{{github}}}</a>
+      </div>
+      <div class="header-center">
+        <h1>{{{userName}}}</h1>
+      </div>
+      <div class="header-right">
+        <p>Phone Number: {{{phoneNumber}}}</p>
+        <p><a href="mailto:{{{email}}}">{{{email}}}</a></p>
+        <p><a href="{{{linkedin}}}">{{{linkedin}}}</a></p>
+      </div>
+    </div>
+
+    <!-- Education Section -->
+    <div class="section">
+      <h2 class="section-title">Education</h2>
+      <div class="section-content">
+        <div class="left">
+          <p><strong>{{{education.institution}}}</strong></p>
+          <p><strong>Major:</strong> {{{education.major}}}</p>
+        </div>
+        <div class="right">
+          <p class="duration">{{{education.duration}}}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Employment Section -->
+    <div class="section">
+      <h2 class="section-title">Employment</h2>
+
+      <!-- Job 1 -->
+      <div class="section-content">
+        <div class="left">
+          <p><strong>{{{job.job1.title}}}</strong></p>
+          <p>{{{job.job1.company}}}</p>
+          <ul>
+            <li>{{{job.job1.responsibility1}}}</li>
+            <li>{{{job.job1.responsibility2}}}</li>
+            <li>{{{job.job1.responsibility3}}}</li>
+          </ul>
+        </div>
+        <div class="right">
+          <p class="duration">{{{job.job1.duration}}}</p>
+        </div>
+      </div>
+
+      <!-- Job 2 -->
+      <div class="section-content">
+        <div class="left">
+          <p><strong>{{{job.job2.title}}}</strong></p>
+          <p>{{{job.job2.company}}}</p>
+          <ul>
+            <li>{{{job.job2.responsibility1}}}</li>
+            <li>{{{job.job2.responsibility2}}}</li>
+            <li>{{{job.job2.responsibility3}}}</li>
+          </ul>
+        </div>
+        <div class="right">
+          <p class="duration">{{{job.job2.duration}}}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Software Projects Section -->
+    <div class="section">
+      <h2 class="section-title">Software Projects</h2>
+
+      <!-- Project 1 -->
+      <div class="sub-section">
+        <p><strong>{{{projects.project1.title}}}</strong></p>
+        <ul>
+          <li>{{{projects.project1.description1}}}</li>
+          <li>{{{projects.project1.description2}}}</li>
+          <li>
+            <strong>Technologies Used:</strong>
+            {{#each projects.project1.technologies}} {{{this}}}, {{/each}}
+          </li>
+        </ul>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="sub-section">
+        <p><strong>{{{projects.project2.title}}}</strong></p>
+        <ul>
+          <li>{{{projects.project2.description1}}}</li>
+          <li>{{{projects.project2.description2}}}</li>
+          <li>
+            <strong>Technologies Used:</strong> 
+            {{#each projects.project2.technologies}} {{{this}}}, {{/each}}
+          </li>
+        </ul>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="sub-section">
+        <p><strong>{{{projects.project3.title}}}</strong></p>
+        <ul>
+          <li>{{{projects.project3.description1}}}</li>
+          <li>{{{projects.project3.description2}}}</li>
+          <li>
+            <strong>Technologies Used:</strong> 
+            {{#each projects.project3.technologies}} {{{this}}}, {{/each}}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Skills Section -->
+    <div class="section">
+      <h2 class="section-title">Skills</h2>
+      <div class="skills">
+        <ul>
+          {{#each skills}} {{{this}}}, {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

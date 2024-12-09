@@ -1,0 +1,91 @@
+{
+  "template": 3,
+  "name": "Tejas Jain",
+  "contact": {
+    "phone": "+91-9820343055",
+    "email": "tejaskjain2003@gmail.com",
+    "links": [
+      {
+        "name": "LinkedIn",
+        "url": "https://www.linkedin.com/in/tejas-jain-1688a3234/"
+      },
+      {
+        "name": "GitHub",
+        "url": "https://github.com/TejasJain03"
+      },
+      {
+        "name": "Portfolio",
+        "url": "https://tejasjain03.netlify.app"
+      }
+    ]
+  },
+  "address": "Sudharma Nilaya, Bangerabettu, Karkala Taluk, Mudar, Bajegoli, Udupi, Karnataka, 574122",
+  "profileImage": "profile.jpg",
+  "summary": "Motivated Computer Science student with practical experience in <strong>full-stack development</strong> and a strong focus on <strong>MongoDB</strong>, <strong>MERN stack</strong> technologies, <strong>AI</strong> and <strong>Machine Learning</strong>. Proven ability to develop dynamic web applications, optimize databases, and enhance user experiences. Adept at collaborating on cross-functional teams to create scalable solutions. Committed to continuous learning and applying knowledge in real-world software development.",
+  "education": [
+    {
+      "degree": "Bachelor of Engineering – Computer Science & Engineering",
+      "duration": "2021 - Present",
+      "institution": "Mangalore Institute of Technology & Engineering, Karnataka",
+      "score": "CGPA: 8.8"
+    },
+    {
+      "degree": "Junior College (12th)",
+      "duration": "2020 - 2021",
+      "institution": "Royal College of Arts, Science and Commerce, Thane, Maharashtra",
+      "score": "Percentage: 88%"
+    },
+    {
+      "degree": "Secondary School (SSLC)",
+      "duration": "2018 - 2019",
+      "institution": "N.L. Dalmia High School, Thane, Maharashtra",
+      "score": "Percentage: 95%"
+    }
+  ],
+  "skills": {
+    "languages": ["Java", "Python", "JavaScript", "C"],
+    "interface": ["HTML", "CSS"],
+    "frameworks": ["React", "Tailwind CSS", "Express", "Node.js"],
+    "database": ["MongoDB", "SQL"],
+    "tools": ["Postman", "Vercel", "Netlify", "Rapid API", "Git", "Github", "Visual Studio Code"]
+  },
+  "internships": [
+    {
+      "title": "Front End Development Intern",
+      "duration": "July 2023 - August 2023",
+      "description": "Completed a <strong>6-week internship</strong> focused on <strong>front-end development</strong>, building user-centric websites using <strong>HTML</strong>, <strong>CSS</strong>, and <strong>React.js</strong>. Worked on a project to create a clone website, implementing modern design principles and web standards. Enhanced skills in responsive design, web performance optimization, and dynamic content presentation."
+    },
+    {
+      "title": "Full Stack Development Intern",
+      "duration": "November 2023 - December 2023",
+      "description": "Completed a <strong>4-week internship</strong> with <strong>Winco Software Solutions</strong>, gaining hands-on experience in both <strong>front-end</strong> and <strong>back-end development</strong>. Focused on <strong>payment integration</strong> using <strong>MongoDB</strong> for database management, implementing <strong>JWT authentication</strong>, and integrating <strong>email services</strong> for secure transactions."
+    }
+  ],
+  "projects": [
+    {
+      "title": "MMC Website",
+      "duration": "June 2024 - July 2024",
+      "technologies": ["HTML", "CSS", "JavaScript"],
+      "description": "Developed a fully responsive <strong>website</strong> for <strong>Mashariq Al Mithalia Company</strong> using <strong>HTML</strong>, <strong>CSS</strong>, and <strong>JavaScript</strong>. The site features <strong>GSAP animations</strong> for dynamic user interactions and is deployed with a custom domain. Focused on web performance and accessibility."
+    },
+    {
+      "title": "TEDxMITE Website",
+      "duration": "September 2023 - December 2023",
+      "technologies": ["ReactJs", "Tailwind CSS"],
+      "description": "Built the <strong>TEDxMITE</strong> website using <strong>React.js</strong> and <strong>Tailwind CSS</strong>. Integrated <strong>animations</strong>, enhanced <strong>user interface</strong> and ensured the site was fully responsive across devices. Optimized performance for high-traffic events."
+    },
+    {
+      "title": "EventEase Website",
+      "duration": "November 2023 - December 2023",
+      "technologies": ["ReactJs", "Express", "MongoDB", "NodeJs"],
+      "description": "Created the <strong>EventEase platform</strong> using <strong>MERN stack</strong> (MongoDB, Express, React, Node.js). Integrated <strong>secure payment systems</strong>, <strong>ticketing</strong> features, and <strong>event management tools</strong>. Used <strong>JWT authentication</strong> for robust security, enhancing the platform's functionality and user experience."
+    }
+  ],
+  "achievements": [
+    "Coordinated a coding event titled 'CODE RELAY' at the college, organized by the CSE department and CSI.",
+    "Website Head for <strong>TEDxMITE</strong>, December 2023.",
+    "Advanced to the finals in the <strong>36-hour National-Level Hack to Future 2.0 Hackathon</strong> at SJEC.",
+    "Secured <strong>2nd place</strong> in <strong>UI-War</strong>, a 6-hour front-end hackathon, building a luxury watch e-commerce site (CSI, MITE).",
+    "Secured <strong>4th place</strong> in the <strong>CTF event</strong> by Crypton Club (MITE)."
+  ]
+}

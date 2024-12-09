@@ -12,7 +12,6 @@ const Footer = () => {
             <div>
               <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
               <ul className="space-y-2">
-                <li><Link to="#features" className="text-gray-400 hover:text-white">Features</Link></li>
                 <li><Link to="#templates" className="text-gray-400 hover:text-white">Templates</Link></li>
                 <li><Link to="#pricing" className="text-gray-400 hover:text-white">Pricing</Link></li>
               </ul>
@@ -24,7 +23,7 @@ const Footer = () => {
             </div>
           </div>
           <div className="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400">
-            <p>&copy; 2023 ResumeBuilder. All rights reserved.</p>
+            <p>&copy; 2024 ResumeBuilder. All rights reserved.</p>
           </div>
         </div>
       </footer>

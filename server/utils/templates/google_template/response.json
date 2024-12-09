@@ -1,0 +1,52 @@
+{
+    "template": 2,
+    "summary": "A passionate software developer who has a passion for building scalable and efficient software solutions. Willing to learn new technologies and improve my skills.",
+    "experience": [
+        {
+            "company": "Accenture",
+            "location": "Bangalore",
+            "jobTitle": "Software Developer",
+            "startDate": "Oct 2024",
+            "endDate": "Present",
+            "description": "Working on backend services and APIs using Node.js and MongoDB. Also worked on frontend using React."
+        },
+        {
+            "company": "TCS",
+            "location": "Bangalore",
+            "jobTitle": "Software Developer",
+            "startDate": "Oct 2024",
+            "endDate": "Present",
+            "description": "Working on backend services and APIs using Node.js and MongoDB. Also worked on frontend using React."
+        }
+    ],
+    "education": [
+        {
+            "school": "Mangalore Institute of Technology & Engineering",
+            "location": "Moodbidri",
+            "degree": "B.Tech in Computer Science",
+            "startDate": "Aug 2020",
+            "endDate": "Jun 2024",
+            "description": "Completed with distinction."
+        }
+    ],
+    "projects": [
+        {
+            "name": "Resume Builder",
+            "technologies": ["Node.js", "MongoDB", "React"],
+            "description": "Allows users to generate dynamic resumes."
+        },
+        {
+            "name": "Portfolio Website",
+            "technologies": ["React"],
+            "description": "Allows users to generate dynamic resumes."
+        },
+        {
+            "name": "E-Commerce Website",
+            "technologies": ["Node.js", "MongoDB", "React"],
+            "description": "Allows users to generate dynamic resumes. This is a full stack project."
+        }
+    ],
+    "skills": ["JavaScript", "Node.js", "MongoDB", "React"],
+    "awards": ["Dean’s List 2022", "Hackathon Winner 2023"],
+    "languages": ["English", "Hindi", "Kannada"]
+}

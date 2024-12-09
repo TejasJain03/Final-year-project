@@ -1,0 +1,84 @@
+{
+  "template": 4,
+  "name": "Venkataramana Shettigar",
+  "phone1": "+91-9008162519",
+  "phone2": "9141129037",
+  "email": "venkataramanashettigar216@gmail.com",
+  "linkedin": "https://www.linkedin.com/in/venkataramana-shettigar",
+  "address": "Golidadi House, Sangabettu Village, Siddakatte Post, Bantwal Taluk, DK District, Karnataka, India, 574237",
+  "profilePicture": "https://example.com/profile.jpg",
+  "profileSummary": "As a fresher to the professional world, I am enthusiastic about securing a growth-oriented position within a renowned organization. I am eager to contribute my hard work and skills towards the improvement and success of the organization. My focus lies on finding an entry-level opportunity in the Finance field, where I can effectively apply the extensive knowledge that have acquired during my MBA studies.",
+  "education": [
+    {
+      "degree": "MBA in Finance & Marketing",
+      "duration": "2021 - 2023",
+      "institution": "Mangalore Institute of Technology & Engineering, Karnataka",
+      "details": "CGPA: 8.33"
+    },
+    {
+      "degree": "Bachelor of Commerce (B.Com)",
+      "duration": "2018 - 2021",
+      "institution": "Mangalore University, Karnataka",
+      "details": "CGPA: 9.21"
+    },
+    {
+      "degree": "PUC (12th Standard)",
+      "duration": "2017 - 2019",
+      "institution": "Govt Pre-University College, Siddakatte",
+      "details": "Percentage: 91.33%"
+    },
+    {
+      "degree": "SSLC (10th Standard)",
+      "duration": "2015 - 2017",
+      "institution": "Govt High School, Siddakatte",
+      "details": "Percentage: 88.16%"
+    }
+  ],
+  "keySkills": [
+    "Problem-Solving",
+    "Time Management",
+    "Adaptability",
+    "Good Communication Skills",
+    "Initiative"
+  ],
+  "computerSkills": ["MS Excel", "MS Word", "Tally", "MS PowerPoint"],
+  "internship": {
+    "company": "CDYMAX (India) Pharma Pvt. Ltd.",
+    "details": [
+      "Coordinated with various departments to ensure smooth organizational processes.",
+      "Learned Tally software and gained a basic understanding of GST compliance."
+    ]
+  },
+  "projects": [
+    {
+      "title": "Enhancing Healthcare Services in Rural Areas",
+      "description": "Led a project aimed at improving primary healthcare centers (PHCs) in Dakshina Kannada. Responsibilities included gathering and analyzing data on current PHC operations, identifying areas for improvement, and developing strategies to enhance healthcare services. Presented findings and recommendations to stakeholders and local health authorities."
+    },
+    {
+      "title": "Evaluating Arbitrage Opportunities in Global Currencies",
+      "description": "Explored arbitrage opportunities in the Indian foreign exchange market by analyzing currency price discrepancies across different platforms. Monitored currency prices, performed statistical analyses to identify arbitrage opportunities, and prepared reports on findings and strategies."
+    }
+  ],
+  "certifications": [
+    "Business Analytics with Excel - Simplilearn",
+    "AI & Industry 4.0 - MITE Workshop",
+    "Digital Marketing Basics - GL Academy",
+    "Logistics Management - GL Academy"
+  ],
+  "volunteerWork": "During 1st Semester of MBA with guidance of the mentor me and my team conduct the “Plastic Awareness Campaign” at Kallamudkur Village. It was the one-week campaign. Our main intention is to give the awareness about Plastic usage and minimize the usage of plastic by some suggestion. I learn team coordination as leader, Pre-Plans for success of campaign, convenience village people to reduce the usage of plastic, handle the different kind of behavior of people. I am NSS volunteer.",
+  "hobbies": ["Drawing", "Cooking", "Playing Chende"],
+  "references": [
+    {
+      "name": "Mr. Harish",
+      "designation": "Senior Executive, CDYMAX (India) Pharma Pvt. Ltd.",
+      "email": "harishhemala@gmail.com",
+      "phone": "8861717212"
+    },
+    {
+      "name": "Dr. Shreekant G. Naik",
+      "designation": "Assistant Professor, MITE Moodabidre",
+      "email": "shreekant@mite.ac.in",
+      "phone": "900803978"
+    }
+  ]
+}

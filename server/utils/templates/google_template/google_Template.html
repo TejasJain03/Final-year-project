@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Template</title>
+    <style>
+        /* A4 size layout */
+        @page {
+            size: A4;
+            margin: 15mm;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 210mm;
+            height: 296mm;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            /* overflow: hidden; */
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #0d6efd;
+            font-size: 18px;
+            text-transform: uppercase;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        h3 {
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: nowrap;
+            width: 100%;
+            height: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .left-column {
+            width: 65%;
+            padding-right: 20px;
+        }
+
+        .name{
+            font-size:60px;
+            font-weight: bold;
+            margin-bottom: 0px;
+            color: black;
+        }
+        .summary{
+            /* font-size: 18px; */
+            margin-bottom: 50px;
+        }
+
+        .right-column {
+            width: 35%;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        .contact-info p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        ul li {
+            margin-bottom: 5px;
+        }
+
+        .project-title {
+            font-style: italic;
+        }
+
+        .list-item {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-column">
+            <h1 class="name">{{{userName}}}</h1>
+            <p class="summary">{{{summary}}}</p>
+
+            <div class="section">
+                <h2>Experience</h2>
+                {{#each experience}}
+                <div class="list-item">
+                    <h3>{{{company}}}, {{{location}}} — <span>{{{jobTitle}}}</span></h3>
+                    <p>{{{startDate}}} - {{{endDate}}}</p>
+                    <p>{{{description}}}</p>
+                </div>
+                {{/each}}
+            </div>
+
+            <div class="section">
+                <h2>Education</h2>
+                {{#each education}}
+                <div class="list-item">
+                    <h3>{{{school}}}, {{{location}}} — <span>{{{degree}}}</span></h3>
+                    <p>{{{startDate}}} - {{{endDate}}}</p>
+                    <p>{{{description}}}</p>
+                </div>
+                {{/each}}
+            </div>
+
+            <div class="section">
+                <h2>Projects</h2>
+                {{#each projects}}
+                <div class="list-item">
+                    <h3 class="project-title">{{{name}}} — <span>{{#each technologies}}{{{this}}}, {{/each}}</span></h3>
+                    <p>{{{description}}}</p>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+
+        <div class="right-column">
+            <div class="contact-info">
+                <p>{{{city}}}</p>
+                <p>{{{state}}}, {{{country}}}</p>
+                <p><strong>{{{phoneNumber}}}</strong></p>
+                <p>{{{email}}}</p>
+            </div>
+
+            <div class="skills section">
+                <h2>Skills</h2>
+                <p>{{#each skills}}{{{this}}}, {{/each}}</p>
+            </div>
+
+            <div class="awards section">
+                <h2>Awards</h2>
+                <ul>
+                    {{#each awards}}
+                    <li>{{{this}}}</li>
+                    {{/each}}
+                </ul>
+            </div>
+
+            <div class="languages section">
+                <h2>Languages</h2>
+                <p>{{#each languages}}{{{this}}}, {{/each}}</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

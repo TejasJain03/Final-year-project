@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{title}}</title>
+    <style>
+      @page {
+        margin-top: 0.2in;
+        margin-left: 0.3in;
+        margin-right: 0.3in;
+        margin-bottom: 0.61in;
+      }
+      body {
+        font-family: "Times New Roman", Times, serif;
+        background-color: #ffffff;
+        color: #000000;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 750px;
+        margin: 0 auto;
+        padding: 0;
+        position: relative;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center; /* Align items to center vertically */
+      }
+      .header img {
+        height: 140px; /* Reduced height */
+        width: 120px; /* Adjusted width to match height */
+        object-fit: cover; /* Ensure the image fits perfectly */
+      }
+      h1 {
+        font-size: 28px;
+        font-weight: bold;
+        margin: 0;
+        color: #000;
+      }
+      h2 {
+        font-size: 14pt;
+        font-weight: bold;
+        margin: 12px 0 6px;
+        color: #4a90e2;
+      }
+      .contact-info,
+      .address,
+      p,
+      .skills-content,
+      .section p,
+      .section ul,
+      .section li {
+        font-size: 12pt; /* Increased font size */
+        line-height: 1.15;
+        margin: 4px 0; /* Uniform spacing between lines */
+        text-align: justify;
+        color: #000;
+      }
+      .contact-info a {
+        color: #0366d6;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      .contact-info a:hover {
+        text-decoration: underline;
+      }
+      .address {
+        margin-top: 5px;
+        margin-bottom: 10px;
+      }
+      hr {
+        border: none;
+        border-top: 1px solid #ccc;
+        margin: 10px 0;
+      }
+      .right-align {
+        float: right;
+        font-size: 12pt;
+        font-style: italic;
+        color: #333;
+      }
+      .clearfix::after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+      .bold-text {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div>
+          <h1>{{name}}</h1>
+          <div class="contact-info">
+            <span class="bold-text">{{contact.phone}}</span><br />
+            <span class="bold-text"
+              ><a href="mailto:{{contact.email}}">{{contact.email}}</a></span
+            >
+            <br />
+            {{#each contact.links}}
+            <span>{{name}}</span>
+            <a href="{{url}}" target="_blank" class="bold-text">{{url}}</a
+            >{{#unless @last}}{{/unless}}<br />
+            {{/each}}
+          </div>
+        </div>
+        <img src="{{profilePicture}}" alt="Profile Picture" />
+      </div>
+      <hr />
+
+      <div class="section">
+        <h2>SUMMARY</h2>
+        <p>{{{summary}}}</p>
+      </div>
+
+      <div class="section">
+        <h2>EDUCATION</h2>
+        {{#each education}}
+        <div class="clearfix">
+          <p>
+            <strong>{{degree}}</strong>
+            <span class="right-align">{{duration}}</span><br />
+            {{institution}}<br />
+            <em>{{score}}</em>
+          </p>
+        </div>
+        {{/each}}
+      </div>
+
+      <div class="section">
+        <h2>SKILLS</h2>
+        <div class="skills-content">
+          <p>
+            <strong>Languages:</strong> {{#each
+            skills.languages}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
+          </p>
+          <p>
+            <strong>Interface:</strong> {{#each
+            skills.interface}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
+          </p>
+          <p>
+            <strong>Frameworks:</strong> {{#each
+            skills.frameworks}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
+          </p>
+          <p>
+            <strong>Database:</strong> {{#each
+            skills.database}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}}
+          </p>
+          <p>
+            <strong>Tools:</strong> {{#each skills.tools}}{{{this}}}{{#unless
+            @last}}, {{/unless}}{{/each}}
+          </p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>INTERNSHIPS</h2>
+        {{#each internships}}
+        <div class="clearfix">
+          <p>
+            <strong>Title: </strong>{{{title}}}
+            <span class="right-align">{{duration}}</span><br />
+            {{{description}}}
+          </p>
+        </div>
+        {{/each}}
+      </div>
+
+      <div class="section">
+        <h2>PROJECTS</h2>
+        {{#each projects}}
+        <div class="clearfix">
+          <p>
+            <strong>{{{title}}}</strong>
+            <span class="right-align">{{duration}}</span><br />
+            Technologies: {{{technologies}}}<br />
+            {{{description}}}
+          </p>
+        </div>
+        {{/each}}
+      </div>
+
+      <div class="section">
+        <h2>ACHIEVEMENTS & ACTIVITIES</h2>
+        <ul>
+          {{#each achievements}}
+          <li>{{{this}}}</li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

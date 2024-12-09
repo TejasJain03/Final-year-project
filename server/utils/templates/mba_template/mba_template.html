@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume</title>
+    <style>
+      @page {
+        margin-top: 0.2in;
+        margin-left: 0.3in;
+        margin-right: 0.3in;
+        margin-bottom: 0.61in;
+      }
+      body {
+        font-family: "Times New Roman", Times, serif;
+        background-color: #ffffff;
+        color: #000000;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 750px;
+        margin: 0 auto;
+        padding: 0;
+        position: relative;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+      .header img {
+        width: 130px;
+        height: 140px;
+        margin-left: 30px;
+        object-fit: cover;
+        border-radius: 5px;
+      }
+      .bold-text {
+        font-weight: bold;
+      }
+      h1 {
+        font-size: 28px;
+        font-weight: bold;
+        margin: 0;
+        color: #000;
+      }
+
+      h2 {
+        font-size: 14pt;
+        font-weight: bold;
+        margin: 12px 0 6px;
+        color: #4a90e2;
+        text-transform: uppercase;
+      }
+
+      p,
+      ul,
+      li {
+        font-size: 12pt;
+        line-height: 1.15;
+        margin: 4px 0;
+        text-align: justify;
+        color: #000;
+      }
+
+      .contact-info a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+
+      .contact-info a:hover {
+        text-decoration: underline;
+      }
+
+      hr {
+        border: none;
+        border-top: 1px solid #ccc;
+        margin: 10px 0;
+      }
+
+      .right-align {
+        float: right;
+        font-size: 12pt;
+        font-style: italic;
+        color: #333;
+      }
+
+      .clearfix::after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+
+      .references {
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 20px;
+      }
+
+      .references .column {
+        width: 35%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div>
+          <h1>{{{name}}}</h1>
+          <div class="contact-info">
+            <p>{{{phone1}}} / {{{phone2}}}</p>
+            <p>
+              Email:
+              <a class="bold-text" href="mailto:{{{email}}}">{{{email}}}</a>
+            </p>
+            <p>
+              LinkedIn:
+              <a class="bold-text" href="{{{linkedin}}}" target="_blank">{{{linkedin}}}</a>
+            </p>
+          </div>
+          <p>{{{address}}}</p>
+        </div>
+        <img src="{{{profilePicture}}}" alt="Profile Picture" />
+      </div>
+      <hr />
+
+      <div class="section">
+        <h2>Profile Summary</h2>
+        <p>{{{profileSummary}}}</p>
+      </div>
+
+      <div class="section">
+        <h2>Education</h2>
+        <div class="clearfix">
+          {{#each education}}
+          <p>
+            <strong>{{{degree}}}</strong>
+            <span class="right-align">{{{duration}}}</span><br />
+            {{{institution}}} | {{{details}}}
+          </p>
+          {{/each}}
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Key Skills & Competencies</h2>
+        <ul>
+          {{#each keySkills}}
+          <li>{{{this}}}</li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>Computer Skills</h2>
+        <ul>
+          {{#each computerSkills}}
+          <li>{{{this}}}</li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>Internship</h2>
+        <p><strong>{{{internship.company}}}</strong></p>
+        <ul>
+          {{#each internship.details}}
+          <li>{{{this}}}</li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>Projects</h2>
+        <ul>
+          {{#each projects}}
+          <li>
+            <strong>{{{title}}}</strong><br />
+            {{{description}}}
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>Certifications</h2>
+        <ul>
+          {{#each certifications}}
+          <li>{{{this}}}</li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>Volunteer Work</h2>
+        <p>{{{volunteerWork}}}</p>
+      </div>
+
+      <div class="section">
+        <h2>Hobbies</h2>
+        <ul>
+          {{#each hobbies}}
+          <li>{{{this}}}</li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>References</h2>
+        <div class="references">
+          {{#each references}}
+          <div class="column">
+            <p>
+              <strong>{{{name}}}</strong><br />
+              {{{designation}}}<br />
+              Email: {{{email}}}<br />
+              Mobile: {{{phone}}}
+            </p>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
