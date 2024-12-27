@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-undef */
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import React from "react";
@@ -19,26 +20,35 @@ function App() {
             {allRoutes.map((route) => {
               if (route.children) {
                 return (
-                  <Route key={route.id} path={route.path} element={route.element}>
+                  <Route
+                    key={route.id}
+                    path={route.path}
+                    element={route.element}
+                  >
                     {route.children.map((child) => (
-                      <Route key={child.id} path={child.path} element={child.element} />
+                      <Route
+                        key={child.id}
+                        path={child.path}
+                        element={child.element}
+                      />
                     ))}
                   </Route>
                 );
               }
 
-              return route.path === '/profile' ? (
+              return route.path === "/profile" ? (
                 <Route
                   key={route.id}
                   path={route.path}
-                  element={
-                    <PrivateRoute>
-                      {route.element}
-                    </PrivateRoute>
-                  }
+                  element={<PrivateRoute>{route.element}</PrivateRoute>}
                 />
               ) : (
-                <Route key={route.id} exact path={route.path} element={route.element} />
+                <Route
+                  key={route.id}
+                  exact
+                  path={route.path}
+                  element={route.element}
+                />
               );
             })}
 
