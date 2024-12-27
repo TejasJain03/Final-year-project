@@ -33,8 +33,8 @@
 <ol>
   <li>
     <strong>Clone the Repository:</strong>
-    <pre><code>git clone https://github.com/your-repository/resume-generator.git
-cd resume-generator</code></pre>
+    <pre><code>https://github.com/TejasJain03/Final-year-project.git
+cd Final-year-project</code></pre>
   </li>
   <li>
     <strong>Set Up the Backend:</strong>
